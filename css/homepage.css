@@ -29,10 +29,12 @@ nav {
 }
 
 .navbar-brand {
-    font-size: 25px !important;
-    font-family: 'Arima Madurai', cursive;
+    font-size: 2rem !important;
+    /* font-weight: 400 !important; */
+    font-family: 'Arima Madurai', cursive !important;
     padding-left: 15px;
-    /* margin: auto !important; */
+    color: rgb(21, 74, 105) ! important;
+    margin: auto !important;
 }
 
 .navbar-nav .nav-link {
