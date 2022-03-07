@@ -101,7 +101,11 @@ let allProducts = [
 		origin: "INDIA",
 		man_name: "ABCD Medicines",
 		man_add: "Khatra mahal, Shaitaan Gali, Samsaan ke saamne",
-		ingred: "Manchurian, Hajmola, Kachori"
+		ingred: "Manchurian, Hajmola, Kachori",
+		img: {
+			data: "/public/images/homeopathy.jpg",
+			contentType: "image/jpeg"
+		}
 	},
 	{
 		name: "Paracetamol-500",
@@ -112,7 +116,11 @@ let allProducts = [
 		origin: "INDIA",
 		man_name: "Toshi Medical",
 		man_add: "App jaan ke kya kroge",
-		ingred: "Hakka Noodles, Dal Bati"
+		ingred: "Hakka Noodles, Dal Bati",
+		img: {
+			data: "/public/images/homeopathy.jpg",
+			contentType: "image/jpeg"
+		}
 	}
 ];
 
@@ -195,8 +203,24 @@ const storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-app.post("/uploadData", upload.single("avatar"), (req, res, next) => {
-	console.log(req.body);
+app.post("/uploadData", upload.single("productImage"), (req, res) => {
+	var img = fs.readFileSync(req.file.path);
+	var encode_img = img.toString("base64");
+	// var final_img = {
+	// 	contentType: req.file.mimetype,
+	// 	image: new Buffer.from(encode_img, "base64")
+	// };
+
+	// Product.create(final_img, function (err, result) {
+	// 	if (err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		console.log(result.img.Buffer);
+	// 		console.log("Saved To database");
+	// 		res.contentType(final_img.contentType);
+	// 		res.send(final_img.image);
+	// 	}
+	// });
 
 	const product = new Product({
 		name: req.body.productName,
@@ -208,12 +232,31 @@ app.post("/uploadData", upload.single("avatar"), (req, res, next) => {
 		man_name: req.body.manufacturerName,
 		man_add: req.body.manufacturerAddress,
 		ingred: req.body.productIngredients,
+		img: {
+			data: new Buffer.from(encode_img, "base64"),
+			contentType: "image/jpeg"
+		}
 		// img: {
 		// 	data: fs.readFileSync(
-		// 		path.join(__dirname + "/uploads/" + req.file.productImage)
+		// 		path.join(
+		// 			__dirname + "/public/uploads/" + req.file.productImage
+		// 		)
 		// 	),
 		// 	contentType: "image/jpeg"
 		// }
+	});
+
+	Product.create(product, (err, doc) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log("data added successfully");
+			// res.redirect("/");
+			// console.log(result.img.Buffer);
+			console.log("Saved To database");
+			res.contentType(product.img.contentType);
+			res.send(product.img.data);
+		}
 	});
 
 	allProducts.push({
@@ -225,15 +268,10 @@ app.post("/uploadData", upload.single("avatar"), (req, res, next) => {
 		origin: req.body.productOriginCountry,
 		man_name: req.body.manufacturerName,
 		man_add: req.body.manufacturerAddress,
-		ingred: req.body.productIngredients
-	});
-
-	Product.create(product, (err, doc) => {
-		if (err) {
-			console.log(err);
-		} else {
-			console.log("data added successfully");
-			res.redirect("/");
+		ingred: req.body.productIngredients,
+		img: {
+			data: new Buffer.from(encode_img, "base64"),
+			contentType: "image/jpeg"
 		}
 	});
 
