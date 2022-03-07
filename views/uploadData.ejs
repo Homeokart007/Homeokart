@@ -16,18 +16,18 @@
 <body>
 
     <h1>ADD A PRODUCT</h1>
-    <form method="post" action="/uploadData">
+    <form method="post" action="/uploadData" enctype="multipart/form-data">
 
         <!-- PRODUCT NAME -->
         <div class="form-floating mb-3">
             <input required type="text" id="product-name" name="productName" class="form-control"
                 placeholder="Product name">
-            <label for="product-name">Product Name</label>
+            <label for="product-name">PRODUCT NAME</label>
         </div>
 
         <!-- PRODUCT DESCRIPTION -->
         <div class="mb-3">
-            <label for="product-description" class="form-label">Product Description</label>
+            <label for="product-description" class="form-label">PRODUCT DESCRIPTION</label>
             <textarea required id="product-description" name="productDescription" class="form-control"></textarea>
         </div>
 
@@ -35,39 +35,47 @@
         <div class="form-floating mb-3">
             <input required type="number" min="0" step=".01" id="product-price" name="productPrice" class="form-control"
                 placeholder="Product Price">
-            <label for="product-price">Product Price(Rs)</label>
+            <label for="product-price">PRODUCT PRICE(Rs)</label>
         </div>
 
-        <!-- PRODUCT CATEGORY -->
-        <div class="mb-3">
-            <label class="form-label">PRODUCT CATEGORY</label>
 
-            <div class="form-check">
-                <input type="checkbox" id="category-1" name="productCategory" value="Covid" class="form-check-input">
-                <label class="form-check-label" for="category-1">Covid</label>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" id="category-2" name="productCategory" value="Body Care Product"
-                    class="form-check-input">
-                <label class="form-check-label" for="category-2">Body Care Product</label>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" id="category-3" name="productCategory" value="Health Care Product"
-                    class="form-check-input">
-                <label class="form-check-label" for="category-3">Health Care Product</label>
-            </div>
-        </div>
+        <div class="row">
 
-        <!-- PRODUCT RATING -->
-        <div class="form-floating mb-3">
-            <input required type="number" min="0" max="5" step=".1" id="product-rating" name="productRating"
-                class="form-control" placeholder="Product Rating">
-            <label for="product-rating">Product Rating</label>
+            <!-- PRODUCT CATEGORY -->
+            <div class="mb-3 col-6">
+                <label class="form-label">PRODUCT CATEGORY</label>
+
+                <div class="form-check">
+                    <input type="checkbox" id="category-1" name="productCategory" value="Covid"
+                        class="form-check-input">
+                    <label class="form-check-label" for="category-1">Covid</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="category-2" name="productCategory" value="Body Care Product"
+                        class="form-check-input">
+                    <label class="form-check-label" for="category-2">Body Care Product</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="category-3" name="productCategory" value="Health Care Product"
+                        class="form-check-input">
+                    <label class="form-check-label" for="category-3">Health Care Product</label>
+                </div>
+            </div>
+
+            <!-- PRODUCT RATING -->
+            <div class="col-6 mb-3">
+                <div class="form-floating">
+                    <input required type="number" min="0" max="5" step=".1" id="product-rating" name="productRating"
+                        class="form-control" placeholder="Product Rating">
+                    <label for="product-rating">PRODUCT RATING</label>
+                </div>
+            </div>
+
         </div>
 
         <!-- COUNTRY OF ORIGIN -->
         <select class="form-select mb-3" aria-label="Default select example" name="productOriginCountry" required>
-            <option selected value="">Select Country of Origin</option>
+            <option selected value="">COUNTRY OF ORIGIN</option>
             <option value="INDIA">INDIA</option>
             <option value="CHINA">CHINA</option>
             <option value="USA">USA</option>
@@ -90,23 +98,37 @@
         <div class="form-floating mb-3">
             <input required type="text" id="manufacturer-name" name="manufacturerName" class="form-control"
                 placeholder="Manufacturer name">
-            <label for="manufacturer-name">Manufacturer Name</label>
+            <label for="manufacturer-name">MANUFACTURER NAME</label>
         </div>
 
         <!-- MANUFACTURER ADDRESS -->
         <div class="form-floating mb-3">
             <input required type="text" id="manufacturer-address" name="manufacturerAddress" class="form-control"
                 placeholder="Manufacturer Address">
-            <label for="manufacturer-address">Manufacturer Address</label>
+            <label for="manufacturer-address">MANUFACTURER ADDRESS</label>
         </div>
 
         <!-- PRODUCT INGREDIENTS -->
         <div class="mb-3">
-            <label for="product-ingredients" class="form-label">Product Ingredients</label>
+            <label for="product-ingredients" class="form-label">PRODUCT INGREDIENTS</label>
             <textarea required id="product-ingredients" name="productIngredients" class="form-control"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <!-- SELECT IMAGE FILE -->
+        <div class="mb-3">
+            <label for="product-image" class="form-label">PRODUCT IMAGE</label>
+            <input type="file" id="product-image" name="productImage" class="form-control">
+        </div>
+
+
+        <!-- <div class="form-group mb-3">
+            <input type="file" class="form-control-file" name="uploaded_file">
+            <input type="text" class="form-control" placeholder="Number of speakers" name="nspeakers">
+        </div> -->
+
+        <button type="submit" class="btn btn-primary">ADD PRODUCT</button>
+
+
     </form>
 
 
