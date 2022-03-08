@@ -46,7 +46,7 @@ const productsSchema = {
 		required: true
 	},
 	img: {
-		data: Buffer,
+		path: Array,
 		contentType: String
 	},
 	price: {
@@ -91,61 +91,6 @@ const User = user.model("User", userSchema);
 
 const Hairitems = [];
 
-let allProducts = [
-	{
-		name: "Dolo-650",
-		description: "Use it anytime, anywhere.",
-		price: "6.9",
-		tag: ["Covid", "Health Care Product"],
-		ratings: "4.8",
-		origin: "INDIA",
-		man_name: "ABCD Medicines",
-		man_add: "Khatra mahal, Shaitaan Gali, Samsaan ke saamne",
-		ingred: "Manchurian, Hajmola, Kachori",
-		img: {
-			data: "/public/images/homeopathy.jpg",
-			contentType: "image/jpeg"
-		}
-	},
-	{
-		name: "Paracetamol-500",
-		description: "Don't use it anytime, anywhere.",
-		price: "12.99",
-		tag: ["Covid", "Health Care Product"],
-		ratings: "4.4",
-		origin: "INDIA",
-		man_name: "Toshi Medical",
-		man_add: "App jaan ke kya kroge",
-		ingred: "Hakka Noodles, Dal Bati",
-		img: {
-			data: "/public/images/homeopathy.jpg",
-			contentType: "image/jpeg"
-		}
-	}
-];
-
-// const product = new Product({
-//     name: "Minoxidil",
-//     description:"Haircare",
-//     price:1500,
-//     tag:["Haircare","Covid 19"],
-//     ratings:4.2,
-//     origin:"India",
-//     man_name:"Zydus",
-//     man_add:"Bharuch",
-//     ingred:"XYZ"
-// })
-
-// Product.create(product,function(err,doc){
-//     if(err)
-//         {
-//             console.log(err);
-//         }
-//         else{
-//             console.log("data added successfully");
-//         }
-// })
-
 app.get("/", function (req, res) {
 	res.render("homepage");
 	Product.find({ tag: "Haircare" }, function (err, results) {
@@ -158,8 +103,30 @@ app.get("/", function (req, res) {
 });
 
 app.get("/categories", function (req, res) {
-	res.render("categories", {
-		allProducts: allProducts
+	// Product.find(
+	// 	{ tag: "Body Care Product", name: "Dolo-sss" },  // Filters
+	// 	{ name: 1, img: 1, _id: 0 },                     // What To display
+	// 	function (err, results) {
+	// 		if (err) {
+	// 			console.log(err);
+	// 		} else {
+	// 			console.log("Found Results", results);
+	// 			res.render("categories", {
+	// 				allProducts: results
+	// 			});
+	// 		}
+	// 	}
+	// );
+
+	Product.find({}, function (err, results) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log("Found Results: ", results);
+			res.render("categories", {
+				allProducts: results
+			});
+		}
 	});
 });
 
@@ -180,15 +147,6 @@ app.get("/cart", function (req, res) {
 });
 
 app.get("/uploadData", function (req, res) {
-	// Product.find({}, function(err,results){
-	//     if(err){
-	//         console.log(err)
-	//     }
-	//     else{
-	//         console.log("Found Results",results)
-	//         res.render('uploadData',{ items: results.img })
-	//     }
-	// })
 	res.render("uploadData");
 });
 
@@ -197,30 +155,23 @@ const storage = multer.diskStorage({
 		cb(null, "./public/uploads");
 	},
 	filename: (req, file, cb) => {
-		cb(null, file.fieldname + "-" + Date.now());
+		let count = req.files.length;
+		let productName = req.body.productName.replace(" ", "-");
+		let ext = file.originalname.substr(file.originalname.lastIndexOf("."));
+		cb(null, productName + "-" + Date.now() + "-" + count + ext);
 	}
 });
 
 var upload = multer({ storage: storage });
 
-app.post("/uploadData", upload.single("productImage"), (req, res) => {
-	var img = fs.readFileSync(req.file.path);
-	var encode_img = img.toString("base64");
-	// var final_img = {
-	// 	contentType: req.file.mimetype,
-	// 	image: new Buffer.from(encode_img, "base64")
-	// };
-
-	// Product.create(final_img, function (err, result) {
-	// 	if (err) {
-	// 		console.log(err);
-	// 	} else {
-	// 		console.log(result.img.Buffer);
-	// 		console.log("Saved To database");
-	// 		res.contentType(final_img.contentType);
-	// 		res.send(final_img.image);
-	// 	}
-	// });
+app.post("/uploadData", upload.array("productImage"), (req, res) => {
+	// console.log(req.files);
+	// console.log(req.files[0].path);
+	var imageArray = [];
+	req.files.map((data, index) => {
+		imageArray.push(data.path.replace("public\\", ""));
+	});
+	// console.log(imageArray);
 
 	const product = new Product({
 		name: req.body.productName,
@@ -233,49 +184,21 @@ app.post("/uploadData", upload.single("productImage"), (req, res) => {
 		man_add: req.body.manufacturerAddress,
 		ingred: req.body.productIngredients,
 		img: {
-			data: new Buffer.from(encode_img, "base64"),
-			contentType: "image/jpeg"
+			path: imageArray,
+			contentType: req.files[0].mimetype
 		}
-		// img: {
-		// 	data: fs.readFileSync(
-		// 		path.join(
-		// 			__dirname + "/public/uploads/" + req.file.productImage
-		// 		)
-		// 	),
-		// 	contentType: "image/jpeg"
-		// }
 	});
 
 	Product.create(product, (err, doc) => {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log("data added successfully");
+			console.log("Data added successfully");
+			console.log(product);
 			// res.redirect("/");
-			// console.log(result.img.Buffer);
-			console.log("Saved To database");
-			res.contentType(product.img.contentType);
-			res.send(product.img.data);
+			res.send(product);
 		}
 	});
-
-	allProducts.push({
-		name: req.body.productName,
-		description: req.body.productDescription,
-		price: req.body.productPrice,
-		tag: req.body.productCategory,
-		ratings: req.body.productRating,
-		origin: req.body.productOriginCountry,
-		man_name: req.body.manufacturerName,
-		man_add: req.body.manufacturerAddress,
-		ingred: req.body.productIngredients,
-		img: {
-			data: new Buffer.from(encode_img, "base64"),
-			contentType: "image/jpeg"
-		}
-	});
-
-	console.log(product);
 });
 
 app.listen(PORT, (req, res) => {
