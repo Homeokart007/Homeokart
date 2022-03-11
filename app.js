@@ -283,7 +283,7 @@ app.get('/auth/google/homeokart',
     function (req, res) {
         // Successful authentication, redirect home.
 
-        res.redirect('/');
+        res.redirect('..');
     });
 
 
@@ -364,13 +364,15 @@ app.get("/register", function (req, res) {
 // })
 
 app.post("/register", (req, res) => {
-    const email = req.body.email;
+    const name = req.body.username
+    const email = req.body.usermail;
     const password = req.body.password
-    User.find({ email: email }, function (err, docs) {
+    User.find({ usermail: email }, function (err, docs) {
         if (docs.length === 0) {
             User.register(
                 {
-                    username: email,
+                    username: name,
+                    usermail: email,
                 },
                 password,
                 function (err, user) {
@@ -406,6 +408,8 @@ app.get("/product", function (req, res) {
 
 app.get("/cart", function (req, res) {
     if (req.isAuthenticated()) {
+        console.log("Inside cart", req);
+        console.log("Inside cart", req.user.id);
         res.render("cart");
     }
     else {
@@ -418,8 +422,9 @@ app.get("/cart/:productid", function (req, res) {
     const producId = req.params.productid;
     if (req.isAuthenticated()) {
 
-        const userId = req.id;
-        console.log(req);
+        const userId = req.user.id;
+        // console.log(req);
+        // console.log("userId", req);
 
         Product.findById(producId, async function (err, results) {
             if (err) {
@@ -614,7 +619,7 @@ app.post("/login", (req, res) => {
                                     if (error) {
                                         console.log(error);
                                     } else {
-                                        res.redirect("/");
+                                        res.redirect("/cart");
                                     }
                                 });
                             }
