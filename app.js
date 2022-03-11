@@ -265,7 +265,7 @@ passport.use(new GoogleStrategy({
 const Hairitems = [];
 
 app.get("/", function (req, res) {
-    res.render("homepage", { category: categorie });
+    res.render("homepageNEW", { category: categorie });
     // Product.find({ tag: "Haircare" }, function (err, results) {
     //     if (err) {
     //         console.log(err);
@@ -406,11 +406,36 @@ app.get("/product", function (req, res) {
     res.render("product");
 });
 
-app.get("/cart", function (req, res) {
+app.get("/cart", async function (req, res) {
     if (req.isAuthenticated()) {
         console.log("Inside cart", req);
         console.log("Inside cart", req.user.id);
-        res.render("cart");
+        const userId = req.user.id;
+
+        try {
+            let cart = await Cart.findOne({ userId });
+            console.log("Hey Cart", cart)
+            if (cart) {
+                //cart exists for user
+
+                return res.render("cart", { cart: cart });
+                // return res.status(201).send(cart);
+            } else {
+                //no cart for user, create new cart
+                // const newCart = await Cart.create({
+                //     userId,
+                //     products: [{ productId, quantity, name, price }]
+                // });
+
+                res.render("cart", { cart: cart });
+                // res.render("cart", { cart: newCart });
+                // return res.status(201).send(newCart);
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+
     }
     else {
         res.redirect("/login")
@@ -481,8 +506,54 @@ app.get("/cart/:productid", function (req, res) {
 
 });
 
-app.post("/cart", function (req, res) {
+app.post("/cart", async function (req, res) {
+    if (req.isAuthenticated()) {
 
+        const userId = req.user.id;
+        // console.log(req);
+        // console.log("userId", req);
+
+        try {
+            let cart = await Cart.findOne({ userId });
+
+            if (cart) {
+                //cart exists for user
+                let itemIndex = cart.products.findIndex(p => p.productId == productId);
+
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    let productItem = cart.products[itemIndex];
+                    productItem.quantity = quantity;
+                    cart.products[itemIndex] = productItem;
+                } else {
+                    //product does not exists in cart, add new item
+                    cart.products.push({ productId, quantity, name, price });
+                }
+                cart = await cart.save();
+                return res.render("cart", { cart: cart });
+                // return res.status(201).send(cart);
+            } else {
+                //no cart for user, create new cart
+                const newCart = await Cart.create({
+                    userId,
+                    products: [{ productId, quantity, name, price }]
+                });
+
+                res.render("cart", { cart: newCart });
+                // return res.status(201).send(newCart);
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    }
+
+    // res.render("Cart");
+
+    // User.findOneAndUpdate({ googleId: "112129154840141555781" }, { phone: 7048105061 })
+    else {
+        res.redirect("/login");
+    }
 })
 
 app.get("/uploadData", function (req, res) {
