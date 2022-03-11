@@ -42,9 +42,10 @@
             <nav class="navbar fixed-top navbar-expand-lg navbar-light " style="background-color: #e3f2fd;">
                 <div class="container-fluid">
                     <div class="nav-brand-container">
-                        <a class="navbar-brand" href="/">HomeoKart</a>
-                        <p class="logo">
-                            Heal with Homeopathy!</p>
+                        <a href="/"><img src="../public/images/LogoNew.jpg" alt="..."></a>
+                        <!-- <p class="logo">
+                            Heal with Homeopathy!</p> -->
+                            
                     </div>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -343,63 +344,23 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="crd">
-                                <a href="#">
-                                    <div class="crd-body">
-                                        <!-- <img src="https://static.toiimg.com/thumb/msid-84309266,width-1200,height-900,resizemode-4/.jpg"
-                  class="crd-img-top"> -->
-                                        <img src="https://cdn.sanity.io/images/92ui5egz/production/e800a8eabc6f17a0eaed1bf6621b46aefa57b8cb-990x557.jpg"
-                                            class="crd-img-top">
-                                    </div>
-                                    <div class="crd-title">Covid-19 Essentials 3</div>
-                                    <div class="crd-bton">
-                                        <button type="button" class="btn btn-primary">View More</button>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="crd">
-                                <a href="#">
-                                    <div class="crd-body">
-                                        <!-- <img
-                  src="https://cdn.sanity.io/images/92ui5egz/production/e800a8eabc6f17a0eaed1bf6621b46aefa57b8cb-990x557.jpg?auto=format"
-                  class="crd-img-top"> -->
-                                        <img src="https://www.johnsonsbaby.in/sites/jbaby_in/files/983x597-newrange.jpg"
-                                            class="crd-img-top">
-                                    </div>
-                                    <div class="crd-title">Covid-19 Essentials 4</div>
-                                    <div class="crd-bton">
-                                        <button type="button" class="btn btn-primary">View More</button>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="crd">
-                                <a href="#">
-                                    <div class="crd-body">
-                                        <!-- <img src="https://i.insider.com/5ff366d26056b60018721cc3?width=600&format=jpeg&auto=webp"
-                  class="crd-img-top"> -->
-                                        <img src="https://static.toiimg.com/thumb/msid-84309266,width-1200,height-900,resizemode-4/.jpg"
-                                            class="crd-img-top">
-                                    </div>
-                                    <div class="crd-title">Covid-19 Essentials 5</div>
-                                    <div class="crd-bton">
-                                        <button type="button" class="btn btn-primary">View More</button>
-                                    </div>
-
-                                </a>
-                            </div>
-                            <div class="crd">
-                                <a href="#">
-                                    <div class="crd-body">
-                                        <!-- <img src="https://www.johnsonsbaby.in/sites/jbaby_in/files/983x597-newrange.jpg" class="crd-img-top"> -->
-                                        <img src="https://i.insider.com/5ff366d26056b60018721cc3?width=600&format=jpeg&auto=webp"
-                                            class="crd-img-top">
-                                    </div>
-                                    <div class="crd-title">Covid-19 Essentials 6</div>
-                                    <div class="crd-bton">
-                                        <button type="button" class="btn btn-primary">View More</button>
-                                    </div>
-                                </a>
-                            </div>
+                           <% category.forEach(function(cat){ %>
+                                <div class="crd">
+                                    <a href="#">
+                                        <div class="crd-body">
+                                            <img src="<%= cat.img %>"
+                                                class="crd-img-top">
+                                        </div>
+                                        <div class="crd-title"><%=    cat.name %></div>
+                                        <div class="crd-bton">
+                                            <a href="/products/<%=cat.name%>">
+                                            <button type="button" class="btn btn-primary">View More</button>
+                                        </a>
+                                        </div>
+                                    </a>
+                                </div>
+                            <% }); %>
+                            
                         </div>
                     </div>
                     </div>
