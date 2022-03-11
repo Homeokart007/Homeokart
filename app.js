@@ -18,6 +18,7 @@ const findOrCreate = require('mongoose-findorcreate');
 var fs = require("fs");
 var path = require("path");
 
+const PORT = 3000;
 const app = express();
 
 app.use(express.static("public"));
@@ -718,7 +719,7 @@ app.get("/logout", function (req, res) {
 
 })
 
-app.listen(3000, (req, res) => {
-    console.log("Server started on http://localhost:");
+app.listen(PORT, (req, res) => {
+    console.log("Server started on http://localhost:" + PORT);
 });
 
