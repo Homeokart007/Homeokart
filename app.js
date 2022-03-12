@@ -43,8 +43,8 @@ app.use(passport.session());
 
 var med = mongoose.createConnection(
     process.env.MONGO_CONNECTION_URL_PRODUCTSDB, {
-        useNewUrlParser: true
-    }
+    useNewUrlParser: true
+}
 );
 
 var usr = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_USERSDB, {
@@ -56,40 +56,40 @@ var cart = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_CART, {
 });
 
 const categorie = [{
-        name: "Hair Care",
-        linkName: "hair_care",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Skin Care",
-        linkName: "skin_care",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Covid",
-        linkName: "covid",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Trituration",
-        linkName: "trituration",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Dilutions",
-        linkName: "dilutions",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Mother tincture",
-        linkName: "mother_tincture",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Baby essentials",
-        linkName: "baby_essentials",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    }
+    name: "Hair Care",
+    linkName: "hair_care",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Skin Care",
+    linkName: "skin_care",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Covid",
+    linkName: "covid",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Trituration",
+    linkName: "trituration",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Dilutions",
+    linkName: "dilutions",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Mother tincture",
+    linkName: "mother_tincture",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Baby essentials",
+    linkName: "baby_essentials",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+}
 ]
 
 const productsSchema = {
@@ -134,26 +134,33 @@ const productsSchema = {
 
 const Product = med.model("Product", productsSchema);
 
-const CartSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    },
-    products: [{
-        productId: String,
-        quantity: Number,
-        name: String,
-        price: Number
-    }],
-    active: {
-        type: Boolean,
-        default: true
-    },
-    modifiedOn: {
-        type: Date,
-        default: Date.now
-    }
-}, {
+const CartSchema = new mongoose.Schema(
+    {
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        products: [
+            {
+                productId: String,
+                quantity: Number,
+                name: String,
+                price: Number,
+                img: {
+                    path: Array,
+                    contentType: String
+                }
+            }
+        ],
+        active: {
+            type: Boolean,
+            default: true
+        },
+        modifiedOn: {
+            type: Date,
+            default: Date.now
+        }
+    }, {
     timestamps: true
 });
 
@@ -249,15 +256,15 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(new GoogleStrategy({
-        clientID: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/google/homeokart",
-        // userProfileURL: "https://www.googleapis.com/oauth/v3/userinfo",
-        passReqToCallback: true
-    },
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/google/homeokart",
+    // userProfileURL: "https://www.googleapis.com/oauth/v3/userinfo",
+    passReqToCallback: true
+},
 
     function (request, accessToken, refreshToken, profile, done) {
-        console.log(profile);
+        // console.log(profile);
         User.findOrCreate({
             googleId: profile.id,
             username: profile.displayName,
@@ -270,9 +277,11 @@ passport.use(new GoogleStrategy({
 
 const Hairitems = [];
 
-app.get("/", function (req, res) {
+app.get("/", async function (req, res) {
+    console.log(req.isAuthenticated());
     res.render("homepageNEW", {
-        category: categorie
+        category: categorie,
+        isAuthenticated: req.isAuthenticated()
     });
     // Product.find({ tag: "Haircare" }, function (err, results) {
     //     if (err) {
@@ -322,7 +331,7 @@ app.get("/categories", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log("Found Results: ", results);
+            // console.log("Found Results: ", results);
             res.render("categories", {
                 allProducts: results
             });
@@ -384,9 +393,9 @@ app.post("/register", (req, res) => {
     }, function (err, docs) {
         if (docs.length === 0) {
             User.register({
-                    username: name,
-                    usermail: email,
-                },
+                username: name,
+                usermail: email,
+            },
                 password,
                 function (err, user) {
                     if (err) {
@@ -410,7 +419,7 @@ app.post("/register", (req, res) => {
                 }
             );
         } else {
-            res.send("The accout already exists!");
+            res.redirect("/login");
         }
     });
 });
@@ -421,8 +430,8 @@ app.get("/product", function (req, res) {
 
 app.get("/cart", async function (req, res) {
     if (req.isAuthenticated()) {
-        console.log("Inside cart", req);
-        console.log("Inside cart", req.user.id);
+        // console.log("Inside cart", req);
+        // console.log("Inside cart", req.user.id);
         const userId = req.user.id;
 
         try {
@@ -476,13 +485,8 @@ app.get("/cart/:productid", function (req, res) {
                 console.log("Found Results inside cart block: ", results);
 
             }
-            const {
-                id,
-                quantity = 1,
-                name,
-                price
-            } = results;
-
+            const { img, id, quantity = 1, name, price } = results;
+            console.log("Image Paths", img)
             const productId = id;
             try {
                 let cart = await Cart.findOne({
@@ -493,6 +497,7 @@ app.get("/cart/:productid", function (req, res) {
                     //cart exists for user
                     let itemIndex = cart.products.findIndex(p => p.productId == productId);
 
+                    console.log("item Index", itemIndex);
                     if (itemIndex > -1) {
                         //product exists in the cart, update the quantity
                         let productItem = cart.products[itemIndex];
@@ -500,12 +505,7 @@ app.get("/cart/:productid", function (req, res) {
                         cart.products[itemIndex] = productItem;
                     } else {
                         //product does not exists in cart, add new item
-                        cart.products.push({
-                            productId,
-                            quantity,
-                            name,
-                            price
-                        });
+                        cart.products.push({ productId, quantity, name, price, img });
                     }
                     cart = await cart.save();
                     return res.render("cart", {
@@ -516,12 +516,7 @@ app.get("/cart/:productid", function (req, res) {
                     //no cart for user, create new cart
                     const newCart = await Cart.create({
                         userId,
-                        products: [{
-                            productId,
-                            quantity,
-                            name,
-                            price
-                        }]
+                        products: [{ productId, quantity, name, price, img }]
                     });
 
                     res.render("cart", {
@@ -544,6 +539,129 @@ app.get("/cart/:productid", function (req, res) {
     }
 
 });
+
+app.get("/cart/:id/incrqty", async function (req, res) {
+    console.log("Here I am");
+    const productId = req.params.id;
+    console.log(productId);
+
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        console.log(userId);
+
+        try {
+            console.log("Enter in try");
+            let cart = await Cart.findOne({ userId });
+            console.log(cart);
+            console.log(cart.products);
+            if (cart) {
+                //cart exists for user
+                // let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                console.log("This", itemIndex);
+
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    let productItem = cart.products[itemIndex];
+                    productItem.quantity = productItem.quantity + 1;
+                    cart.products[itemIndex] = productItem;
+                }
+                cart = await cart.save();
+                return res.render("cart", { cart: cart });
+            }
+            else {
+                console.log("Cart doesnot exists");
+            }
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    }
+    else {
+        res.redirect("/login");
+    }
+})
+
+app.get("/cart/:id/decrqty", async function (req, res) {
+    console.log("Here I am");
+    const productId = req.params.id;
+    console.log(productId);
+
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        console.log(userId);
+
+        try {
+            console.log("Enter in try");
+            let cart = await Cart.findOne({ userId });
+            console.log(cart);
+            console.log(cart.products);
+            if (cart) {
+                //cart exists for user
+                // let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                console.log("This", itemIndex);
+
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    let productItem = cart.products[itemIndex];
+                    productItem.quantity = productItem.quantity - 1;
+                    cart.products[itemIndex] = productItem;
+                }
+                cart = await cart.save();
+                return res.render("cart", { cart: cart });
+            }
+            else {
+                console.log("Cart doesnot exists");
+            }
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    }
+    else {
+        res.redirect("/login");
+    }
+})
+
+
+app.get("/cart/:id/remove", async function (req, res) {
+    console.log("Removed")
+    const productId = req.params.id;
+    if (req.isAuthenticated()) {
+
+        const userId = req.user.id;
+
+        try {
+            let cart = await Cart.findOne({ userId });
+            console.log(cart);
+            // console.log(cart.products)
+            if (cart) {
+                //cart exists for user
+                let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                console.log(itemIndex);
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    cart.products.splice(itemIndex, 1);
+                }
+                cart = await cart.save();
+                return res.render("cart", { cart: cart });
+                // return res.status(201).send(cart);
+            } else {
+                //no cart for user, create new cart
+                console.log("No cart for user");
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    }
+    else {
+        res.redirect("/login");
+    }
+})
 
 app.post("/cart", async function (req, res) {
     if (req.isAuthenticated()) {
@@ -599,7 +717,7 @@ app.post("/cart", async function (req, res) {
             }
         } catch (err) {
             console.log(err);
-            res.status(500).send("Something went wrong");
+            res.status(500).send("Something went wrongaaaaa");
         }
     }
 
@@ -677,7 +795,7 @@ app.get("/products/:category", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log("Found Results: ", results);
+            // console.log("Found Results: ", results);
             res.render("categories", {
                 allProducts: results
             });
@@ -692,7 +810,7 @@ app.get("/product/:prdid", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log("Found Results: ", results);
+            // console.log("Found Results: ", results);
             res.render("product", {
                 product: results
             });
@@ -751,7 +869,7 @@ app.post("/login", (req, res) => {
                                     if (error) {
                                         console.log(error);
                                     } else {
-                                        res.redirect("/cart");
+                                        res.redirect("/");
                                     }
                                 });
                             }
@@ -764,6 +882,10 @@ app.post("/login", (req, res) => {
         }
     });
 });
+
+app.get("/checkout", function (req, res) {
+    res.render("checkout");
+})
 
 app.get("/logout", function (req, res) {
     console.log("Logged out")
@@ -778,6 +900,6 @@ app.get("/logout", function (req, res) {
 
 })
 
-app.listen(3000, (req, res) => {
-    console.log("Server started on http://localhost:");
+app.listen(PORT, (req, res) => {
+    console.log("Server started on http://localhost:" + PORT);
 });
