@@ -20,6 +20,7 @@ const findOrCreate = require('mongoose-findorcreate');
 var fs = require("fs");
 var path = require("path");
 
+const PORT = 3000;
 const app = express();
 
 app.use(express.static("public"));
@@ -270,7 +271,7 @@ passport.use(new GoogleStrategy({
 const Hairitems = [];
 
 app.get("/", function (req, res) {
-    res.render("homepage", {
+    res.render("homepageNEW", {
         category: categorie
     });
     // Product.find({ tag: "Haircare" }, function (err, results) {
@@ -294,7 +295,7 @@ app.get('/auth/google/homeokart',
     function (req, res) {
         // Successful authentication, redirect home.
 
-        res.redirect('/');
+        res.redirect('..');
     });
 
 
@@ -375,14 +376,16 @@ app.get("/register", function (req, res) {
 // })
 
 app.post("/register", (req, res) => {
-    const email = req.body.email;
+    const name = req.body.username
+    const email = req.body.usermail;
     const password = req.body.password
     User.find({
-        email: email
+        usermail: email
     }, function (err, docs) {
         if (docs.length === 0) {
             User.register({
-                    username: email,
+                    username: name,
+                    usermail: email,
                 },
                 password,
                 function (err, user) {
@@ -416,9 +419,42 @@ app.get("/product", function (req, res) {
     res.render("product");
 });
 
-app.get("/cart", function (req, res) {
+app.get("/cart", async function (req, res) {
     if (req.isAuthenticated()) {
-        res.render("cart");
+        console.log("Inside cart", req);
+        console.log("Inside cart", req.user.id);
+        const userId = req.user.id;
+
+        try {
+            let cart = await Cart.findOne({
+                userId
+            });
+            console.log("Hey Cart", cart)
+            if (cart) {
+                //cart exists for user
+
+                return res.render("cart", {
+                    cart: cart
+                });
+                // return res.status(201).send(cart);
+            } else {
+                //no cart for user, create new cart
+                // const newCart = await Cart.create({
+                //     userId,
+                //     products: [{ productId, quantity, name, price }]
+                // });
+
+                res.render("cart", {
+                    cart: cart
+                });
+                // res.render("cart", { cart: newCart });
+                // return res.status(201).send(newCart);
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+
     } else {
         res.redirect("/login")
     }
@@ -429,8 +465,9 @@ app.get("/cart/:productid", function (req, res) {
     const producId = req.params.productid;
     if (req.isAuthenticated()) {
 
-        const userId = req.id;
-        console.log(req);
+        const userId = req.user.id;
+        // console.log(req);
+        // console.log("userId", req);
 
         Product.findById(producId, async function (err, results) {
             if (err) {
@@ -508,8 +545,70 @@ app.get("/cart/:productid", function (req, res) {
 
 });
 
-app.post("/cart", function (req, res) {
+app.post("/cart", async function (req, res) {
+    if (req.isAuthenticated()) {
 
+        const userId = req.user.id;
+        // console.log(req);
+        // console.log("userId", req);
+
+        try {
+            let cart = await Cart.findOne({
+                userId
+            });
+
+            if (cart) {
+                //cart exists for user
+                let itemIndex = cart.products.findIndex(p => p.productId == productId);
+
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    let productItem = cart.products[itemIndex];
+                    productItem.quantity = quantity;
+                    cart.products[itemIndex] = productItem;
+                } else {
+                    //product does not exists in cart, add new item
+                    cart.products.push({
+                        productId,
+                        quantity,
+                        name,
+                        price
+                    });
+                }
+                cart = await cart.save();
+                return res.render("cart", {
+                    cart: cart
+                });
+                // return res.status(201).send(cart);
+            } else {
+                //no cart for user, create new cart
+                const newCart = await Cart.create({
+                    userId,
+                    products: [{
+                        productId,
+                        quantity,
+                        name,
+                        price
+                    }]
+                });
+
+                res.render("cart", {
+                    cart: newCart
+                });
+                // return res.status(201).send(newCart);
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    }
+
+    // res.render("Cart");
+
+    // User.findOneAndUpdate({ googleId: "112129154840141555781" }, { phone: 7048105061 })
+    else {
+        res.redirect("/login");
+    }
 })
 
 app.get("/uploadData", function (req, res) {
@@ -652,7 +751,7 @@ app.post("/login", (req, res) => {
                                     if (error) {
                                         console.log(error);
                                     } else {
-                                        res.redirect("/");
+                                        res.redirect("/cart");
                                     }
                                 });
                             }
