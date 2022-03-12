@@ -3,7 +3,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
-const { stringify } = require("nodemon/lib/utils");
+const {
+    stringify
+} = require("nodemon/lib/utils");
 const multer = require("multer");
 const mime = require('mime');
 // const upload = multer({ dest: 'uploads/' })
@@ -23,7 +25,9 @@ const app = express();
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 
 // app.use(express.static(__dirname+"./public/"))
@@ -38,8 +42,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 var med = mongoose.createConnection(
-    process.env.MONGO_CONNECTION_URL_PRODUCTSDB,
-    { useNewUrlParser: true }
+    process.env.MONGO_CONNECTION_URL_PRODUCTSDB, {
+    useNewUrlParser: true
+}
 );
 
 var usr = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_USERSDB, {
@@ -50,42 +55,41 @@ var cart = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_CART, {
     useNewUrlParser: true
 });
 
-const categorie = [
-    {
-        name: "Hair Care",
-        linkName: "hair_care",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Skin Care",
-        linkName: "skin_care",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Covid",
-        linkName: "covid",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Trituration",
-        linkName: "trituration",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Dilutions",
-        linkName: "dilutions",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Mother tincture",
-        linkName: "mother_tincture",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    },
-    {
-        name: "Baby essentials",
-        linkName: "baby_essentials",
-        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-    }
+const categorie = [{
+    name: "Hair Care",
+    linkName: "hair_care",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Skin Care",
+    linkName: "skin_care",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Covid",
+    linkName: "covid",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Trituration",
+    linkName: "trituration",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Dilutions",
+    linkName: "dilutions",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Mother tincture",
+    linkName: "mother_tincture",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+},
+{
+    name: "Baby essentials",
+    linkName: "baby_essentials",
+    img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+}
 ]
 
 const productsSchema = {
@@ -156,9 +160,9 @@ const CartSchema = new mongoose.Schema(
             type: Date,
             default: Date.now
         }
-    },
-    { timestamps: true }
-);
+    }, {
+    timestamps: true
+});
 
 const Cart = cart.model("Cart", CartSchema);
 
@@ -261,7 +265,11 @@ passport.use(new GoogleStrategy({
 
     function (request, accessToken, refreshToken, profile, done) {
         console.log(profile);
-        User.findOrCreate({ googleId: profile.id, username: profile.displayName, profImg: profile.photos[0].value }, function (err, user) {
+        User.findOrCreate({
+            googleId: profile.id,
+            username: profile.displayName,
+            profImg: profile.photos[0].value
+        }, function (err, user) {
             return done(err, user);
         });
     }
@@ -270,7 +278,9 @@ passport.use(new GoogleStrategy({
 const Hairitems = [];
 
 app.get("/", function (req, res) {
-    res.render("homepageNEW", { category: categorie });
+    res.render("homepageNEW", {
+        category: categorie
+    });
     // Product.find({ tag: "Haircare" }, function (err, results) {
     //     if (err) {
     //         console.log(err);
@@ -281,10 +291,14 @@ app.get("/", function (req, res) {
 });
 
 app.get('/auth/google',
-    passport.authenticate('google', { scope: ["profile"] }));
+    passport.authenticate('google', {
+        scope: ["profile"]
+    }));
 
 app.get('/auth/google/homeokart',
-    passport.authenticate('google', { failureRedirect: '/login' }),
+    passport.authenticate('google', {
+        failureRedirect: '/login'
+    }),
     function (req, res) {
         // Successful authentication, redirect home.
 
@@ -372,13 +386,14 @@ app.post("/register", (req, res) => {
     const name = req.body.username
     const email = req.body.usermail;
     const password = req.body.password
-    User.find({ usermail: email }, function (err, docs) {
+    User.find({
+        usermail: email
+    }, function (err, docs) {
         if (docs.length === 0) {
-            User.register(
-                {
-                    username: name,
-                    usermail: email,
-                },
+            User.register({
+                username: name,
+                usermail: email,
+            },
                 password,
                 function (err, user) {
                     if (err) {
@@ -418,12 +433,16 @@ app.get("/cart", async function (req, res) {
         const userId = req.user.id;
 
         try {
-            let cart = await Cart.findOne({ userId });
-            // console.log("Hey Cart", cart)
+            let cart = await Cart.findOne({
+                userId
+            });
+            console.log("Hey Cart", cart)
             if (cart) {
                 //cart exists for user
 
-                return res.render("cart", { cart: cart });
+                return res.render("cart", {
+                    cart: cart
+                });
                 // return res.status(201).send(cart);
             } else {
                 //no cart for user, create new cart
@@ -432,7 +451,9 @@ app.get("/cart", async function (req, res) {
                 //     products: [{ productId, quantity, name, price }]
                 // });
 
-                res.render("cart", { cart: cart });
+                res.render("cart", {
+                    cart: cart
+                });
                 // res.render("cart", { cart: newCart });
                 // return res.status(201).send(newCart);
             }
@@ -441,8 +462,7 @@ app.get("/cart", async function (req, res) {
             res.status(500).send("Something went wrong");
         }
 
-    }
-    else {
+    } else {
         res.redirect("/login")
     }
 })
@@ -467,7 +487,9 @@ app.get("/cart/:productid", function (req, res) {
             console.log("Image Paths", img)
             const productId = id;
             try {
-                let cart = await Cart.findOne({ userId });
+                let cart = await Cart.findOne({
+                    userId
+                });
 
                 if (cart) {
                     //cart exists for user
@@ -484,7 +506,9 @@ app.get("/cart/:productid", function (req, res) {
                         cart.products.push({ productId, quantity, name, price, img });
                     }
                     cart = await cart.save();
-                    return res.render("cart", { cart: cart });
+                    return res.render("cart", {
+                        cart: cart
+                    });
                     // return res.status(201).send(cart);
                 } else {
                     //no cart for user, create new cart
@@ -493,7 +517,9 @@ app.get("/cart/:productid", function (req, res) {
                         products: [{ productId, quantity, name, price, img }]
                     });
 
-                    res.render("cart", { cart: newCart });
+                    res.render("cart", {
+                        cart: newCart
+                    });
                     // return res.status(201).send(newCart);
                 }
             } catch (err) {
@@ -643,7 +669,9 @@ app.post("/cart", async function (req, res) {
         // console.log("userId", req);
 
         try {
-            let cart = await Cart.findOne({ userId });
+            let cart = await Cart.findOne({
+                userId
+            });
 
             if (cart) {
                 //cart exists for user
@@ -656,19 +684,33 @@ app.post("/cart", async function (req, res) {
                     cart.products[itemIndex] = productItem;
                 } else {
                     //product does not exists in cart, add new item
-                    cart.products.push({ productId, quantity, name, price });
+                    cart.products.push({
+                        productId,
+                        quantity,
+                        name,
+                        price
+                    });
                 }
                 cart = await cart.save();
-                return res.render("cart", { cart: cart });
+                return res.render("cart", {
+                    cart: cart
+                });
                 // return res.status(201).send(cart);
             } else {
                 //no cart for user, create new cart
                 const newCart = await Cart.create({
                     userId,
-                    products: [{ productId, quantity, name, price }]
+                    products: [{
+                        productId,
+                        quantity,
+                        name,
+                        price
+                    }]
                 });
 
-                res.render("cart", { cart: newCart });
+                res.render("cart", {
+                    cart: newCart
+                });
                 // return res.status(201).send(newCart);
             }
         } catch (err) {
@@ -695,13 +737,15 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         let count = req.files.length;
-        let productName = req.body.productName.replace(" ", "-");
+        let productName = req.body.productName.replaceAll(" ", "-");
         let ext = file.originalname.substr(file.originalname.lastIndexOf("."));
         cb(null, productName + "-" + Date.now() + "-" + count + ext);
     }
 });
 
-var upload = multer({ storage: storage });
+var upload = multer({
+    storage: storage
+});
 
 app.post("/uploadData", upload.array("productImage"), (req, res) => {
     // console.log(req.files);
@@ -743,7 +787,9 @@ app.post("/uploadData", upload.array("productImage"), (req, res) => {
 app.get("/products/:category", function (req, res) {
     const catTag = req.params.category;
     console.log(catTag);
-    Product.find({ tag: catTag }, function (err, results) {
+    Product.find({
+        tag: catTag
+    }, function (err, results) {
         if (err) {
             console.log(err);
         } else {
@@ -798,7 +844,9 @@ app.get("/product/:prdid", function (req, res) {
 
 app.post("/login", (req, res) => {
     const email = req.body.email;
-    User.findOne({ usermail: email }, function (err, u) {
+    User.findOne({
+        usermail: email
+    }, function (err, u) {
         if (err) {
             console.log(err);
         } else {
@@ -839,15 +887,13 @@ app.get("/logout", function (req, res) {
     req.session.destroy(function (err) {
         if (err) {
             console.log(err)
-        }
-        else {
+        } else {
             res.redirect("/");
         }
     })
 
 })
 
-app.listen(PORT, (req, res) => {
-    console.log("Server started on http://localhost:" + PORT);
+app.listen(3000, (req, res) => {
+    console.log("Server started on http://localhost:");
 });
-

@@ -67,7 +67,7 @@ nav {
     justify-content: space-between;
 }
 
-.flex-around .d-flex {}
+/* .flex-around .d-flex {} */
 
 .flex-around hr {
     display: none;
