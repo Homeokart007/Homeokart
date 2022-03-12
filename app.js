@@ -303,8 +303,8 @@ app.get('/auth/google/homeokart',
     }),
     function (req, res) {
         // Successful authentication, redirect home.
-
-        res.redirect('..');
+        res.redirect('/');
+        // res.redirect('..');
     });
 
 
@@ -443,7 +443,8 @@ app.get("/cart", async function (req, res) {
                 //cart exists for user
 
                 return res.render("cart", {
-                    cart: cart
+                    cart: cart,
+                    isAuthenticated: req.isAuthenticated()
                 });
                 // return res.status(201).send(cart);
             } else {
@@ -454,7 +455,8 @@ app.get("/cart", async function (req, res) {
                 // });
 
                 res.render("cart", {
-                    cart: cart
+                    cart: cart,
+                    isAuthenticated: req.isAuthenticated()
                 });
                 // res.render("cart", { cart: newCart });
                 // return res.status(201).send(newCart);
@@ -509,7 +511,8 @@ app.get("/cart/:productid", function (req, res) {
                     }
                     cart = await cart.save();
                     return res.render("cart", {
-                        cart: cart
+                        cart: cart,
+                        isAuthenticated: req.isAuthenticated()
                     });
                     // return res.status(201).send(cart);
                 } else {
@@ -520,7 +523,8 @@ app.get("/cart/:productid", function (req, res) {
                     });
 
                     res.render("cart", {
-                        cart: newCart
+                        cart: newCart,
+                        isAuthenticated: req.isAuthenticated()
                     });
                     // return res.status(201).send(newCart);
                 }
@@ -695,7 +699,8 @@ app.post("/cart", async function (req, res) {
                 }
                 cart = await cart.save();
                 return res.render("cart", {
-                    cart: cart
+                    cart: cart,
+                    isAuthenticated: req.isAuthenticated()
                 });
                 // return res.status(201).send(cart);
             } else {
@@ -711,7 +716,8 @@ app.post("/cart", async function (req, res) {
                 });
 
                 res.render("cart", {
-                    cart: newCart
+                    cart: newCart,
+                    isAuthenticated: req.isAuthenticated()
                 });
                 // return res.status(201).send(newCart);
             }
