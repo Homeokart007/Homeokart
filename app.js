@@ -3,7 +3,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
-const { stringify } = require("nodemon/lib/utils");
+const {
+    stringify
+} = require("nodemon/lib/utils");
 const multer = require("multer");
 const mime = require('mime');
 // const upload = multer({ dest: 'uploads/' })
@@ -22,7 +24,9 @@ const app = express();
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 
 // app.use(express.static(__dirname+"./public/"))
@@ -37,8 +41,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 var med = mongoose.createConnection(
-    process.env.MONGO_CONNECTION_URL_PRODUCTSDB,
-    { useNewUrlParser: true }
+    process.env.MONGO_CONNECTION_URL_PRODUCTSDB, {
+        useNewUrlParser: true
+    }
 );
 
 var usr = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_USERSDB, {
@@ -49,8 +54,7 @@ var cart = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_CART, {
     useNewUrlParser: true
 });
 
-const categorie = [
-    {
+const categorie = [{
         name: "Hair Care",
         linkName: "hair_care",
         img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
@@ -129,31 +133,28 @@ const productsSchema = {
 
 const Product = med.model("Product", productsSchema);
 
-const CartSchema = new mongoose.Schema(
-    {
-        userId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        products: [
-            {
-                productId: String,
-                quantity: Number,
-                name: String,
-                price: Number
-            }
-        ],
-        active: {
-            type: Boolean,
-            default: true
-        },
-        modifiedOn: {
-            type: Date,
-            default: Date.now
-        }
+const CartSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     },
-    { timestamps: true }
-);
+    products: [{
+        productId: String,
+        quantity: Number,
+        name: String,
+        price: Number
+    }],
+    active: {
+        type: Boolean,
+        default: true
+    },
+    modifiedOn: {
+        type: Date,
+        default: Date.now
+    }
+}, {
+    timestamps: true
+});
 
 const Cart = cart.model("Cart", CartSchema);
 
@@ -247,16 +248,20 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/homeokart",
-    // userProfileURL: "https://www.googleapis.com/oauth/v3/userinfo",
-    passReqToCallback: true
-},
+        clientID: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        callbackURL: "http://localhost:3000/auth/google/homeokart",
+        // userProfileURL: "https://www.googleapis.com/oauth/v3/userinfo",
+        passReqToCallback: true
+    },
 
     function (request, accessToken, refreshToken, profile, done) {
         console.log(profile);
-        User.findOrCreate({ googleId: profile.id, username: profile.displayName, profImg: profile.photos[0].value }, function (err, user) {
+        User.findOrCreate({
+            googleId: profile.id,
+            username: profile.displayName,
+            profImg: profile.photos[0].value
+        }, function (err, user) {
             return done(err, user);
         });
     }
@@ -265,7 +270,9 @@ passport.use(new GoogleStrategy({
 const Hairitems = [];
 
 app.get("/", function (req, res) {
-    res.render("homepage", { category: categorie });
+    res.render("homepage", {
+        category: categorie
+    });
     // Product.find({ tag: "Haircare" }, function (err, results) {
     //     if (err) {
     //         console.log(err);
@@ -276,10 +283,14 @@ app.get("/", function (req, res) {
 });
 
 app.get('/auth/google',
-    passport.authenticate('google', { scope: ["profile"] }));
+    passport.authenticate('google', {
+        scope: ["profile"]
+    }));
 
 app.get('/auth/google/homeokart',
-    passport.authenticate('google', { failureRedirect: '/login' }),
+    passport.authenticate('google', {
+        failureRedirect: '/login'
+    }),
     function (req, res) {
         // Successful authentication, redirect home.
 
@@ -366,10 +377,11 @@ app.get("/register", function (req, res) {
 app.post("/register", (req, res) => {
     const email = req.body.email;
     const password = req.body.password
-    User.find({ email: email }, function (err, docs) {
+    User.find({
+        email: email
+    }, function (err, docs) {
         if (docs.length === 0) {
-            User.register(
-                {
+            User.register({
                     username: email,
                 },
                 password,
@@ -407,8 +419,7 @@ app.get("/product", function (req, res) {
 app.get("/cart", function (req, res) {
     if (req.isAuthenticated()) {
         res.render("cart");
-    }
-    else {
+    } else {
         res.redirect("/login")
     }
 })
@@ -428,11 +439,18 @@ app.get("/cart/:productid", function (req, res) {
                 console.log("Found Results inside cart block: ", results);
 
             }
-            const { id, quantity = 1, name, price } = results;
+            const {
+                id,
+                quantity = 1,
+                name,
+                price
+            } = results;
 
             const productId = id;
             try {
-                let cart = await Cart.findOne({ userId });
+                let cart = await Cart.findOne({
+                    userId
+                });
 
                 if (cart) {
                     //cart exists for user
@@ -445,19 +463,33 @@ app.get("/cart/:productid", function (req, res) {
                         cart.products[itemIndex] = productItem;
                     } else {
                         //product does not exists in cart, add new item
-                        cart.products.push({ productId, quantity, name, price });
+                        cart.products.push({
+                            productId,
+                            quantity,
+                            name,
+                            price
+                        });
                     }
                     cart = await cart.save();
-                    return res.render("cart", { cart: cart });
+                    return res.render("cart", {
+                        cart: cart
+                    });
                     // return res.status(201).send(cart);
                 } else {
                     //no cart for user, create new cart
                     const newCart = await Cart.create({
                         userId,
-                        products: [{ productId, quantity, name, price }]
+                        products: [{
+                            productId,
+                            quantity,
+                            name,
+                            price
+                        }]
                     });
 
-                    res.render("cart", { cart: newCart });
+                    res.render("cart", {
+                        cart: newCart
+                    });
                     // return res.status(201).send(newCart);
                 }
             } catch (err) {
@@ -490,13 +522,15 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         let count = req.files.length;
-        let productName = req.body.productName.replace(" ", "-");
+        let productName = req.body.productName.replaceAll(" ", "-");
         let ext = file.originalname.substr(file.originalname.lastIndexOf("."));
         cb(null, productName + "-" + Date.now() + "-" + count + ext);
     }
 });
 
-var upload = multer({ storage: storage });
+var upload = multer({
+    storage: storage
+});
 
 app.post("/uploadData", upload.array("productImage"), (req, res) => {
     // console.log(req.files);
@@ -538,7 +572,9 @@ app.post("/uploadData", upload.array("productImage"), (req, res) => {
 app.get("/products/:category", function (req, res) {
     const catTag = req.params.category;
     console.log(catTag);
-    Product.find({ tag: catTag }, function (err, results) {
+    Product.find({
+        tag: catTag
+    }, function (err, results) {
         if (err) {
             console.log(err);
         } else {
@@ -593,7 +629,9 @@ app.get("/product/:prdid", function (req, res) {
 
 app.post("/login", (req, res) => {
     const email = req.body.email;
-    User.findOne({ usermail: email }, function (err, u) {
+    User.findOne({
+        usermail: email
+    }, function (err, u) {
         if (err) {
             console.log(err);
         } else {
@@ -634,8 +672,7 @@ app.get("/logout", function (req, res) {
     req.session.destroy(function (err) {
         if (err) {
             console.log(err)
-        }
-        else {
+        } else {
             res.redirect("/");
         }
     })
@@ -645,4 +682,3 @@ app.get("/logout", function (req, res) {
 app.listen(3000, (req, res) => {
     console.log("Server started on http://localhost:");
 });
-
