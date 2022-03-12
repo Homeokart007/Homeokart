@@ -71,7 +71,7 @@
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
 
-            <h1 class="logo me-auto"><a href="homepage.html">HomeoKart</a></h1>
+            <h1 class="logo me-auto"><a href="/">HomeoKart</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -90,13 +90,14 @@
                             <li><a href="#">Drop Down 4</a></li>
                         </ul>
                     </li>
+
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
 
-            <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span>
-                Appointment</a>
+            <a href=<%= isAuthenticated ? "/logout" : "/login" %>
+                class="appointment-btn scrollto"><%= isAuthenticated ? "Logout" : "Login" %></a>
 
         </div>
     </header><!-- End Header -->

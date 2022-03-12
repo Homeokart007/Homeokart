@@ -264,7 +264,7 @@ passport.use(new GoogleStrategy({
 },
 
     function (request, accessToken, refreshToken, profile, done) {
-        console.log(profile);
+        // console.log(profile);
         User.findOrCreate({
             googleId: profile.id,
             username: profile.displayName,
@@ -277,9 +277,11 @@ passport.use(new GoogleStrategy({
 
 const Hairitems = [];
 
-app.get("/", function (req, res) {
+app.get("/", async function (req, res) {
+    console.log(req.isAuthenticated());
     res.render("homepageNEW", {
-        category: categorie
+        category: categorie,
+        isAuthenticated: req.isAuthenticated()
     });
     // Product.find({ tag: "Haircare" }, function (err, results) {
     //     if (err) {
@@ -417,7 +419,7 @@ app.post("/register", (req, res) => {
                 }
             );
         } else {
-            res.send("The accout already exists!");
+            res.redirect("/login");
         }
     });
 });
@@ -429,7 +431,7 @@ app.get("/product", function (req, res) {
 app.get("/cart", async function (req, res) {
     if (req.isAuthenticated()) {
         // console.log("Inside cart", req);
-        console.log("Inside cart", req.user.id);
+        // console.log("Inside cart", req.user.id);
         const userId = req.user.id;
 
         try {
@@ -867,7 +869,7 @@ app.post("/login", (req, res) => {
                                     if (error) {
                                         console.log(error);
                                     } else {
-                                        res.redirect("/cart");
+                                        res.redirect("/");
                                     }
                                 });
                             }
