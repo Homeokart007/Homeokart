@@ -881,6 +881,10 @@ app.post("/login", (req, res) => {
     });
 });
 
+app.get("/checkout", function (req, res) {
+    res.render("checkout");
+})
+
 app.get("/logout", function (req, res) {
     console.log("Logged out")
     // req.logout();
@@ -894,6 +898,6 @@ app.get("/logout", function (req, res) {
 
 })
 
-app.listen(3000, (req, res) => {
-    console.log("Server started on http://localhost:");
+app.listen(PORT, (req, res) => {
+    console.log("Server started on http://localhost:" + PORT);
 });
