@@ -126,5 +126,81 @@ h2 {
 .cnt {
     display: flex;
     flex-direction: row;
+    margin: 150px auto;
+    justify-content: space-evenly;
     /* flex: none !important; */
+}
+
+.crt {
+    background-color: #fff;
+    /* width: fit-content; */
+    height: fit-content;
+    padding: 10px;
+    width: 60%;
+}
+
+.crd {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.crd-img {
+    width: 30%;
+    margin: auto;
+}
+
+.img-fluid {
+    width: 200px;
+    height: 200px;
+}
+
+.crd-dtl {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding-left: 10px;
+}
+
+.crd-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    /* margin: auto; */
+}
+
+.prd-name {
+    width: 60%;
+    height: fit-content;
+}
+
+.crd-bottom {
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+    /* margin: auto; */
+    /* justify-content: space-evenly; */
+}
+
+.crd-bottom div {
+    padding-right: 20px;
+    /* background-color: aliceblue;
+    border-radius: 20px; */
+}
+.prc {
+    padding-left: 20px;
+}
+
+.frm {
+    width: fit-content;
+    padding: 5px;
+    width: 30%;
+}
+
+.frm-cnt {
+    background-color: #fff;
+}
+
+.frm-sec {
+    padding: 16px;
 }
