@@ -23,33 +23,28 @@
 </head>
 
 <body class="bg-light">
-    <form action="/cart" method="POST">
+    <!-- <form action="/cart" method="POST"> -->
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-10 col-11 mx-auto">
+        <div class="row here">
+            <div class="col-md-10 col-11 ">
                 <div class="row mt-5 gx-3">
                     <!-- left side div -->
                     
-                    <div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-5 shadow">
+                    <div class="col-md-12 col-lg-8 col-11  main_cart mb-lg-0 mb-5 shadow">
                         
                         <div class="card p-4">
                             <h2 class="py-4 font-weight-bold">Cart (<%= cart.products.length %> items)</h2>
                             <div class="row">
-                               
 
-
-
-
-                                
                                 <% cart.products.forEach(function(product){ %>
 
                                      <!-- cart images div -->
                                 <div
-                                class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center shadow product_img">
+                                class="col-md-5 col-11  bg-light d-flex justify-content-center align-items-center shadow product_img">
                                 <img src="Images/homeopathy2.jpg" class="img-fluid" alt="cart img">
                             </div>
                                     <!-- cart product details -->
-                                <div class="col-md-7 col-11 mx-auto px-4 mt-2">
+                                <div class="col-md-7 col-11  px-4 mt-2">
                                     <div class="row">
                                         <!-- product name  -->
                                         <div class="col-6 card-title">
@@ -61,17 +56,21 @@
                                         <div class="col-6">
                                             <ul class="pagination justify-content-end set_quantity">
                                                 <li class="page-item">
-                                                    <button class="page-link "
+                                                    <a href="/cart/<%=product.productId%>/decrqty"><button class="page-link "
                                                         onclick="decreaseNumber('textbox','itemval')">
                                                         <i class="fas fa-minus"></i> </button>
+                                                    </a>
                                                 </li>
                                                 <li class="page-item"><input type="text" name="" class="page-link"
                                                         value="<%=product.quantity%>" id="textbox">
                                                 </li>
                                                 <li class="page-item">
-                                                    <button class="page-link"
+                                                    <a href="/cart/<%=product.productId%>/incrqty">
+                                                        <button class="page-link"
                                                         onclick="increaseNumber('textbox','itemval')"> <i
                                                             class="fas fa-plus"></i></button>
+                                                        </a>
+                                                        
                                                 </li>
                                             </ul>
                                         </div>
@@ -79,7 +78,7 @@
                                     <!-- //remover move and price -->
                                     <div class="row">
                                         <div class="col-8 d-flex justify-content-between remove_wish">
-                                            <p><i class="fas fa-trash-alt"></i>REMOVE ITEM</p>
+                                            <a href="/cart/<%=product.productId%>/remove"><p><i class="fas fa-trash-alt"></i>REMOVE ITEM</p></a>
                                             <p><i class="fas fa-heart"></i>MOVE TO WISH LIST </p>
                                         </div>
                                         <div class="col-4 d-flex justify-content-end ">
@@ -92,14 +91,14 @@
                   
                     <%})%>
                         <hr />
-                        
+                        <form action="/cart" method="POST">
                     <!-- right side div -->
                     <div class="col-md-12 col-lg-4 col-11 mx-auto mt-lg-0 mt-md-5">
                         <div class="right_side p-3 shadow bg-white">
                             <h2 class="product_name mb-5">The Total Amount Of</h2>
                             <div class="price_indiv d-flex justify-content-between">
                                 <p>Product amount</p>
-                                <p>₹<span id="product_total_amt">240.00</span></p>
+                                <p>₹<span id="product_total_amt">100</span></p>
                             </div>
                             <div class="price_indiv d-flex justify-content-between">
                                 <p>Shipping Charge</p>
@@ -146,11 +145,12 @@
                             </div>
                         </div>
                     </div>
+                </form>
                 </div>
             </div>
         </div>
     </div>
-</form>
+<!-- </form> -->
     <!-- Optional JavaScript -->
     <!-- Popper.js first, then Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
@@ -166,6 +166,7 @@
         var total_cart_amt = document.getElementById('total_cart_amt');
         var discountCode = document.getElementById('discount_code1');
         const decreaseNumber = (incdec, itemprice) => {
+            // incdec.preventDefault();
             var itemval = document.getElementById(incdec);
             var itemprice = document.getElementById(itemprice);
             console.log(itemprice.innerHTML);
@@ -184,6 +185,7 @@
             }
         }
         const increaseNumber = (incdec, itemprice) => {
+            // incdec.preventDefault();
             var itemval = document.getElementById(incdec);
             var itemprice = document.getElementById(itemprice);
             // console.log(itemval.value);

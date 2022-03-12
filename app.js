@@ -141,7 +141,11 @@ const CartSchema = new mongoose.Schema(
                 productId: String,
                 quantity: Number,
                 name: String,
-                price: Number
+                price: Number,
+                img: {
+                    path: Array,
+                    contentType: String
+                }
             }
         ],
         active: {
@@ -311,7 +315,7 @@ app.get("/categories", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log("Found Results: ", results);
+            // console.log("Found Results: ", results);
             res.render("categories", {
                 allProducts: results
             });
@@ -409,13 +413,13 @@ app.get("/product", function (req, res) {
 
 app.get("/cart", async function (req, res) {
     if (req.isAuthenticated()) {
-        console.log("Inside cart", req);
+        // console.log("Inside cart", req);
         console.log("Inside cart", req.user.id);
         const userId = req.user.id;
 
         try {
             let cart = await Cart.findOne({ userId });
-            console.log("Hey Cart", cart)
+            // console.log("Hey Cart", cart)
             if (cart) {
                 //cart exists for user
 
@@ -459,8 +463,8 @@ app.get("/cart/:productid", function (req, res) {
                 console.log("Found Results inside cart block: ", results);
 
             }
-            const { id, quantity = 1, name, price } = results;
-
+            const { img, id, quantity = 1, name, price } = results;
+            console.log("Image Paths", img)
             const productId = id;
             try {
                 let cart = await Cart.findOne({ userId });
@@ -469,6 +473,7 @@ app.get("/cart/:productid", function (req, res) {
                     //cart exists for user
                     let itemIndex = cart.products.findIndex(p => p.productId == productId);
 
+                    console.log("item Index", itemIndex);
                     if (itemIndex > -1) {
                         //product exists in the cart, update the quantity
                         let productItem = cart.products[itemIndex];
@@ -476,7 +481,7 @@ app.get("/cart/:productid", function (req, res) {
                         cart.products[itemIndex] = productItem;
                     } else {
                         //product does not exists in cart, add new item
-                        cart.products.push({ productId, quantity, name, price });
+                        cart.products.push({ productId, quantity, name, price, img });
                     }
                     cart = await cart.save();
                     return res.render("cart", { cart: cart });
@@ -485,7 +490,7 @@ app.get("/cart/:productid", function (req, res) {
                     //no cart for user, create new cart
                     const newCart = await Cart.create({
                         userId,
-                        products: [{ productId, quantity, name, price }]
+                        products: [{ productId, quantity, name, price, img }]
                     });
 
                     res.render("cart", { cart: newCart });
@@ -506,6 +511,129 @@ app.get("/cart/:productid", function (req, res) {
     }
 
 });
+
+app.get("/cart/:id/incrqty", async function (req, res) {
+    console.log("Here I am");
+    const productId = req.params.id;
+    console.log(productId);
+
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        console.log(userId);
+
+        try {
+            console.log("Enter in try");
+            let cart = await Cart.findOne({ userId });
+            console.log(cart);
+            console.log(cart.products);
+            if (cart) {
+                //cart exists for user
+                // let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                console.log("This", itemIndex);
+
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    let productItem = cart.products[itemIndex];
+                    productItem.quantity = productItem.quantity + 1;
+                    cart.products[itemIndex] = productItem;
+                }
+                cart = await cart.save();
+                return res.render("cart", { cart: cart });
+            }
+            else {
+                console.log("Cart doesnot exists");
+            }
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    }
+    else {
+        res.redirect("/login");
+    }
+})
+
+app.get("/cart/:id/decrqty", async function (req, res) {
+    console.log("Here I am");
+    const productId = req.params.id;
+    console.log(productId);
+
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        console.log(userId);
+
+        try {
+            console.log("Enter in try");
+            let cart = await Cart.findOne({ userId });
+            console.log(cart);
+            console.log(cart.products);
+            if (cart) {
+                //cart exists for user
+                // let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                console.log("This", itemIndex);
+
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    let productItem = cart.products[itemIndex];
+                    productItem.quantity = productItem.quantity - 1;
+                    cart.products[itemIndex] = productItem;
+                }
+                cart = await cart.save();
+                return res.render("cart", { cart: cart });
+            }
+            else {
+                console.log("Cart doesnot exists");
+            }
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    }
+    else {
+        res.redirect("/login");
+    }
+})
+
+
+app.get("/cart/:id/remove", async function (req, res) {
+    console.log("Removed")
+    const productId = req.params.id;
+    if (req.isAuthenticated()) {
+
+        const userId = req.user.id;
+
+        try {
+            let cart = await Cart.findOne({ userId });
+            console.log(cart);
+            // console.log(cart.products)
+            if (cart) {
+                //cart exists for user
+                let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                console.log(itemIndex);
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    cart.products.splice(itemIndex, 1);
+                }
+                cart = await cart.save();
+                return res.render("cart", { cart: cart });
+                // return res.status(201).send(cart);
+            } else {
+                //no cart for user, create new cart
+                console.log("No cart for user");
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    }
+    else {
+        res.redirect("/login");
+    }
+})
 
 app.post("/cart", async function (req, res) {
     if (req.isAuthenticated()) {
@@ -545,7 +673,7 @@ app.post("/cart", async function (req, res) {
             }
         } catch (err) {
             console.log(err);
-            res.status(500).send("Something went wrong");
+            res.status(500).send("Something went wrongaaaaa");
         }
     }
 
@@ -619,7 +747,7 @@ app.get("/products/:category", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log("Found Results: ", results);
+            // console.log("Found Results: ", results);
             res.render("categories", {
                 allProducts: results
             });
@@ -634,7 +762,7 @@ app.get("/product/:prdid", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log("Found Results: ", results);
+            // console.log("Found Results: ", results);
             res.render("product", {
                 product: results
             });
