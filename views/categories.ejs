@@ -155,22 +155,27 @@
                         <div class="row">
                             <!-- <div class="product-container"> -->
                             <% allProducts.forEach(function(prd) { %>
-                            <%console.log("Hello",prd._id)%>
-                            <a href="/product/<%= prd._id %>" class="col-3 product-card">
-                                <p class="product-discount">20% off</p>
-                                <div class="product-card-img">
-                                    <img src="<%=prd.img.path[0]%>" % /> alt="">
+                            <div class="col-lg-3 col-md-6 col-sm-12 product-card">
+                                <div class="product-card-inner">
+                                    <a href="/product/<%= prd._id %>">
+                                        <p class="product-discount">20% off</p>
+                                        <div class="product-card-img">
+                                            <img src="<%=prd.img.path[0]%>" alt="">
+                                        </div>
+
+                                        <p class="product-brand"><%= prd.man_name %></p>
+                                        <h5><%= prd.name.slice(0,20) %><%= prd.name.length >20 ? "..." : "" %> </h5>
+                                        <p class="product-price">
+                                            <span class="new-price">Rs. <%= prd.price %></span>
+                                            <del>₹3,195</del>
+                                        </p>
+
+                                    </a>
+                                    <button type="button" class="btn btn-primary">
+                                        ADD TO CART
+                                    </button>
                                 </div>
-                                <p class="product-brand"><%= prd.man_name %></p>
-                                <h5><%= prd.name %></h5>
-                                <p class="product-price">
-                                    <span class="new-price">Rs. <%= prd.price %></span>
-                                    <del>₹3,195</del>
-                                </p>
-                                <button type="button" class="btn btn-primary">
-                                    ADD TO CART
-                                </button>
-                            </a>
+                            </div>
                             <% }); %>
                             <!-- </div> -->
                         </div>
