@@ -25,149 +25,153 @@ const app = express();
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(
-	bodyParser.urlencoded({
-		extended: true
-	})
+    bodyParser.urlencoded({
+        extended: true
+    })
 );
 
 // app.use(express.static(__dirname+"./public/"))
 
 app.use(
-	session({
-		secret: "secret",
-		resave: false,
-		saveUninitialized: false
-	})
+    session({
+        secret: "secret",
+        resave: false,
+        saveUninitialized: false
+    })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 var med = mongoose.createConnection(
-	process.env.MONGO_CONNECTION_URL_PRODUCTSDB,
-	{
-		useNewUrlParser: true
-	}
+    process.env.MONGO_CONNECTION_URL_PRODUCTSDB,
+    {
+        useNewUrlParser: true
+    }
 );
 
 var usr = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_USERSDB, {
-	useNewUrlParser: true
+    useNewUrlParser: true
 });
 
 var cart = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_CART, {
-	useNewUrlParser: true
+    useNewUrlParser: true
 });
 
 const categorie = [
-	{
-		name: "Hair Care",
-		linkName: "hair_care",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-	},
-	{
-		name: "Skin Care",
-		linkName: "skin_care",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-	},
-	{
-		name: "Covid",
-		linkName: "covid",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-	},
-	{
-		name: "Trituration",
-		linkName: "trituration",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-	},
-	{
-		name: "Dilutions",
-		linkName: "dilutions",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-	},
-	{
-		name: "Mother tincture",
-		linkName: "mother_tincture",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-	},
-	{
-		name: "Baby essentials",
-		linkName: "baby_essentials",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-	}
+    {
+        name: "Hair Care",
+        linkName: "hair_care",
+        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+    },
+    {
+        name: "Skin Care",
+        linkName: "skin_care",
+        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+    },
+    {
+        name: "Covid",
+        linkName: "covid",
+        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+    },
+    {
+        name: "Trituration",
+        linkName: "trituration",
+        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+    },
+    {
+        name: "Dilutions",
+        linkName: "dilutions",
+        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+    },
+    {
+        name: "Mother tincture",
+        linkName: "mother_tincture",
+        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+    },
+    {
+        name: "Baby essentials",
+        linkName: "baby_essentials",
+        img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+    }
 ];
 
 const productsSchema = {
-	name: {
-		type: String,
-		required: true
-	},
-	description: {
-		type: String,
-		required: true
-	},
-	img: {
-		path: Array,
-		contentType: String
-	},
-	price: {
-		type: String,
-		required: true
-	},
-	tag: {
-		type: Array,
-		required: true
-	},
-	ratings: Number,
-	origin: {
-		type: String,
-		required: true
-	},
-	man_name: {
-		type: String,
-		required: true
-	},
-	man_add: {
-		type: String,
-		required: true
-	},
-	ingred: {
-		type: String,
-		required: true
-	}
+    name: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    img: {
+        path: Array,
+        contentType: String
+    },
+    price: {
+        type: String,
+        required: true
+    },
+    tag: {
+        type: Array,
+        required: true
+    },
+    ratings: Number,
+    origin: {
+        type: String,
+        required: true
+    },
+    man_name: {
+        type: String,
+        required: true
+    },
+    man_add: {
+        type: String,
+        required: true
+    },
+    ingred: {
+        type: String,
+        required: true
+    }
 };
 
 const Product = med.model("Product", productsSchema);
 
 const CartSchema = new mongoose.Schema(
-	{
-		userId: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User"
-		},
-		products: [
-			{
-				productId: String,
-				quantity: Number,
-				name: String,
-				price: Number,
-				img: {
-					path: Array,
-					contentType: String
-				}
-			}
-		],
-		active: {
-			type: Boolean,
-			default: true
-		},
-		modifiedOn: {
-			type: Date,
-			default: Date.now
-		}
-	},
-	{
-		timestamps: true
-	}
+    {
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        products: [
+            {
+                productId: String,
+                quantity: Number,
+                name: String,
+                price: Number,
+                img: {
+                    path: Array,
+                    contentType: String
+                }
+            }
+        ],
+        totalPrice: {
+            type: Number,
+            default: 0
+        },
+        active: {
+            type: Boolean,
+            default: true
+        },
+        modifiedOn: {
+            type: Date,
+            default: Date.now
+        }
+    },
+    {
+        timestamps: true
+    }
 );
 
 const Cart = cart.model("Cart", CartSchema);
@@ -180,68 +184,68 @@ const Cart = cart.model("Cart", CartSchema);
 // });
 
 const userSchema = new mongoose.Schema({
-	// userId: Number,
-	username: {
-		type: String,
-		default: ""
-		// required: true
-	},
-	usermail: {
-		type: String,
-		default: ""
-		// required: true
-	},
-	password: String,
-	googleId: {
-		type: String
-	},
-	age: {
-		type: Number,
-		default: null,
-		min: 18,
-		max: 100
-	},
-	profImg: {
-		type: String,
-		default: ""
-		// contentType: String
-	},
-	orders: {
-		type: Array,
-		default: []
-		// required: true
-	},
-	phone: {
-		type: Number,
-		default: null
-		// required: true
-	},
-	address: {
-		country: {
-			type: String,
-			default: ""
-		},
-		street1: {
-			type: String,
-			default: ""
-		},
-		street2: {
-			type: String,
-			default: ""
-		},
-		city: {
-			type: String,
-			default: ""
-		},
-		state: {
-			type: String,
-			default: ""
-		},
-		zip: {
-			type: Number,
-			default: null
-		}
-	}
+    // userId: Number,
+    username: {
+        type: String,
+        default: ""
+        // required: true
+    },
+    usermail: {
+        type: String,
+        default: ""
+        // required: true
+    },
+    password: String,
+    googleId: {
+        type: String
+    },
+    age: {
+        type: Number,
+        default: null,
+        min: 18,
+        max: 100
+    },
+    profImg: {
+        type: String,
+        default: ""
+        // contentType: String
+    },
+    orders: {
+        type: Array,
+        default: []
+        // required: true
+    },
+    phone: {
+        type: Number,
+        default: null
+        // required: true
+    },
+    address: {
+        country: {
+            type: String,
+            default: ""
+        },
+        street1: {
+            type: String,
+            default: ""
+        },
+        street2: {
+            type: String,
+            default: ""
+        },
+        city: {
+            type: String,
+            default: ""
+        },
+        state: {
+            type: String,
+            default: ""
+        },
+        zip: {
+            type: Number,
+            default: null
+        }
+    }
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -252,111 +256,111 @@ const User = usr.model("User", userSchema);
 passport.use(User.createStrategy());
 
 passport.serializeUser(function (user, done) {
-	done(null, user.id);
+    done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
-	User.findById(id, function (err, user) {
-		done(err, user);
-	});
+    User.findById(id, function (err, user) {
+        done(err, user);
+    });
 });
 
 passport.use(
-	new GoogleStrategy(
-		{
-			clientID: process.env.CLIENT_ID,
-			clientSecret: process.env.CLIENT_SECRET,
-			callbackURL: "http://localhost:3000/auth/google/homeokart",
-			// userProfileURL: "https://www.googleapis.com/oauth/v3/userinfo",
-			passReqToCallback: true
-		},
+    new GoogleStrategy(
+        {
+            clientID: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            callbackURL: "http://localhost:3000/auth/google/homeokart",
+            // userProfileURL: "https://www.googleapis.com/oauth/v3/userinfo",
+            passReqToCallback: true
+        },
 
-		function (request, accessToken, refreshToken, profile, done) {
-			// console.log(profile);
-			User.findOrCreate(
-				{
-					googleId: profile.id,
-					username: profile.displayName,
-					profImg: profile.photos[0].value
-				},
-				function (err, user) {
-					return done(err, user);
-				}
-			);
-		}
-	)
+        function (request, accessToken, refreshToken, profile, done) {
+            // console.log(profile);
+            User.findOrCreate(
+                {
+                    googleId: profile.id,
+                    username: profile.displayName,
+                    profImg: profile.photos[0].value
+                },
+                function (err, user) {
+                    return done(err, user);
+                }
+            );
+        }
+    )
 );
 
 const Hairitems = [];
 
 app.get("/", async function (req, res) {
-	console.log(req.isAuthenticated());
-	res.render("homepageNEW", {
-		category: categorie,
-		isAuthenticated: req.isAuthenticated()
-	});
-	// Product.find({ tag: "Haircare" }, function (err, results) {
-	//     if (err) {
-	//         console.log(err);
-	//     } else {
-	//         console.log("Found Results", results);
-	//     }
-	// });
+    console.log(req.isAuthenticated());
+    res.render("homepageNEW", {
+        category: categorie,
+        isAuthenticated: req.isAuthenticated()
+    });
+    // Product.find({ tag: "Haircare" }, function (err, results) {
+    //     if (err) {
+    //         console.log(err);
+    //     } else {
+    //         console.log("Found Results", results);
+    //     }
+    // });
 });
 
 app.get(
-	"/auth/google",
-	passport.authenticate("google", {
-		scope: ["profile"]
-	})
+    "/auth/google",
+    passport.authenticate("google", {
+        scope: ["profile"]
+    })
 );
 
 app.get(
-	"/auth/google/homeokart",
-	passport.authenticate("google", {
-		failureRedirect: "/login"
-	}),
-	function (req, res) {
-		// Successful authentication, redirect home.
-		res.redirect("/");
-		// res.redirect('..');
-	}
+    "/auth/google/homeokart",
+    passport.authenticate("google", {
+        failureRedirect: "/login"
+    }),
+    function (req, res) {
+        // Successful authentication, redirect home.
+        res.redirect("/");
+        // res.redirect('..');
+    }
 );
 
 app.get("/categories", function (req, res) {
-	// res.render("categories", {
-	//     allProducts: allProducts
-	// });
-	// Product.find(
-	// 	{ tag: "Body Care Product", name: "Dolo-sss" },  // Filters
-	// 	{ name: 1, img: 1, _id: 0 },                     // What To display
-	// 	function (err, results) {
-	// 		if (err) {
-	// 			console.log(err);
-	// 		} else {
-	// 			console.log("Found Results", results);
-	// 			res.render("categories", {
-	// 				allProducts: results
-	// 			});
-	// 		}
-	// 	}
-	// );
+    // res.render("categories", {
+    //     allProducts: allProducts
+    // });
+    // Product.find(
+    // 	{ tag: "Body Care Product", name: "Dolo-sss" },  // Filters
+    // 	{ name: 1, img: 1, _id: 0 },                     // What To display
+    // 	function (err, results) {
+    // 		if (err) {
+    // 			console.log(err);
+    // 		} else {
+    // 			console.log("Found Results", results);
+    // 			res.render("categories", {
+    // 				allProducts: results
+    // 			});
+    // 		}
+    // 	}
+    // );
 
-	Product.find({}, function (err, results) {
-		if (err) {
-			console.log(err);
-		} else {
-			// console.log("Found Results: ", results);
-			res.render("categories", {
-				allProducts: results,
-				isAuthenticated: req.isAuthenticated()
-			});
-		}
-	});
+    Product.find({}, function (err, results) {
+        if (err) {
+            console.log(err);
+        } else {
+            // console.log("Found Results: ", results);
+            res.render("categories", {
+                allProducts: results,
+                isAuthenticated: req.isAuthenticated()
+            });
+        }
+    });
 });
 
 app.get("/login", function (req, res) {
-	res.render("login");
+    res.render("login");
 });
 
 // app.post("/login", passport.authenticate('local', { failureRedirect: '/', failureMessage: true }),
@@ -372,7 +376,7 @@ app.get("/login", function (req, res) {
 
 //
 app.get("/register", function (req, res) {
-	res.render("register");
+    res.render("register");
 });
 
 // username: req.body.username,
@@ -391,474 +395,500 @@ app.get("/register", function (req, res) {
 // })
 
 app.post("/register", (req, res) => {
-	const name = req.body.username;
-	const email = req.body.usermail;
-	const password = req.body.password;
-	User.find(
-		{
-			usermail: email
-		},
-		function (err, docs) {
-			if (docs.length === 0) {
-				User.register(
-					{
-						username: name,
-						usermail: email
-					},
-					password,
-					function (err, user) {
-						if (err) {
-							console.log(err);
-						} else {
-							req.login(user, (err) => {
-								if (err) {
-									console.log(err);
-								} else {
-									passport.authenticate("local");
-									req.session.save((error) => {
-										if (err) {
-											console.log(err);
-										} else {
-											res.redirect("/");
-										}
-									});
-								}
-							});
-						}
-					}
-				);
-			} else {
-				res.redirect("/login");
-			}
-		}
-	);
+    const name = req.body.username;
+    const email = req.body.usermail;
+    const password = req.body.password;
+    User.find(
+        {
+            usermail: email
+        },
+        function (err, docs) {
+            if (docs.length === 0) {
+                User.register(
+                    {
+                        username: name,
+                        usermail: email
+                    },
+                    password,
+                    function (err, user) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            req.login(user, (err) => {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    passport.authenticate("local");
+                                    req.session.save((error) => {
+                                        if (err) {
+                                            console.log(err);
+                                        } else {
+                                            res.redirect("/");
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }
+                );
+            } else {
+                res.redirect("/login");
+            }
+        }
+    );
 });
 
 app.get("/consultation", function (req, res) {
-	res.render("consultation", {
-		isAuthenticated: req.isAuthenticated()
-	});
+    res.render("consultation", {
+        isAuthenticated: req.isAuthenticated()
+    });
 });
 
-app.get("/product", function (req, res) {
-	res.render("product", {
-		isAuthenticated: req.isAuthenticated()
-	});
-});
+// app.get("/product", function (req, res) {
+//     res.render("product", {
+//         isAuthenticated: req.isAuthenticated()
+//     });
+// });
 
 app.get("/cart", async function (req, res) {
-	if (req.isAuthenticated()) {
-		// console.log("Inside cart", req);
-		// console.log("Inside cart", req.user.id);
-		const userId = req.user.id;
+    if (req.isAuthenticated()) {
+        // console.log("Inside cart", req);
+        // console.log("Inside cart", req.user.id);
+        const userId = req.user.id;
 
-		try {
-			let cart = await Cart.findOne({
-				userId
-			});
-			console.log("Hey Cart", cart);
-			if (cart) {
-				//cart exists for user
+        try {
+            let cart = await Cart.findOne({
+                userId
+            });
+            console.log("Hey Cart", cart);
+            if (cart) {
+                //cart exists for user
 
-				res.render("cart", {
-					cart: cart,
-					isAuthenticated: req.isAuthenticated()
-				});
-				// return res.status(201).send(cart);
-			} else {
-				//no cart for user, create new cart
-				// const newCart = await Cart.create({
-				//     userId,
-				//     products: [{ productId, quantity, name, price }]
-				// });
+                res.render("cart", {
+                    cart: cart,
+                    isAuthenticated: req.isAuthenticated()
+                });
+                // return res.status(201).send(cart);
+            } else {
+                //no cart for user, create new cart
+                // const newCart = await Cart.create({
+                //     userId,
+                //     products: [{ productId, quantity, name, price }]
+                // });
 
-				res.render("cart", {
-					cart: cart,
-					isAuthenticated: req.isAuthenticated()
-				});
-				// res.render("cart", { cart: newCart });
-				// return res.status(201).send(newCart);
-			}
-		} catch (err) {
-			console.log(err);
-			res.status(500).send("Something went wrong");
-		}
-	} else {
-		res.redirect("/login");
-	}
+                // alert("No items in the cart please add something");
+                res.render("cart", {
+                    cart: cart,
+                    isAuthenticated: req.isAuthenticated()
+                });
+                // res.render("cart", { cart: newCart });
+                // return res.status(201).send(newCart);
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    } else {
+        res.redirect("/login");
+    }
 });
 
 app.get("/cart/:productid", function (req, res) {
-	const producId = req.params.productid;
-	if (req.isAuthenticated()) {
-		const userId = req.user.id;
-		// console.log(req);
-		// console.log("userId", req);
+    const producId = req.params.productid;
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        // console.log(req);
+        // console.log("userId", req);
 
-		Product.findById(producId, async function (err, results) {
-			if (err) {
-				console.log(err);
-			} else {
-				console.log("Found Results inside cart block: ", results);
-			}
-			const { img, id, quantity = 1, name, price } = results;
-			console.log("Image Paths", img);
-			const productId = id;
-			try {
-				let cart = await Cart.findOne({
-					userId
-				});
+        Product.findById(producId, async function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Found Results inside cart block: ", results);
+            }
+            const { img, id, quantity = 1, name, price } = results;
+            console.log("Image Paths", img);
+            const productId = id;
+            try {
+                let cart = await Cart.findOne({
+                    userId
+                });
 
-				if (cart) {
-					//cart exists for user
-					let itemIndex = cart.products.findIndex(
-						(p) => p.productId == productId
-					);
+                if (cart) {
+                    //cart exists for user
+                    let itemIndex = cart.products.findIndex(
+                        (p) => p.productId == productId
+                    );
 
-					console.log("item Index", itemIndex);
-					if (itemIndex > -1) {
-						//product exists in the cart, update the quantity
-						let productItem = cart.products[itemIndex];
-						productItem.quantity = quantity;
-						cart.products[itemIndex] = productItem;
-					} else {
-						//product does not exists in cart, add new item
-						cart.products.push({
-							productId,
-							quantity,
-							name,
-							price,
-							img
-						});
-					}
-					cart = await cart.save();
-					res.render("cart", {
-						cart: cart,
-						isAuthenticated: req.isAuthenticated()
-					});
-					// return res.status(201).send(cart);
-				} else {
-					//no cart for user, create new cart
-					const newCart = await Cart.create({
-						userId,
-						products: [{ productId, quantity, name, price, img }]
-					});
+                    console.log("item Index", itemIndex);
+                    if (itemIndex > -1) {
+                        //product exists in the cart, update the quantity
+                        let price = 0;
+                        let productItem = cart.products[itemIndex];
+                        productItem.quantity = quantity;
+                        cart.products[itemIndex] = productItem;
+                        for (var i = 0; i < cart.products.length; i++) {
+                            price += cart.products[i].quantity * cart.products[i].price;
+                        }
+                        cart.totalPrice = price;
+                    } else {
+                        //product does not exists in cart, add new item
+                        cart.products.push({
+                            productId,
+                            quantity,
+                            name,
+                            price,
+                            img
+                        });
+                    }
+                    cart = await cart.save();
+                    res.redirect("/cart")
+                    // res.render("cart", {
+                    //     cart: cart,
+                    //     isAuthenticated: req.isAuthenticated()
+                    // });
+                    // return res.status(201).send(cart);
+                } else {
+                    //no cart for user, create new cart
+                    const newCart = await Cart.create({
+                        userId,
+                        products: [{ productId, quantity, name, price, img }]
+                    });
 
-					res.render("cart", {
-						cart: newCart,
-						isAuthenticated: req.isAuthenticated()
-					});
-					// return res.status(201).send(newCart);
-				}
-			} catch (err) {
-				console.log(err);
-				res.status(500).send("Something went wrong");
-			}
-		});
-	}
+                    res.redirect("/cart");
+                    // res.render("cart", {
+                    //     cart: newCart,
+                    //     isAuthenticated: req.isAuthenticated()
+                    // });
+                    // return res.status(201).send(newCart);
+                }
+            } catch (err) {
+                console.log(err);
+                res.status(500).send("Something went wrong");
+            }
+        });
+    }
 
-	// res.render("Cart");
+    // res.render("Cart");
 
-	// User.findOneAndUpdate({ googleId: "112129154840141555781" }, { phone: 7048105061 })
-	else {
-		res.redirect("/login");
-	}
+    // User.findOneAndUpdate({ googleId: "112129154840141555781" }, { phone: 7048105061 })
+    else {
+        res.redirect("/login");
+    }
 });
 
 app.get("/cart/:id/incrqty", async function (req, res) {
-	console.log("Here I am");
-	const productId = req.params.id;
-	console.log(productId);
+    console.log("Here I am");
+    const productId = req.params.id;
+    console.log(productId);
 
-	if (req.isAuthenticated()) {
-		const userId = req.user.id;
-		console.log(userId);
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        console.log(userId);
 
-		try {
-			console.log("Enter in try");
-			let cart = await Cart.findOne({ userId });
-			console.log(cart);
-			console.log(cart.products);
-			if (cart) {
-				//cart exists for user
-				// let itemIndex = cart.products.findIndex(p => p.productId == productId);
-				let itemIndex = cart.products.findIndex(
-					(p) => p.productId == productId
-				);
-				console.log("This", itemIndex);
+        try {
+            console.log("Enter in try");
+            let cart = await Cart.findOne({ userId });
+            console.log(cart);
+            console.log(cart.products);
+            if (cart) {
+                //cart exists for user
+                // let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                let itemIndex = cart.products.findIndex(
+                    (p) => p.productId == productId
+                );
+                console.log("This", itemIndex);
+                let price = 0;
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    let productItem = cart.products[itemIndex];
+                    productItem.quantity = productItem.quantity + 1;
+                    cart.products[itemIndex] = productItem;
+                    for (var i = 0; i < cart.products.length; i++) {
+                        price += cart.products[i].quantity * cart.products[i].price;
+                    }
+                    cart.totalPrice = price
 
-				if (itemIndex > -1) {
-					//product exists in the cart, update the quantity
-					let productItem = cart.products[itemIndex];
-					productItem.quantity = productItem.quantity + 1;
-					cart.products[itemIndex] = productItem;
-				}
-				cart = await cart.save();
-				res.render("cart", {
-					cart: cart,
-					isAuthenticated: req.isAuthenticated()
-				});
-			} else {
-				console.log("Cart doesnot exists");
-			}
-		} catch (err) {
-			console.log(err);
-			res.status(500).send("Something went wrong");
-		}
-	} else {
-		res.redirect("/login");
-	}
+                }
+                cart = await cart.save();
+                res.redirect("/cart");
+                // res.render("cart", {
+                //     cart: cart,
+                //     isAuthenticated: req.isAuthenticated()
+                // });
+            } else {
+                console.log("Cart doesnot exists");
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    } else {
+        res.redirect("/login");
+    }
 });
 
 app.get("/cart/:id/decrqty", async function (req, res) {
-	console.log("Here I am");
-	const productId = req.params.id;
-	console.log(productId);
+    console.log("Here I am");
+    const productId = req.params.id;
+    console.log(productId);
 
-	if (req.isAuthenticated()) {
-		const userId = req.user.id;
-		console.log(userId);
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        console.log(userId);
 
-		try {
-			console.log("Enter in try");
-			let cart = await Cart.findOne({ userId });
-			console.log(cart);
-			console.log(cart.products);
-			if (cart) {
-				//cart exists for user
-				// let itemIndex = cart.products.findIndex(p => p.productId == productId);
-				let itemIndex = cart.products.findIndex(
-					(p) => p.productId == productId
-				);
-				console.log("This", itemIndex);
+        try {
+            console.log("Enter in try");
+            let cart = await Cart.findOne({ userId });
+            console.log(cart);
+            console.log(cart.products);
+            if (cart) {
+                //cart exists for user
+                // let itemIndex = cart.products.findIndex(p => p.productId == productId);
+                let itemIndex = cart.products.findIndex(
+                    (p) => p.productId == productId
+                );
+                console.log("This", itemIndex);
 
-				if (itemIndex > -1) {
-					//product exists in the cart, update the quantity
-					let productItem = cart.products[itemIndex];
-					productItem.quantity = productItem.quantity - 1;
-					cart.products[itemIndex] = productItem;
-				}
-				cart = await cart.save();
-				res.render("cart", {
-					cart: cart,
-					isAuthenticated: req.isAuthenticated()
-				});
-			} else {
-				console.log("Cart doesnot exists");
-			}
-		} catch (err) {
-			console.log(err);
-			res.status(500).send("Something went wrong");
-		}
-	} else {
-		res.redirect("/login");
-	}
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    let price = 0;
+                    let productItem = cart.products[itemIndex];
+                    productItem.quantity = productItem.quantity - 1;
+                    cart.products[itemIndex] = productItem;
+                    for (var i = 0; i < cart.products.length; i++) {
+                        price += cart.products[i].quantity * cart.products[i].price;
+                    }
+                    cart.totalPrice = price;
+                }
+                cart = await cart.save();
+                res.redirect("/cart");
+                // res.render("cart", {
+                //     cart: cart,
+                //     isAuthenticated: req.isAuthenticated()
+                // });
+            } else {
+                console.log("Cart doesnot exists");
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    } else {
+        res.redirect("/login");
+    }
 });
 
 app.get("/cart/:id/remove", async function (req, res) {
-	console.log("Removed");
-	const productId = req.params.id;
-	if (req.isAuthenticated()) {
-		const userId = req.user.id;
+    console.log("Removed");
+    const productId = req.params.id;
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
 
-		try {
-			let cart = await Cart.findOne({ userId });
-			console.log(cart);
-			// console.log(cart.products)
-			if (cart) {
-				//cart exists for user
-				let itemIndex = cart.products.findIndex(
-					(p) => p.productId == productId
-				);
-				console.log(itemIndex);
-				if (itemIndex > -1) {
-					//product exists in the cart, update the quantity
-					cart.products.splice(itemIndex, 1);
-				}
-				cart = await cart.save();
-				return res.render("cart", {
-					cart: cart,
-					isAuthenticated: req.isAuthenticated()
-				});
-				// return res.status(201).send(cart);
-			} else {
-				//no cart for user, create new cart
-				console.log("No cart for user");
-			}
-		} catch (err) {
-			console.log(err);
-			res.status(500).send("Something went wrong");
-		}
-	} else {
-		res.redirect("/login");
-	}
+        try {
+            let cart = await Cart.findOne({ userId });
+            console.log(cart);
+            // console.log(cart.products)
+            if (cart) {
+                //cart exists for user
+                let itemIndex = cart.products.findIndex(
+                    (p) => p.productId == productId
+                );
+                console.log(itemIndex);
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    let price = 0;
+                    cart.products.splice(itemIndex, 1);
+                    for (var i = 0; i < cart.products.length; i++) {
+                        price += cart.products[i].quantity * cart.products[i].price;
+                    }
+                    cart.totalPrice = price;
+                }
+                cart = await cart.save();
+                res.redirect("/cart");
+                // return res.render("cart", {
+                //     cart: cart,
+                //     isAuthenticated: req.isAuthenticated()
+                // });
+                // return res.status(201).send(cart);
+            } else {
+                //no cart for user, create new cart
+                console.log("No cart for user");
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrong");
+        }
+    } else {
+        res.redirect("/login");
+    }
 });
 
 app.post("/cart", async function (req, res) {
-	if (req.isAuthenticated()) {
-		const userId = req.user.id;
-		// console.log(req);
-		// console.log("userId", req);
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        // console.log(req);
+        // console.log("userId", req);
 
-		try {
-			let cart = await Cart.findOne({
-				userId
-			});
+        try {
+            let cart = await Cart.findOne({
+                userId
+            });
 
-			if (cart) {
-				//cart exists for user
-				let itemIndex = cart.products.findIndex(
-					(p) => p.productId == productId
-				);
+            if (cart) {
+                //cart exists for user
+                let itemIndex = cart.products.findIndex(
+                    (p) => p.productId == productId
+                );
 
-				if (itemIndex > -1) {
-					//product exists in the cart, update the quantity
-					let productItem = cart.products[itemIndex];
-					productItem.quantity = quantity;
-					cart.products[itemIndex] = productItem;
-				} else {
-					//product does not exists in cart, add new item
-					cart.products.push({
-						productId,
-						quantity,
-						name,
-						price
-					});
-				}
-				cart = await cart.save();
-				return res.render("cart", {
-					cart: cart,
-					isAuthenticated: req.isAuthenticated()
-				});
-				// return res.status(201).send(cart);
-			} else {
-				//no cart for user, create new cart
-				const newCart = await Cart.create({
-					userId,
-					products: [
-						{
-							productId,
-							quantity,
-							name,
-							price
-						}
-					]
-				});
+                if (itemIndex > -1) {
+                    //product exists in the cart, update the quantity
+                    let productItem = cart.products[itemIndex];
+                    productItem.quantity = quantity;
+                    cart.products[itemIndex] = productItem;
+                } else {
+                    //product does not exists in cart, add new item
+                    cart.products.push({
+                        productId,
+                        quantity,
+                        name,
+                        price
+                    });
+                }
+                cart = await cart.save();
+                return res.render("cart", {
+                    cart: cart,
+                    isAuthenticated: req.isAuthenticated()
+                });
+                // return res.status(201).send(cart);
+            } else {
+                //no cart for user, create new cart
+                const newCart = await Cart.create({
+                    userId,
+                    products: [
+                        {
+                            productId,
+                            quantity,
+                            name,
+                            price
+                        }
+                    ]
+                });
 
-				res.render("cart", {
-					cart: newCart,
-					isAuthenticated: req.isAuthenticated()
-				});
-				// return res.status(201).send(newCart);
-			}
-		} catch (err) {
-			console.log(err);
-			res.status(500).send("Something went wrongaaaaa");
-		}
-	}
+                res.render("cart", {
+                    cart: newCart,
+                    isAuthenticated: req.isAuthenticated()
+                });
+                // return res.status(201).send(newCart);
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Something went wrongaaaaa");
+        }
+    }
 
-	// res.render("Cart");
+    // res.render("Cart");
 
-	// User.findOneAndUpdate({ googleId: "112129154840141555781" }, { phone: 7048105061 })
-	else {
-		res.redirect("/login");
-	}
+    // User.findOneAndUpdate({ googleId: "112129154840141555781" }, { phone: 7048105061 })
+    else {
+        res.redirect("/login");
+    }
 });
 
 app.get("/uploadData", function (req, res) {
-	res.render("uploadData", {
-		isAuthenticated: req.isAuthenticated()
-	});
+    res.render("uploadData", {
+        isAuthenticated: req.isAuthenticated()
+    });
 });
 
 const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		cb(null, "./public/uploads");
-	},
-	filename: (req, file, cb) => {
-		let count = req.files.length;
-		let productName = req.body.productName.replaceAll(" ", "-");
-		let ext = file.originalname.substr(file.originalname.lastIndexOf("."));
-		cb(null, productName + "-" + Date.now() + "-" + count + ext);
-	}
+    destination: (req, file, cb) => {
+        cb(null, "./public/uploads");
+    },
+    filename: (req, file, cb) => {
+        let count = req.files.length;
+        let productName = req.body.productName.replaceAll(" ", "-");
+        let ext = file.originalname.substr(file.originalname.lastIndexOf("."));
+        cb(null, productName + "-" + Date.now() + "-" + count + ext);
+    }
 });
 
 var upload = multer({
-	storage: storage
+    storage: storage
 });
 
 app.post("/uploadData", upload.array("productImage"), (req, res) => {
-	// console.log(req.files);
-	// console.log(req.files[0].path);
-	var imageArray = [];
-	req.files.map((data, index) => {
-		imageArray.push(data.path.replace("public\\", ""));
-	});
-	// console.log(imageArray);
+    // console.log(req.files);
+    // console.log(req.files[0].path);
+    var imageArray = [];
+    req.files.map((data, index) => {
+        imageArray.push(data.path.replace("public\\", ""));
+    });
+    // console.log(imageArray);
 
-	const product = new Product({
-		name: req.body.productName,
-		description: req.body.productDescription,
-		price: req.body.productPrice,
-		tag: req.body.productCategory,
-		ratings: req.body.productRating,
-		origin: req.body.productOriginCountry,
-		man_name: req.body.manufacturerName,
-		man_add: req.body.manufacturerAddress,
-		ingred: req.body.productIngredients,
-		img: {
-			path: imageArray,
-			contentType: req.files[0].mimetype
-		}
-	});
+    const product = new Product({
+        name: req.body.productName,
+        description: req.body.productDescription,
+        price: req.body.productPrice,
+        tag: req.body.productCategory,
+        ratings: req.body.productRating,
+        origin: req.body.productOriginCountry,
+        man_name: req.body.manufacturerName,
+        man_add: req.body.manufacturerAddress,
+        ingred: req.body.productIngredients,
+        img: {
+            path: imageArray,
+            contentType: req.files[0].mimetype
+        }
+    });
 
-	Product.create(product, (err, doc) => {
-		if (err) {
-			console.log(err);
-		} else {
-			console.log("Data added successfully");
-			console.log(product);
-			// res.redirect("/");
-			res.send(product);
-		}
-	});
+    Product.create(product, (err, doc) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Data added successfully");
+            console.log(product);
+            // res.redirect("/");
+            res.send(product);
+        }
+    });
 });
 
 app.get("/products/:category", function (req, res) {
-	const catTag = req.params.category;
-	console.log(catTag);
-	Product.find(
-		{
-			tag: catTag
-		},
-		function (err, results) {
-			if (err) {
-				console.log(err);
-			} else {
-				// console.log("Found Results: ", results);
-				res.render("categories", {
-					allProducts: resourceLimits,
-					isAuthenticated: req.isAuthenticated()
-				});
-			}
-		}
-	);
+    const catTag = req.params.category;
+    console.log(catTag);
+    Product.find(
+        {
+            tag: catTag
+        },
+        function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                // console.log("Found Results: ", results);
+                res.render("categories", {
+                    allProducts: resourceLimits,
+                    isAuthenticated: req.isAuthenticated()
+                });
+            }
+        }
+    );
 });
 
 app.get("/product/:prdid", function (req, res) {
-	const prdid = req.params.prdid;
-	console.log("Prdid", prdid);
-	Product.findById(prdid, function (err, results) {
-		if (err) {
-			console.log(err);
-		} else {
-			// console.log("Found Results: ", results);
-			res.render("product", {
-				product: results,
+    const prdid = req.params.prdid;
+    console.log("Prdid", prdid);
+    Product.findById(prdid, function (err, results) {
+        if (err) {
+            console.log(err);
+        } else {
+            // console.log("Found Results: ", results);
+            res.render("productNew", {
+                product: results,
                 isAuthenticated: req.isAuthenticated()
-			});
-		}
-	});
+            });
+        }
+    });
 });
 
 // app.post("/login", function (req, res) {
@@ -888,65 +918,65 @@ app.get("/product/:prdid", function (req, res) {
 // });
 
 app.post("/login", (req, res) => {
-	const email = req.body.email;
-	User.findOne(
-		{
-			usermail: email
-		},
-		function (err, u) {
-			if (err) {
-				console.log(err);
-			} else {
-				if (u) {
-					u.authenticate(req.body.password, (err, model, info) => {
-						if (info) {
-							console.log("Wrong email or password!");
-						}
-						if (err) {
-							console.log(err);
-						} else if (model) {
-							req.login(u, (err) => {
-								if (err) {
-									console.log(err);
-								} else {
-									passport.authenticate("local");
-									req.session.save((error) => {
-										if (error) {
-											console.log(error);
-										} else {
-											res.redirect("/");
-										}
-									});
-								}
-							});
-						}
-					});
-				} else {
-					res.send("Wrong email or password!");
-				}
-			}
-		}
-	);
+    const email = req.body.email;
+    User.findOne(
+        {
+            usermail: email
+        },
+        function (err, u) {
+            if (err) {
+                console.log(err);
+            } else {
+                if (u) {
+                    u.authenticate(req.body.password, (err, model, info) => {
+                        if (info) {
+                            console.log("Wrong email or password!");
+                        }
+                        if (err) {
+                            console.log(err);
+                        } else if (model) {
+                            req.login(u, (err) => {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    passport.authenticate("local");
+                                    req.session.save((error) => {
+                                        if (error) {
+                                            console.log(error);
+                                        } else {
+                                            res.redirect("/");
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    res.send("Wrong email or password!");
+                }
+            }
+        }
+    );
 });
 
 app.get("/checkout", function (req, res) {
-	res.render("checkout",{
+    res.render("checkout", {
         isAuthenticated: req.isAuthenticated()
     });
 });
 
 app.get("/logout", function (req, res) {
-	console.log("Logged out");
-	// req.logout();
-	req.session.destroy(function (err) {
-		if (err) {
-			console.log(err);
-		} else {
-			res.redirect("/");
-		}
-	});
+    console.log("Logged out");
+    // req.logout();
+    req.session.destroy(function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/");
+        }
+    });
 });
 
 app.listen(PORT, (req, res) => {
-	console.log("Server started on http://localhost:" + PORT);
+    console.log("Server started on http://localhost:" + PORT);
 });
