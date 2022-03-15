@@ -69,25 +69,32 @@ a {
 .prd-body {
     width: 100%;
     height: fit-content !important;
-    margin: 4rem;
+    /* margin: 4rem; */
     background-color: white;
     display: flex;
     flex-direction: row !important;
-
 }
 
 .prd-img {
     /* height: ; */
     padding: 20px;
-    width: 43%;
+    /* width: 43%; */
+    width: 40%;
     display: flex;
+    /* flex-direction: row; */
     flex-direction: column;
     margin: auto !important;
 }
 
+.upr .slick-track {
+    width: 500px !important;
+    height: 500px !important;
+    display: flex !important;
+}
 .prd-content {
     height: fit-content;
-    width: 57%;
+    /* width: 57%; */
+    width: 60%;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -125,6 +132,14 @@ a {
     padding: 0.5rem !important;
 }
 
+.naav .slick-track {
+    display: flex;
+    flex-direction: row;
+    width: 500px !important;
+    justify-content: space-evenly !important;
+    transform: none !important;
+}
+
 /* .slick-track {
     width: 40% !important;
 } */
@@ -135,10 +150,11 @@ a {
 }
 
 .hdr {
-    font-size: 30px;
+    /* font-size: 30px; */
+    font-size: 20px;
     font-weight: 500;
     color: black;
-    margin: 10px;
+    margin: 10px 10px 10px 0px;
 }
 
 .categ {
@@ -164,7 +180,8 @@ a {
 
 .adj {
     color: green;
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: 16px;
     font-weight: 500;
 }
 
@@ -176,21 +193,22 @@ a {
 
 .prc .amt {
     color: black;
-    font-size: 35px;
-    margin: 0px 10px;
+    /* font-size: 35px; */
+    font-size: 25px;
+    margin: 0px 10px 0px 0px;
 }
 
 .prc .dsc {
     color: green;
     font-weight: 500;
-    font-size: 25px;
+    font-size: 18px;
     margin: auto 10px;
 }
 
 .rate {
     display: flex;
     flex-direction: row;
-    margin: 10px 0px;
+    margin: 5px 0px;
     align-items: baseline;
     /* justify-content: space-around; */
     /* vertical-align: baseline; */
@@ -203,9 +221,9 @@ a {
     background-color: #26a541;
     color: white;
     vertical-align: baseline;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
-    margin: 0px 15px;
+    /* margin: 0px 15px; */
     padding: 0px 10px;
 }
 
@@ -217,7 +235,7 @@ a {
 
 .norat {
     color: gray;
-    font-size: 25px;
+    font-size: 16px;
     font-weight: 500;
     margin: 0px 15px;
 }
@@ -234,7 +252,8 @@ a {
 }
 
 .assure span {
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: 16px;
     background-color: yellow;
     border-radius: 50%;
     padding: 2px 9px;
@@ -249,10 +268,9 @@ a {
 }
 
 .inf {
-    font-size: 1.5rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 400;
     color: black;
-
 }
 
 .inf i {
@@ -266,14 +284,14 @@ a {
 }
 
 .bton1 {
-    margin: 20px;
+    margin: 20px 10px 20px 0px;
     font-size: 20px !important;
     font-weight: 500 !important;
     padding: 10px 50px !important;
 }
 
 .bton2 {
-    margin: 20px;
+    margin: 20px 0px 20px 10px;
     font-size: 20px !important;
     font-weight: 500 !important;
     padding: 10px 50px !important;
@@ -315,7 +333,6 @@ a {
 .accordion-body {
     font-size: 1.5rem;
 }
-
 
 /* Product Card Carousel */
 .product {
