@@ -17,7 +17,7 @@ const findOrCreate = require("mongoose-findorcreate");
 
 var fs = require("fs");
 var path = require("path");
-const { resourceLimits } = require("worker_threads");
+// const { resourceLimits } = require("worker_threads");
 
 const PORT = 3000;
 const app = express();
@@ -867,7 +867,8 @@ app.get("/products/:category", function (req, res) {
             } else {
                 // console.log("Found Results: ", results);
                 res.render("categories", {
-                    allProducts: resourceLimits,
+                    // allProducts: resourceLimits,
+                    allProducts: results,
                     isAuthenticated: req.isAuthenticated()
                 });
             }
