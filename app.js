@@ -464,6 +464,19 @@ app.get("/cart", async function (req, res) {
             if (cart) {
                 //cart exists for user
 
+                if (cart.products) {
+                    // if (ite?mIndex > -1) {
+                    //product exists in the cart, update the quantity
+
+                    let price = 0;
+                    // let productItem = cart.products[itemIndex];
+                    // productItem.quantity = quantity;
+                    // cart.products[itemIndex] = productItem;
+                    for (var i = 0; i < cart.products.length; i++) {
+                        price += cart.products[i].quantity * cart.products[i].price;
+                    }
+                    cart.totalPrice = price;
+                }
                 res.render("cart", {
                     cart: cart,
                     isAuthenticated: req.isAuthenticated()
