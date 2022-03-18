@@ -105,7 +105,7 @@ a {
 .imag {
     /* width: 40% !important; */
     height: 500px !important;
-    margin: auto;
+    margin: 50px;
 }
 
 .imag-nav {
@@ -310,7 +310,7 @@ a {
     width: 8rem;
     height: fit-content;
     /* padding: 10px; */
-    margin: 10px 0px;
+    margin: 10px 15px;
 }
 
 .src img {
@@ -516,4 +516,27 @@ a {
 .collection:nth-child(3) {
     grid-column: span 2;
     margin-bottom: 10px;
+}
+
+/* accordion */
+
+
+#accordionExample{
+    margin-bottom: 20px;
+}
+
+.accordion-item h2{
+    margin: 0;
+}
+
+
+.accordion-item h2 button.collapsed{
+    /* color: #084594 !important; */
+    color: #56BBF1 !important;
+
+}
+
+.accordion-item.item{
+    border-left: 4px solid #98b3fa;
+    margin-left: 10px;
 }
