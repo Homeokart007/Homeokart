@@ -6,6 +6,7 @@ const ejs = require("ejs");
 const { stringify } = require("nodemon/lib/utils");
 const multer = require("multer");
 const mime = require("mime");
+const Razorpay = require('razorpay'); 
 // const upload = multer({ dest: 'uploads/' })
 // const upload = multer({ dest: './public/uploads/' })
 
@@ -24,6 +25,7 @@ const app = express();
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+app.use(express.json({ extended: false }));
 app.use(
     bodyParser.urlencoded({
         extended: true
@@ -42,6 +44,11 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+var instance = new Razorpay({
+    key_id: 'rzp_test_DrxDeJy6wmVzgw',
+    key_secret: 'nTDmXspaYr3D6zbVg8Nj2rNK',
+  });
 
 var med = mongoose.createConnection(
     process.env.MONGO_CONNECTION_URL_PRODUCTSDB,
@@ -467,7 +474,7 @@ app.get("/cart", async function (req, res) {
                 if (cart.products) {
                     // if (ite?mIndex > -1) {
                     //product exists in the cart, update the quantity
-
+                    console.log("Found")
                     let price = 0;
                     // let productItem = cart.products[itemIndex];
                     // productItem.quantity = quantity;
@@ -476,7 +483,17 @@ app.get("/cart", async function (req, res) {
                         price += cart.products[i].quantity * cart.products[i].price;
                     }
                     cart.totalPrice = price;
+                    
+                    // Cart.updateOne(userId,{$set:{"totalPrice":price},function(err,results){
+                    //     if(err){
+                    //         console.log(err)
+                    //     } else {
+                    //         console.log("Andar hi hon bhai");
+                    //         console.log("Updated Results",results);
+                    //     }
+                    // }})
                 }
+                cart = await cart.save();
                 res.render("cart", {
                     cart: cart,
                     isAuthenticated: req.isAuthenticated()
@@ -543,9 +560,13 @@ app.get("/cart/:productid", function (req, res) {
                         for (var i = 0; i < cart.products.length; i++) {
                             price += cart.products[i].quantity * cart.products[i].price;
                         }
+                        console.log("I am price",price)
                         cart.totalPrice = price;
                     } else {
                         //product does not exists in cart, add new item
+                        console.log("Aagaya")
+                        
+
                         cart.products.push({
                             productId,
                             quantity,
@@ -555,6 +576,7 @@ app.get("/cart/:productid", function (req, res) {
                         });
                     }
                     cart = await cart.save();
+
                     res.redirect("/cart")
                     // res.render("cart", {
                     //     cart: cart,
@@ -577,7 +599,7 @@ app.get("/cart/:productid", function (req, res) {
                 }
             } catch (err) {
                 console.log(err);
-                res.status(500).send("Something went wrong");
+                res.status(500).send("Something went wrongeeeee");
             }
         });
     }
@@ -737,76 +759,32 @@ app.get("/cart/:id/remove", async function (req, res) {
     }
 });
 
-app.post("/cart", async function (req, res) {
-    if (req.isAuthenticated()) {
-        const userId = req.user.id;
-        // console.log(req);
-        // console.log("userId", req);
+// app.post("/cart", function (req, res) {
+//     if (req.isAuthenticated()) {
+//         const userId = req.user.id;
 
-        try {
-            let cart = await Cart.findOne({
-                userId
-            });
+//         User.findById(userId, function (err, results) {
+//             if (err) {
+//                 console.log(err);
+//             } else {
+//                 console.log(results);
+//             }
+//         })
 
-            if (cart) {
-                //cart exists for user
-                let itemIndex = cart.products.findIndex(
-                    (p) => p.productId == productId
-                );
-
-                if (itemIndex > -1) {
-                    //product exists in the cart, update the quantity
-                    let productItem = cart.products[itemIndex];
-                    productItem.quantity = quantity;
-                    cart.products[itemIndex] = productItem;
-                } else {
-                    //product does not exists in cart, add new item
-                    cart.products.push({
-                        productId,
-                        quantity,
-                        name,
-                        price
-                    });
-                }
-                cart = await cart.save();
-                return res.render("cart", {
-                    cart: cart,
-                    isAuthenticated: req.isAuthenticated()
-                });
-                // return res.status(201).send(cart);
-            } else {
-                //no cart for user, create new cart
-                const newCart = await Cart.create({
-                    userId,
-                    products: [
-                        {
-                            productId,
-                            quantity,
-                            name,
-                            price
-                        }
-                    ]
-                });
-
-                res.render("cart", {
-                    cart: newCart,
-                    isAuthenticated: req.isAuthenticated()
-                });
-                // return res.status(201).send(newCart);
-            }
-        } catch (err) {
-            console.log(err);
-            res.status(500).send("Something went wrongaaaaa");
-        }
-    }
-
-    // res.render("Cart");
-
-    // User.findOneAndUpdate({ googleId: "112129154840141555781" }, { phone: 7048105061 })
-    else {
-        res.redirect("/login");
-    }
-});
+//         Cart.findById(userId, function(err,results){
+//             if(err){
+//                 console.log(err);
+//             }
+//             else {
+//                 console.log(results);
+//             }
+//         })
+//         res.render("checkout");
+//     }
+//     else {
+//         res.redirect("/login");
+//     }
+// })
 
 app.get("/uploadData", function (req, res) {
     res.render("uploadData", {
@@ -973,10 +951,127 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/checkout", function (req, res) {
-    res.render("checkout", {
-        isAuthenticated: req.isAuthenticated()
-    });
+
+    console.log("Entered");
+    // const userId = req.user.id;
+    const arr = []
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        console.log(userId)
+        User.findById(userId, function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('Results', results)
+                arr.push(results)
+            }
+        })
+
+        Cart.findOne({ userId: userId }, function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Arr1", arr)
+                console.log("Got the results")
+                console.log('Cart Results', results)
+                arr.push(results)
+                console.log("Arr2", arr)
+                res.render("checkout", { info: arr });
+            }
+        })
+
+        // console.log("Arr3", arr)
+    } else {
+        res.redirect("/login"); 
+    }
+
 });
+
+app.get("/checkout/:productid",function(req,res){
+    const prdid = req.params.productid
+    const arr = []
+    if(req.isAuthenticated()){
+        const userId = req.user.id;
+        console.log(userId)
+        User.findById(userId, function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('Results', results)
+                arr.push(results)
+            }
+        })
+
+        Product.findById(prdid,function(err, results) {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log('Results', results)
+                // const totalPrice = results.price
+                
+                const products = {img: results.img,
+                    name : results.name,
+                    totalPrice : results.price
+                }
+                arr.push(products)
+                console.log("Arr2", arr)
+                res.render("checkout", { info: arr });
+            }
+        })
+    }
+    else{
+        res.redirect("/login")
+    }
+})
+
+// app.post("/checkout",function(req,res){
+//     const checkoutmail= req.body.checkoutemail;
+//     const checkoutPhone = req.body.checkoutphone;
+//     const checkoutname = req.body.checkoutname;
+//     const checkoutaddress = req.body.checkoutaddress;
+//     const checkoutcity = req.body.checkoutcity;
+//     const checkoutcountry = req.body.checkoutcountry;
+//     const checkoutpostal = req.body.checkoutpostal;
+
+
+// })
+
+app.post("/create/orderId", function(req,res){
+
+    var options = {
+        amount: req.body.amount,  // amount in the smallest currency unit
+        currency: "INR",
+        receipt: "rcptid_1"
+      };
+
+      instance.orders.create(options, function(err, order) {
+        console.log(order);
+        res.send({orderId : order.id});
+      });
+
+})
+
+
+
+app.post("/api/payment/verify",(req,res)=>{
+
+    //  const razorpay_payment_id= req.body.response.razorpay_payment_id;
+    //  const razorpay_order_id = req.body.response.razorpay_order_id;
+    //  const razorpay_signature= req.body.response.razorpay_signature;
+
+    let body=req.body.response.razorpay_order_id + "|" + req.body.response.razorpay_payment_id;
+   
+     var crypto = require("crypto");
+     var expectedSignature = crypto.createHmac('sha256', 'nTDmXspaYr3D6zbVg8Nj2rNK')
+                                     .update(body.toString())
+                                     .digest('hex');
+                                     console.log("sig received " ,req.body.response.razorpay_signature);
+                                     console.log("sig generated " ,expectedSignature);
+     var response = {"signatureIsValid":"false"}
+     if(expectedSignature === req.body.response.razorpay_signature)
+      response={"signatureIsValid":"true"}
+         res.send(response);
+     });
 
 app.get("/logout", function (req, res) {
     console.log("Logged out");

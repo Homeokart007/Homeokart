@@ -14,7 +14,7 @@
     </header>
     <main>
         <section class="checkout-form">
-            <form action="#!" method="get">
+            <form action="/checkout" method="POST">
                 <h3>Contact information</h3>
                 <div class="form-control">
                     <label for="checkout-email">E-mail</label>
@@ -23,9 +23,9 @@
                         <input
                             type="email"
                             id="checkout-email"
-                            name="checkout-email"
+                            name="checkoutemail"
                             placeholder="Enter your email..."
-                        />
+                            value="<%=info[0].username%>"/>
                     </div>
                 </div>
                 <div class="form-control">
@@ -34,9 +34,10 @@
                         <span class="fa fa-phone"></span>
                         <input
                             type="tel"
-                            name="checkout-phone"
+                            name="checkoutphone"
                             id="checkout-phone"
                             placeholder="Enter you phone..."
+                            value="<%=info[0].phone%>"
                         />
                     </div>
                 </div>
@@ -49,8 +50,9 @@
                         <input
                             type="text"
                             id="checkout-name"
-                            name="checkout-name"
+                            name="checkoutname"
                             placeholder="Enter you name..."
+                            value="<%=info[0].username%>"
                         />
                     </div>
                 </div>
@@ -60,9 +62,10 @@
                         <span class="fa fa-home"></span>
                         <input
                             type="text"
-                            name="checkout-address"
+                            name="checkoutaddress"
                             id="checkout-address"
                             placeholder="Your address..."
+                            value="<%=info[0].address.street1%>"
                         />
                     </div>
                 </div>
@@ -72,9 +75,10 @@
                         <span class="fa fa-building"></span>
                         <input
                             type="text"
-                            name="checkout-city"
+                            name="checkoutcity"
                             id="checkout-city"
                             placeholder="Your city..."
+                            value="<%=info[0].address.city%>"
                         />
                     </div>
                 </div>
@@ -85,10 +89,11 @@
                             <span class="fa fa-globe"></span>
                             <input
                                 type="text"
-                                name="checkout-country"
+                                name="checkoutcountry"
                                 id="checkout-country"
                                 placeholder="Your country..."
                                 list="country-list"
+                                value="<%=info[0].address.country%>"
                             />
                             <datalist id="country-list">
                                 <option value="India"></option>
@@ -105,9 +110,10 @@
                             <span class="fa fa-archive"></span>
                             <input
                                 type="numeric"
-                                name="checkout-postal"
+                                name="checkoutpostal"
                                 id="checkout-postal"
                                 placeholder="Your postal code..."
+                                value="<%=info[0].address.zip%>"
                             />
                         </div>
                     </div>
@@ -117,7 +123,7 @@
                     <label for="checkout-checkbox">Save this information for next time</label>
                 </div> -->
                 <div class="form-control-btn">
-                    <button>Continue</button>
+                    <!-- <button>Pay Now</button> -->
                 </div>
             </form>
         </section>
@@ -125,54 +131,132 @@
         <section class="checkout-details">
             <div class="checkout-details-inner">
                 <div class="checkout-lists">
-                    <div class="card">
-                        <div class="card-image">
-                            <img
-                                src="https://vetri-suriya.web.app/devchallenges/checkout-page/photo1.png"
-                                alt=""
-                            />
-                        </div>
-                        <div class="card-details">
-                            <div class="card-name">Vintage Backbag</div>
-                            <div class="card-price">
-                                $54.99 <span>$94.99</span>
+                    <% info[1].products.forEach(function(product){ %>
+                        <div class="card">
+                            <div class="card-image">
+                                <img
+                                    src="<%=product.img.path[0]%>" 
+                                    alt=""
+                                />
                             </div>
-                            <!-- <div class="card-wheel">
-                                <button>-</button>
-                                <span>1</span>
-                                <button>+</button>
-                            </div> -->
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-image">
-                            <img
-                                src="https://vetri-suriya.web.app/devchallenges/checkout-page/photo2.png"
-                                alt=""
-                            />
-                        </div>
-                        <div class="card-details">
-                            <div class="card-name">Levi Shoes</div>
-                            <div class="card-price">
-                                $74.99 <span>$124.99</span>
+                            
+                            <div class="card-details">
+                                <div class="card-name"><%=product.name%></div>
+                                <div class="card-price">
+                                    ₹<%=product.price%> <span>₹<%=product.price+10%></span>
+                                </div>
+                                <!-- <div class="card-wheel">
+                                    <button>-</button>
+                                    <span>1</span>
+                                    <button>+</button>
+                                </div> -->
                             </div>
-                            <!-- <div class="card-wheel">
-                                <button>-</button>
-                                <span>1</span>
-                                <button>+</button>
-                            </div> -->
                         </div>
-                    </div>
+                   <% }) %>
+                    
+                   
                 </div>
                 <div class="checkout-shipping">
                     <h3>Shipping</h3>
-                    <p>$19</p>
+                    <p>₹ 50</p>
                 </div>
                 <div class="checkout-total">
                     <h3>Total</h3>
-                    <p>$148.98</p>
+                    <p>₹ <%=Math.round((info[1].totalPrice+50) * 100)/100 %></p>
                 </div>
+                <button id="rzp-button1">Pay</button>
             </div>
+            <% var amt = Math.round((info[1].totalPrice+50) * 100)%>
         </section>
     </main>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+    // const amt = info[1].totalPrice.toString();
+    var amoun = "<%= amt %>";
+    console.log("${amoun}",`${amoun}`)
+    // console.log("amoun",amoun);
+
+    var orderId ;
+$(document).ready(function(){
+    var settings = {
+  "url": "/create/orderId",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": JSON.stringify({
+    // "amount": `${info[1].totalPrice}`
+    "amount": `${amoun}`
+  }),
+};
+
+    //creates new orderId everytime
+    $.ajax(settings).done(function (response) {
+
+    orderId=response.orderId;
+    console.log(orderId);
+    $("button").show();
+    });
+});
+
+document.getElementById('rzp-button1').onclick = function(e){
+
+    var options = {
+    "key": "rzp_test_DrxDeJy6wmVzgw", // Enter the Key ID generated from the Dashboard
+    "amount": `${amoun}`, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "HomeoKart",
+    "description": "HomeoKart Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the previous step
+    // "order_id": `${orderId}`,
+    "handler": function (response){
+        console.log(response);
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature)
+
+        var settings = {
+         "url": "/api/payment/verify",
+         "method": "POST",
+         "timeout": 0,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "data": JSON.stringify({response}),
+}
+        //creates new orderId everytime
+$.ajax(settings).done(function (response) {
+
+alert(JSON.stringify(response));
+});
+    },
+    "prefill": {
+        "name": "Vagisha Kumar",
+        "email": "vagisha.kumar@example.com",
+        "contact": "9999999999"
+    },
+
+"theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+rzp1.open();
+    e.preventDefault();
+}
+</script>
+</html>

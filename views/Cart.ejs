@@ -200,7 +200,7 @@
                 <!-- </div> -->
             </div>
             <div class="frm">
-                <form action="/cart" method="POST">
+                <!-- <form action="/checkout" method="POST"> -->
                     <!-- right side div -->
                     <div class="frm-cnt">
                         <div class="frm-sec">
@@ -211,7 +211,7 @@
                                 class="price_indiv d-flex justify-content-between"
                             >
                                 <p>Amount</p>
-                                <p>₹<span id="product_total_amt"><%=cart.totalPrice%></span></p>
+                                <p>₹<span id="product_total_amt"><%=Math.round(cart.totalPrice * 100) /100%></span></p>
                             </div>
                             <div
                                 class="price_indiv d-flex justify-content-between"
@@ -224,11 +224,13 @@
                                 class="total-amt d-flex justify-content-between font-weight-bold"
                             >
                                 <p>The total amount of cart</p>
-                                <p>₹<span id="total_cart_amt">290.00</span></p>
+                                <p>₹<span id="total_cart_amt"><%=Math.round((cart.totalPrice + 50) * 100) /100%></span></p>
                             </div>
-                            <button class="btn btn-primary text-uppercase">
+                            <a href="/checkout" type ="button" class="btn btn-primary text-uppercase" >
+                            <!-- <button class="btn btn-primary text-uppercase"> -->
                                 Checkout
-                            </button>
+                            <!-- </button> -->
+                        </a>
                         </div>
                         <!-- discount code part -->
                         <div class="discount_code mt-3 shadow">
@@ -282,7 +284,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                <!-- </form> -->
             </div>
         </div>
         <!-- </form> -->
