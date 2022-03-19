@@ -1014,14 +1014,15 @@ app.get("/checkout/:productid", function(req,res){
                 
                 const products = {img: results.img,
                     name : results.name,
-                    totalPrice : results.price
+                    price : Number(results.price)
                 }
                 console.log("I am products",products)
-                arr.push({products : [products]})
+                arr.push({products : [products], totalPrice : Number(results.price)})
                 console.log("Arr2", arr)
-                res.render("checkout", { info: arr });
+                await res.render("checkout", { info: arr });
             }
         })
+        // res.render("checkout", { info: arr });
     }
     else{
         res.redirect("/login")
