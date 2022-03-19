@@ -79,7 +79,7 @@
                                             src="https://img.icons8.com/small/16/000000/user.png" />&nbsp;Full Name</h4>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    HomeoKart User
+                                    <%=prf.username%>
                                 </div>
                             </div>
                             <hr>
@@ -89,7 +89,7 @@
                                             src="https://img.icons8.com/small/16/000000/new-post.png" />&nbsp;Email</h4>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    homeokart@gmail.com
+                                    <%=prf.usermail%>
                                 </div>
                             </div>
                             <hr>
@@ -99,7 +99,7 @@
                                             src="https://img.icons8.com/small/16/000000/user.png" />&nbsp;Age</h4>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-
+                                    <%=prf.age%>
                                 </div>
                             </div>
                             <hr>
@@ -109,7 +109,7 @@
                                             src="https://img.icons8.com/small/16/000000/phone.png" />&nbsp;Phone</h4>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    +91 00000 00000
+                                    <%=prf.phone %>
                                 </div>
                             </div>
                             <hr>
@@ -130,7 +130,7 @@
                                             src="https://img.icons8.com/small/16/000000/home.png" />&nbsp;Address</h4>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    MSU Polytechnic, Fatehgunj, Vadodara
+                                    <%=prf.address.street1%>
                                 </div>
                             </div>
                             <hr>
@@ -140,12 +140,12 @@
                                             src="https://img.icons8.com/small/16/000000/home.png" />&nbsp;Pincode</h4>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    392011
+                                    <%=prf.address.zip%>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-info " target="__blank" href="edit-profile.html">Edit</a>
+                                    <a class="btn btn-info " target="__blank" href="/editProfile">Edit</a>
                                 </div>
                             </div>
                         </div>
