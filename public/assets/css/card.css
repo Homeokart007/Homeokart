@@ -9,8 +9,8 @@
   .card {
     margin: 0 0.5em;
     box-shadow: 2px 6px 8px 0 rgba(60, 60, 196, 0.781);
-    border: none;
-    border-radius: 0;
+    /* border: none; */
+    /* border-radius: 0; */
     margin-bottom: 30px !important;
   }
   .carousel-inner {
