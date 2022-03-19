@@ -909,6 +909,18 @@ app.get("/product/:prdid", function (req, res) {
 //     // })
 // });
 
+app.get("/profile", function (req,res){
+    res.render("profileNew");
+})
+
+app.get("/editProfile", function (req,res){
+    res.render("edit-profileNew");
+})
+app.post("/editProfile", (req, res)=>{
+    console.log(req.body);
+    res.redirect("/profile");
+})
+
 app.post("/login", (req, res) => {
     const email = req.body.email;
     User.findOne(
