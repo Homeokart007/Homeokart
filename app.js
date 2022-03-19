@@ -994,41 +994,35 @@ app.get("/checkout", function (req, res) {
 app.get("/checkout/:productid", function(req,res){
     const prdid = req.params.productid
     const arr = []
-    let flag = 0
     if(req.isAuthenticated()){
         const userId = req.user.id;
         console.log("Inside Buy Now",userId)
 
-        while (flag==0) {
             User.findById(userId, function (err, results) {
                 if (err) {
                     console.log(err);
                 } else {
                     console.log('Results of User', results)
                     arr.push(results)
+                    Product.findById(prdid, function(err, results) {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            console.log('Results', results)
+                            // const totalPrice = results.price
+                            
+                            const products = {img: results.img,
+                                name : results.name,
+                                price : Number(results.price)
+                            }
+                            console.log("I am products",products)
+                            arr.push({products : [products], totalPrice : Number(results.price)})
+                            console.log("Arr2", arr)
+                            res.render("checkout", { info: arr });
+                        }
+                    })
                 }
             })
-            flag=1;
-        }
-        
-
-        Product.findById(prdid, function(err, results) {
-            if(err) {
-                console.log(err);
-            } else {
-                console.log('Results', results)
-                // const totalPrice = results.price
-                
-                const products = {img: results.img,
-                    name : results.name,
-                    price : Number(results.price)
-                }
-                console.log("I am products",products)
-                arr.push({products : [products], totalPrice : Number(results.price)})
-                console.log("Arr2", arr)
-                res.render("checkout", { info: arr });
-            }
-        })
         // res.render("checkout", { info: arr });
     }
     else{
