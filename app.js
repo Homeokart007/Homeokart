@@ -990,7 +990,7 @@ app.get("/checkout", function (req, res) {
 
 });
 
-app.get("/checkout/:productid", function(req,res){
+app.get("/checkout/:productid", async function(req,res){
     const prdid = req.params.productid
     const arr = []
     if(req.isAuthenticated()){
@@ -1005,7 +1005,7 @@ app.get("/checkout/:productid", function(req,res){
             }
         })
 
-        Product.findById(prdid,async function(err, results) {
+        await Product.findById(prdid,async function(err, results) {
             if(err) {
                 console.log(err);
             } else {
@@ -1019,7 +1019,7 @@ app.get("/checkout/:productid", function(req,res){
                 console.log("I am products",products)
                 arr.push({products : [products], totalPrice : Number(results.price)})
                 console.log("Arr2", arr)
-                await res.render("checkout", { info: arr });
+                res.render("checkout", { info: arr });
             }
         })
         // res.render("checkout", { info: arr });
