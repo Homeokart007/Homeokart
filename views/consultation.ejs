@@ -234,7 +234,7 @@
             <!-- <h2 class="text-center">Contac Form</h2> -->
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-6 pb-5">
-                    <form action="mail.php" method="post">
+                    <form action="/consultation" method="post">
                         <div class="carrd border-primary rounded-0">
                             <div class="card-header p-0">
                                 <div class="bg-info text-white text-center py-2">
@@ -322,9 +322,9 @@
                                         </div>
                                         <select name="department" id="department" class="form-select">
                                             <option value="">Select Department</option>
-                                            <option value="Doctor 1">Department 1</option>
-                                            <option value="Doctor 2">Department 2</option>
-                                            <option value="Doctor 3">Department 3</option>
+                                            <option value="Orthopedic">Orthopedic</option>
+                                            <option value="Gynaecologist">Gynaecologist</option>
+                                            <option value="Dermatologist">Dermatologist</option>
                                         </select>
                                     </div>
                                 </div>
@@ -339,7 +339,7 @@
                                             <div class="input-group-text"><i class="fa fa-comment text-info"></i>
                                             </div>
                                         </div>
-                                        <textarea class="form-control" name="message" rows="3"
+                                        <textarea class="form-control" name="comments" rows="3"
                                             placeholder="Message (Optional)" required></textarea>
                                     </div>
                                 </div>
@@ -383,25 +383,27 @@
                         </p>
                     </div>
                     <div class="row">
+
+                        <% docData.forEach(function(doc) {%>
                         <div class="col-md-3">
                             <div class="card-content">
                                 <div class="card-img">
                                     <img src="assets/img/doctors/doctors-1.jpg" class="img-fluid" alt="" />
                                 <span><h4>
                                     <i class="fa-solid fa-star"></i>
-                                    3.5/5
+                                    <%=doc.ratings%>/5
                                 </h4></span>
                                 </div>
                                 <div class="card-desc">
-                                    <h3>Walter White</h3>
-                                    <h4>Chief Medical Officer</h4>
-                                    <p> Explicabo voluptatem mollitia et repellat qui
-                                        dolorum quasi officiis et et accusamus</p>
+                                    <h3><%=doc.username%></h3>
+                                    <h4><%=doc.department%></h4>
+                                    <p> <%=doc.description%></p>
                                           <div class="button-div"><a href="#" class="btn-card">Request Consultation</a></div> 
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <% })%>
+                        <!-- <div class="col-md-3">
                             <div class="card-content">
                                 <div class="card-img">
                                     <img src="assets/img/doctors/doctors-2.jpg" class="img-fluid" alt="" />
@@ -458,7 +460,7 @@
                                         
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     </div>

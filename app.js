@@ -65,6 +65,14 @@ var cart = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_CART, {
     useNewUrlParser: true
 });
 
+var appointment = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_APPOINTMENT,{
+    useNewUrlParser: true
+});
+
+var doctor = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_DOCTOR,{
+    useNewUrlParser:true
+});
+
 const categorie = [
     {
         name: "Hair Care",
@@ -102,6 +110,61 @@ const categorie = [
         img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
     }
 ];
+
+const doctorsSchema = {
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    username: {
+        type: String,
+        required: true
+    },
+    department: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    ratings: {
+        type:Number,
+        default:""
+    },
+    degree: {
+        type:String,
+        default:""
+    },
+    exp:{
+        type:Number,
+        default:null
+    },
+    charge:{
+        type:Number,
+        default:null
+    },
+    img: {
+        path: Array,
+        contentType: String
+    },
+    appoin: [
+        {
+            patientId: String,
+            paDesc: String,
+            name: String,
+            // price: Number,
+            date:Date,
+            time:String,
+            img: {
+                path: Array,
+                contentType: String
+            }
+        }
+    ]
+}
+
+const Doctor = doctor.model("Doctor", doctorsSchema);
 
 const productsSchema = {
     name: {
@@ -182,6 +245,81 @@ const CartSchema = new mongoose.Schema(
 );
 
 const Cart = cart.model("Cart", CartSchema);
+
+const AppointmentSchema = new mongoose.Schema(
+    {
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        newApp:[{
+        username: {
+            type: String,
+            default: ""
+            // required: true
+        },
+        usermail: {
+            type: String,
+            default: ""
+            // required: true
+        },
+        phone: {
+            type: Number,
+            default: null
+            // required: true
+        },
+        age: {
+            type: Number,
+            default: null,
+            min: 18,
+            max: 100
+        },
+        gender: {
+            type: String,
+            default:""
+        },
+        department: {
+            type: String,
+            default:""
+        },
+        comments: {
+            type:String,
+            default:""
+        }
+        }],
+        appointments: [
+            {
+                doctorId: String,
+                department: String,
+                name: String,
+                price: Number,
+                date:Date,
+                time:String,
+                img: {
+                    path: Array,
+                    contentType: String
+                }
+            }
+        ],
+        // totalPrice: {
+        //     type: Number,
+        //     default: 0
+        // },
+        active: {
+            type: Boolean,
+            default: true
+        },
+        modifiedOn: {
+            type: Date,
+            default: Date.now
+        }
+    },
+    {
+        timestamps: true
+    }
+);
+
+const Appointment = appointment.model("Appointment", AppointmentSchema);
 
 // const userSchema = new mongoose.Schema({
 //     username: String,
@@ -445,11 +583,11 @@ app.post("/register", (req, res) => {
     );
 });
 
-app.get("/consultation", function (req, res) {
-    res.render("consultation", {
-        isAuthenticated: req.isAuthenticated()
-    });
-});
+// app.get("/consultation", function (req, res) {
+//     res.render("consultation", {
+//         isAuthenticated: req.isAuthenticated()
+//     });
+// });
 
 // app.get("/product", function (req, res) {
 //     res.render("product", {
@@ -1172,6 +1310,97 @@ app.post("/editProfile",function(req,res){
 // app.post("/myProfile",function(req,res){
 
 // })
+
+app.get("/consultation",function(req,res){
+    console.log('Entered inside consultation')
+    if(req.isAuthenticated()){
+        // console.log('Entered inside consultation')
+        Doctor.find({},function(err,results){
+            if(err){
+                console.log(err)
+            } else {
+                console.log("XXXXXX")
+                console.log(results)
+                res.render("consultation",{ docData : results, isAuthenticated: req.isAuthenticated()})
+            }
+        })
+    } else {
+        res.redirect("/login")
+    }
+})
+
+app.post("/consultation",function(req,res){
+    
+if(req.isAuthenticated()){
+    const userId = req.user.id;
+    const appn = new Appointment({
+        userId : userId,
+        newApp : [{
+            username : req.body.name,
+            usermail : req.body.email,
+            phone : req.body.phone,
+            age : req.body.age,
+            gender : req.body.gender,
+            department : req.body.department,
+            comments : req.body.comments,
+        }]
+    })
+    console.log("Entered inside consul2")
+    Appointment.create(appn,function(err,result){
+        if(err){
+            console.log(err)
+        } else {
+            console.log("Entered Here")
+            console.log(result);
+        }
+    })
+} else {
+    res.redirect("/login");
+}
+    
+})
+
+app.get("/registerDoc",function(req,res){
+    if(req.isAuthenticated()){
+        res.render("registerDoc")
+        
+    } else {
+        res.redirect("/login")
+    }
+})
+
+app.post("/registerDoc",upload.single("productImage"),function(req,res){
+
+
+
+    if(req.isAuthenticated()){
+        const userId = req.user.id;
+
+        const doctor = new Doctor({
+        userId : userId,
+        username : req.body.doctorName,
+        usermail : req.body.doctorEmail,
+        department : req.body.expertise,
+        description : req.body.doctordesc,
+        charge : req.body.doctorPrice,
+        ratings : req.body.doctorRating,
+        degree : req.body.doctorDegree,
+        exp : req.body.doctorExperience,
+    })
+
+    console.log("Entered inside consul2")
+    Doctor.create(doctor,function(err,result){
+        if(err){
+            console.log(err)
+        } else {
+            console.log("Entered Here")
+            console.log(result);
+        }
+    })
+    } else {
+        res.redirect("/login")
+    }
+})
 
 app.get("/logout", function (req, res) {
     console.log("Logged out");
