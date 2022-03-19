@@ -287,8 +287,8 @@ passport.use(
             User.findOrCreate(
                 {
                     googleId: profile.id,
-                    username: profile.displayName,
-                    profImg: profile.photos[0].value
+                    // username: profile.displayName,
+                    // profImg: profile.photos[0].value
                 },
                 function (err, user) {
                     return done(err, user);
@@ -909,8 +909,10 @@ app.get("/product/:prdid", function (req, res) {
 //     // })
 // });
 
+
 app.post("/login", (req, res) => {
     const email = req.body.email;
+    
     User.findOne(
         {
             usermail: email
@@ -988,22 +990,28 @@ app.get("/checkout", function (req, res) {
 
 });
 
-app.get("/checkout/:productid",function(req,res){
+app.get("/checkout/:productid", function(req,res){
     const prdid = req.params.productid
     const arr = []
+    let flag = 0
     if(req.isAuthenticated()){
         const userId = req.user.id;
-        console.log(userId)
-        User.findById(userId, function (err, results) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log('Results', results)
-                arr.push(results)
-            }
-        })
+        console.log("Inside Buy Now",userId)
 
-        Product.findById(prdid,function(err, results) {
+        while (flag==0) {
+            User.findById(userId, function (err, results) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Results of User', results)
+                    arr.push(results)
+                }
+            })
+            flag=1;
+        }
+        
+
+        Product.findById(prdid, function(err, results) {
             if(err) {
                 console.log(err);
             } else {
@@ -1012,13 +1020,15 @@ app.get("/checkout/:productid",function(req,res){
                 
                 const products = {img: results.img,
                     name : results.name,
-                    totalPrice : results.price
+                    price : Number(results.price)
                 }
-                arr.push(products)
+                console.log("I am products",products)
+                arr.push({products : [products], totalPrice : Number(results.price)})
                 console.log("Arr2", arr)
                 res.render("checkout", { info: arr });
             }
         })
+        // res.render("checkout", { info: arr });
     }
     else{
         res.redirect("/login")
@@ -1073,6 +1083,100 @@ app.post("/api/payment/verify",(req,res)=>{
       response={"signatureIsValid":"true"}
          res.send(response);
      });
+
+app.get("/myProfile",function(req,res){
+    if(req.isAuthenticated()){
+        
+        const userId = req.user.id;
+        console.log("Inside my Profile",userId)
+        User.findById(userId,function(err,results){
+            if(err){
+                console.log(err);
+            } else {
+                console.log("Updated Results in my Profile",results)
+                res.render("profileNew",{prf : results});
+            }
+        })
+        // res.render("profileNew");
+    } else {
+        res.redirect("/login")
+    }
+    
+})     
+
+app.get("/editProfile",function(req,res){
+    if(req.isAuthenticated()){
+        const userId = req.user.id;
+
+        User.findById(userId,function(err,results){
+            if(err){
+                console.log(err);
+            } else {
+                console.log("Updated Results in edit Profile",results)
+                res.render("edit-profileNew",{prf : results});
+            }
+        })
+        // res.render("edit-profileNew")
+    } else {
+        res.redirect("/login")
+    }
+   
+})
+
+app.post("/editProfile",function(req,res){
+    const username = req.body.fullName;
+    const usermail = req.body.userEmail;
+    const userage = req.body.userAge;
+    const userphone = req.body.userPhoneNumber;
+    const usergender= req.body.userGender;
+    const userstreet1 = req.body.userStreet1;
+    const userstreet2 = req.body.userStreet2
+    const userpincode = req.body.userpincode;
+    const usercity = req.body.userCity;
+    const userstate = req.body.userState
+    const usercountry = req.body.userCountry
+
+    console.log("Received value",username);
+    console.log("Received value",usermail);
+    console.log("Received value",userage);
+    console.log("Received value",userphone);
+    console.log("Received value",usergender);
+    console.log("Received value",userstreet1);
+    console.log("Received value",userpincode);
+
+    const addr = {
+        country : usercountry,
+        street1: userstreet1,
+        street2: userstreet2,
+        city:  usercity,
+        state: userstate,
+        zip: userpincode
+    }
+
+    console.log("addr",addr)
+    if(req.isAuthenticated()){
+
+        const userid = req.user.id;
+        console.log("Userid inside edit profile",userid)
+
+        User.findByIdAndUpdate(userid,{username:username,usermail:usermail, age: userage,phone:userphone,address:addr },function(err,results){
+            if(err){
+                console.log(err)
+            } else {
+                console.log("Here")
+                console.log(results);
+                res.redirect('/myProfile')
+            }
+        })
+
+    } else {
+        res.redirect("/login")
+    }
+})
+
+// app.post("/myProfile",function(req,res){
+
+// })
 
 app.get("/logout", function (req, res) {
     console.log("Logged out");

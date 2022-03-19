@@ -2,7 +2,7 @@
     background: #f7f7ff;
     margin-top: 20px;
 }
-
+/* 
 .card {
     position: relative;
     display: flex;
@@ -52,4 +52,48 @@ me-2 {
 
 .card .list-group:last-child {
     margin-block-end: 6.3rem;
+} */
+
+
+
+
+
+
+
+* {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.form-select{
+    width: auto !important;
+}
+
+h1 {
+    text-align: center;
+    color: #121212;
+    margin: 5rem auto 2rem;
+    text-decoration: underline;
+}
+
+label,
+select {
+    font-weight: 600;
+}
+
+select {
+    font-weight: 600 !important;
+}
+
+textarea {
+    min-height: 100px !important;
+}
+
+form {
+    /* width: 50%; */
+    margin: 1rem auto;
+}
+
+.form-check {
+    margin: auto auto auto 3rem;
 }
