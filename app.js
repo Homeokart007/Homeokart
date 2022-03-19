@@ -287,8 +287,8 @@ passport.use(
             User.findOrCreate(
                 {
                     googleId: profile.id,
-                    username: profile.displayName,
-                    profImg: profile.photos[0].value
+                    // username: profile.displayName,
+                    // profImg: profile.photos[0].value
                 },
                 function (err, user) {
                     return done(err, user);
@@ -911,6 +911,7 @@ app.get("/product/:prdid", function (req, res) {
 
 app.post("/login", (req, res) => {
     const email = req.body.email;
+    
     User.findOne(
         {
             usermail: email
@@ -988,22 +989,22 @@ app.get("/checkout", function (req, res) {
 
 });
 
-app.get("/checkout/:productid",function(req,res){
+app.get("/checkout/:productid", function(req,res){
     const prdid = req.params.productid
     const arr = []
     if(req.isAuthenticated()){
         const userId = req.user.id;
-        console.log(userId)
+        console.log("Inside Buy Now",userId)
         User.findById(userId, function (err, results) {
             if (err) {
                 console.log(err);
             } else {
-                console.log('Results', results)
+                console.log('Results of User', results)
                 arr.push(results)
             }
         })
 
-        Product.findById(prdid,function(err, results) {
+        Product.findById(prdid,async function(err, results) {
             if(err) {
                 console.log(err);
             } else {
@@ -1014,7 +1015,8 @@ app.get("/checkout/:productid",function(req,res){
                     name : results.name,
                     totalPrice : results.price
                 }
-                arr.push(products)
+                console.log("I am products",products)
+                arr.push({products : [products]})
                 console.log("Arr2", arr)
                 res.render("checkout", { info: arr });
             }
@@ -1073,6 +1075,81 @@ app.post("/api/payment/verify",(req,res)=>{
       response={"signatureIsValid":"true"}
          res.send(response);
      });
+
+app.get("/myProfile",function(req,res){
+    if(req.isAuthenticated()){
+        
+        const userId = req.user.id;
+        console.log("Inside my Profile",userId)
+        User.findById(userId,function(err,results){
+            if(err){
+                console.log(err);
+            } else {
+                console.log("Updated Results in my Profile",results)
+                res.render("profileNew",{prf : results});
+            }
+        })
+        // res.render("profileNew");
+    } else {
+        res.redirect("/login")
+    }
+    
+})     
+
+app.get("/editProfile",function(req,res){
+    res.render("edit-profileNew")
+})
+
+app.post("/editProfile",function(req,res){
+    const username = req.body.username;
+    const usermail = req.body.usermail;
+    const userage = req.body.userage;
+    const userphone = req.body.userphone;
+    const usergender= req.body.usergender;
+    const userstreet = req.body.userstreet;
+    const userpincode = req.body.userpincode;
+
+    console.log("Received value",username);
+    console.log("Received value",usermail);
+    console.log("Received value",userage);
+    console.log("Received value",userphone);
+    console.log("Received value",usergender);
+    console.log("Received value",userstreet);
+    console.log("Received value",userpincode);
+
+    const addr = {
+        country : "",
+        street1: userstreet,
+        street2: userstreet,
+        city: "",
+        state: "",
+        zip: userpincode
+    }
+
+    console.log("addr",addr)
+    if(req.isAuthenticated()){
+
+        const userid = req.user.id;
+        console.log("Userid inside edit profile",userid)
+
+        User.findByIdAndUpdate(userid,{username:username,usermail:usermail, age: userage,phone:userphone,address:addr },function(err,results){
+            if(err){
+                console.log(err)
+            } else {
+                console.log("Here")
+                console.log(results);
+                res.redirect('/myProfile')
+            }
+        })
+
+    } else {
+        res.redirect("/login")
+    }
+})
+
+// app.post("/myProfile",function(req,res){
+
+// })
 
 app.get("/logout", function (req, res) {
     console.log("Logged out");
