@@ -5,155 +5,183 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="/HomeoKart/public/CSS/NewProfilePage.css">
+    <link rel="stylesheet" href="/CSS/NewProfilePage.css">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+        integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
 </head>
 
 <body>
-    <div class="container">
-        <div class="main-body">
-            <!-- Breadcrumb
-            <nav aria-label="breadcrumb" class="main-breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-                </ol>
-            </nav> -->
-            <!-- /Breadcrumb -->
-            <div class="row gutters-sm">
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center">
-                                <img src="<%=prf.profImg%>" alt="Admin"
-                                    class="rounded-circle" width="150">
-                                <div class="mt-3">
-                                    <h4 style="font-weight: bolder;">HomeoKart User</h4>
-                                </div>
+
+    <div class="container portfolio">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="heading">
+                    <img src="https://image.ibb.co/cbCMvA/logo.png" />
+                </div>
+            </div>
+        </div>
+        <div class="bio-info">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12 profile-imgDiv">
+                            <div class="bio-image">
+                                <!-- <img src="<%=prf.profImg%>" alt="Admin"
+                                    class="rounded-circle"> -->
+                                <img src="https://www.seekpng.com/png/small/966-9665493_my-profile-icon-blank-profile-image-circle.png"
+                                    alt="Admin" class="rounded-circle">
+
                             </div>
                         </div>
-                    </div>
-                    <div class="card mt-3">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><a href="profile.html" style="text-decoration:none;">Profile</a></h6>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><a href="#" style="text-decoration:none;">Cart</a></h6>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><a href="wishlist.html" style="text-decoration:none;">My Wishlist</a>
-                                </h6>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><a href="subscription.html" style="text-decoration:none;">My
-                                        Subscriptions</a></h6>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><a href="#" style="text-decoration:none;">Help</a></h6>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><a href="#" style="text-decoration:none;">Contact us</a></h6>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><a href="#" style="text-decoration:none;">Logout</a></h6>
-                            </li>
-                        </ul>
+                        <div class="card mt-3 profile-div">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <h6 class="mb-0">
+                                        <a href="profile.html" style="text-decoration:none;">Profile</a>
+                                    </h6>
+                                </li>
+                                <li class="list-group-item">
+                                    <h6 class="mb-0"><a href="#" style="text-decoration:none;">Cart</a></h6>
+                                </li>
+                                <li class="list-group-item">
+                                    <h6 class="mb-0"><a href="wishlist.html" style="text-decoration:none;">My
+                                            Wishlist</a>
+                                    </h6>
+                                </li>
+                                <li class="list-group-item">
+                                    <h6 class="mb-0"><a href="subscription.html" style="text-decoration:none;">My
+                                            Subscriptions</a></h6>
+                                </li>
+                                <li class="list-group-item">
+                                    <h6 class="mb-0"><a href="#" style="text-decoration:none;">Help</a></h6>
+                                </li>
+                                <li class="list-group-item">
+                                    <h6 class="mb-0"><a href="#" style="text-decoration:none;">Contact us</a></h6>
+                                </li>
+                                <li class="list-group-item">
+                                    <h6 class="mb-0"><a href="#" style="text-decoration:none;">Logout</a></h6>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="card  mb-3">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h4 class="mb-0"><img
-                                            src="https://img.icons8.com/small/16/000000/user.png" />&nbsp;Full Name</h4>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <%=prf.username%>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h4 class="mb-0"><img
-                                            src="https://img.icons8.com/small/16/000000/new-post.png" />&nbsp;Email</h4>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <%=prf.usermail%>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h4 class="mb-0"><img
-                                            src="https://img.icons8.com/small/16/000000/user.png" />&nbsp;Age</h4>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <%=prf.age%>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h4 class="mb-0"><img
-                                            src="https://img.icons8.com/small/16/000000/phone.png" />&nbsp;Phone</h4>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <%=prf.phone %>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h4 class="mb-0"><img
-                                            src="https://img.icons8.com/material-outlined/24/000000/conference-call.png"/
-                                            style="width: 20px;">&nbsp;Gender</h4>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    Male
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h4 class="mb-0"><img
-                                            src="https://img.icons8.com/small/16/000000/home.png" />&nbsp;Address</h4>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <%=prf.address.street1%>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h4 class="mb-0"><img
-                                            src="https://img.icons8.com/small/16/000000/home.png" />&nbsp;Pincode</h4>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <%=prf.address.zip%>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <a class="btn btn-info " href="/editProfile">Edit</a>
-                                </div>
-                            </div>
+                <div class="col-md-6 details">
+                    <div class="row">
+                        <div class="col-sm-4 details-label">
+                            <h4 class="mb-0">
+                                <i class="fa-solid fa-user"></i>
+                                Full Name
+                            </h4>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            <%=prf.username%>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4 details-label">
+                            <h4 class="mb-0">
+                                <i class="fa-solid fa-envelope"></i>
+                                Email
+                            </h4>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            <%=prf.usermail%>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4 details-label">
+                            <h4 class="mb-0">
+                                <i class="fa-solid fa-user-pen"></i>
+                                Age
+                            </h4>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            <%=prf.age%>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4 details-label">
+                            <h4 class="mb-0">
+                                <i class="fa-solid fa-phone"></i>
+                                Phone
+                            </h4>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            <%=prf.phone %>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4 details-label">
+                            <h4 class="mb-0"><i class="fa-solid fa-mars-and-venus"></i>
+                                Gender
+                            </h4>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            Male
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4 details-label">
+                            <h4 class="mb-0">
+                                <i class="fa-solid fa-house-chimney-user"></i>
+                                Address
+                            </h4>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            <%=prf.address.street1%>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4 details-label">
+                            <h4 class="mb-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                                Pincode
+                            </h4>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            <%=prf.address.zip%>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a class="btn btn-info " href="/editProfile" style="width: inherit">
+                                Edit</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 </body>
 
 </html>

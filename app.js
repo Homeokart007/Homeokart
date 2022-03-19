@@ -1387,6 +1387,16 @@ if(req.isAuthenticated()){
         } else {
             console.log("Entered Here")
             console.log(result);
+            // res.render("docCategory",{docData : result, isAuthenticated: req.isAuthenticated()})
+        }
+    })
+
+    Doctor.find({department : req.body.department},function(err,results){
+        if(err){
+            console.log(err);
+        } else {
+            console.log(results)
+            res.render("docCategory",{docData : results, isAuthenticated: req.isAuthenticated()})
         }
     })
 } else {
@@ -1430,11 +1440,38 @@ app.post("/registerDoc",upload.single("productImage"),function(req,res){
         } else {
             console.log("Entered Here")
             console.log(result);
+            res.redirect("/consultation")
         }
     })
     } else {
         res.redirect("/login")
     }
+})
+
+app.get("/docCategory",function(req,res){
+
+    if(req.isAuthenticated()){
+        // console.log('Entered inside consultation')
+        Doctor.find({},function(err,results){
+            if(err){
+                console.log(err)
+            } else {
+                console.log("XXXXXX")
+                console.log(results)
+                res.render("consultation",{ docData : results, isAuthenticated: req.isAuthenticated()})
+            }
+        })
+    } else {
+        res.redirect("/login")
+    }
+})
+
+app.get("/docProfile",function(req,res){
+    res.render("docProfile");
+})
+
+app.get("/booking",function(req,res){
+    res.render("booking");
 })
 
 app.get("/logout", function (req, res) {
