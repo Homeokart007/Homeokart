@@ -20,7 +20,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
+                                <img src="<%=prf.profImg%>" alt="Admin"
                                     class="rounded-circle" width="150">
                                 <div class="mt-3">
                                     <h4>HomeoKart User</h4>
@@ -64,14 +64,14 @@
                         <!-- USER NAME -->
                         <div class="form-floating mb-3">
                             <input required type="text" id="full-name" name="fullName" class="form-control"
-                                placeholder="Full name">
+                                placeholder="Full name" value="<%=prf.username%>">
                             <label for="full-name">FULL NAME</label>
                         </div>
 
                         <!-- USER EMAIL -->
                         <div class="form-floating mb-3">
                             <input required type="email" class="form-control" id="user-email" name="userEmail"
-                                placeholder="name@example.com">
+                                placeholder="name@example.com" value="<%=prf.usermail%>">
                             <label for="user-email">Email address</label>
                         </div>
 
@@ -87,7 +87,7 @@
                             <div class="col-4 mb-3">
                                 <div class="form-floating">
                                     <input required type="number" min="1" max="100" id="user-age" name="userAge"
-                                        class="form-control" placeholder="Age">
+                                        class="form-control" placeholder="Age" value="<%=prf.age%>">
                                     <label for="user-age">AGE</label>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                             <div class="col-4 mb-3">
                                 <div class="form-floating">
                                     <input required type="tel" id="user-phone-number" name="userPhoneNumber"
-                                        class="form-control" placeholder="Phone Number" pattern="[6-9]{1}[0-9]{9}">
+                                        class="form-control" placeholder="Phone Number" pattern="[6-9]{1}[0-9]{9}" value="<%=prf.phone%>">
                                     <label for="user-phone-number">PHONE NUMBER</label>
                                 </div>
                             </div>
@@ -114,33 +114,33 @@
                         <!-- USER ADDRESS -->
                         <div class="form-floating mb-3">
                             <input required type="text" id="user-street1" name="userStreet1" class="form-control"
-                                placeholder="Home Address">
+                                placeholder="Home Address" value="<%=prf.address.street1%>">
                             <label for="user-street1">FLAT / BUILDING NO. / SOCIETY NAME</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input required type="text" id="user-street2" name="userStreet2" class="form-control"
-                                placeholder="Street 2">
+                                placeholder="Street 2" value="<%=prf.address.street2%>">
                             <label for="user-street2">STREET</label>
                         </div>
                         <div class="row">
                             <div class="col-3 mb-3">
                                 <div class="form-floating">
                                     <input required type="text" id="user-city" name="userCity" class="form-control"
-                                        placeholder="City">
+                                        placeholder="City" value="<%=prf.address.city%>">
                                     <label for="user-city">CITY</label>
                                 </div>
                             </div>
                             <div class="col-3 mb-3">
                                 <div class="form-floating">
                                     <input required type="text" id="user-state" name="userState" class="form-control"
-                                        placeholder="State">
+                                        placeholder="State" value="<%=prf.address.state%>">
                                     <label for="user-state">STATE</label>
                                 </div>
                             </div>
                             <div class="col-3 mb-3">
                                 <div class="form-floating">
                                     <input required type="text" id="user-country" name="userCountry"
-                                        class="form-control" placeholder="Country">
+                                        class="form-control" placeholder="Country" value="<%=prf.address.country%>">
                                     <label for="user-country">COUNTRY</label>
                                 </div>
                             </div>
@@ -148,7 +148,7 @@
                             <div class="col-3 mb-3">
                                 <div class="form-floating">
                                     <input required type="tel" id="user-pincode" name="userPincode" class="form-control"
-                                        placeholder="Pincode" pattern="[1-9]{1}[0-9]{5}">
+                                        placeholder="Pincode" pattern="[1-9]{1}[0-9]{5}" value="<%=prf.address.zip%>">
                                     <label for="user-pincode">PINCODE</label>
                                 </div>
                             </div>

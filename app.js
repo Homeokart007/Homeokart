@@ -1014,14 +1014,15 @@ app.get("/checkout/:productid", function(req,res){
                 
                 const products = {img: results.img,
                     name : results.name,
-                    totalPrice : results.price
+                    price : Number(results.price)
                 }
                 console.log("I am products",products)
-                arr.push({products : [products]})
+                arr.push({products : [products], totalPrice : Number(results.price)})
                 console.log("Arr2", arr)
-                res.render("checkout", { info: arr });
+                await res.render("checkout", { info: arr });
             }
         })
+        // res.render("checkout", { info: arr });
     }
     else{
         res.redirect("/login")
@@ -1098,32 +1099,51 @@ app.get("/myProfile",function(req,res){
 })     
 
 app.get("/editProfile",function(req,res){
-    res.render("edit-profileNew")
+    if(req.isAuthenticated()){
+        const userId = req.user.id;
+
+        User.findById(userId,function(err,results){
+            if(err){
+                console.log(err);
+            } else {
+                console.log("Updated Results in edit Profile",results)
+                res.render("edit-profileNew",{prf : results});
+            }
+        })
+        // res.render("edit-profileNew")
+    } else {
+        res.redirect("/login")
+    }
+   
 })
 
 app.post("/editProfile",function(req,res){
-    const username = req.body.username;
-    const usermail = req.body.usermail;
-    const userage = req.body.userage;
-    const userphone = req.body.userphone;
-    const usergender= req.body.usergender;
-    const userstreet = req.body.userstreet;
+    const username = req.body.fullName;
+    const usermail = req.body.userEmail;
+    const userage = req.body.userAge;
+    const userphone = req.body.userPhoneNumber;
+    const usergender= req.body.userGender;
+    const userstreet1 = req.body.userStreet1;
+    const userstreet2 = req.body.userStreet2
     const userpincode = req.body.userpincode;
+    const usercity = req.body.userCity;
+    const userstate = req.body.userState
+    const usercountry = req.body.userCountry
 
     console.log("Received value",username);
     console.log("Received value",usermail);
     console.log("Received value",userage);
     console.log("Received value",userphone);
     console.log("Received value",usergender);
-    console.log("Received value",userstreet);
+    console.log("Received value",userstreet1);
     console.log("Received value",userpincode);
 
     const addr = {
-        country : "",
-        street1: userstreet,
-        street2: userstreet,
-        city: "",
-        state: "",
+        country : usercountry,
+        street1: userstreet1,
+        street2: userstreet2,
+        city:  usercity,
+        state: userstate,
         zip: userpincode
     }
 
