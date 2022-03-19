@@ -507,10 +507,11 @@ app.get("/cart", async function (req, res) {
                 // });
 
                 // alert("No items in the cart please add something");
-                res.render("cart", {
-                    cart: cart,
-                    isAuthenticated: req.isAuthenticated()
-                });
+                // res.render("cart", {
+                //     cart: cart,
+                //     isAuthenticated: req.isAuthenticated()
+                // });
+                res.render("emptycart");
                 // res.render("cart", { cart: newCart });
                 // return res.status(201).send(newCart);
             }
