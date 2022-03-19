@@ -990,22 +990,28 @@ app.get("/checkout", function (req, res) {
 
 });
 
-app.get("/checkout/:productid", async function(req,res){
+app.get("/checkout/:productid", function(req,res){
     const prdid = req.params.productid
     const arr = []
+    let flag = 0
     if(req.isAuthenticated()){
         const userId = req.user.id;
         console.log("Inside Buy Now",userId)
-        User.findById(userId, function (err, results) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log('Results of User', results)
-                arr.push(results)
-            }
-        })
 
-        await Product.findById(prdid,async function(err, results) {
+        while (flag==0) {
+            User.findById(userId, function (err, results) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Results of User', results)
+                    arr.push(results)
+                }
+            })
+            flag=1;
+        }
+        
+
+        Product.findById(prdid, function(err, results) {
             if(err) {
                 console.log(err);
             } else {
