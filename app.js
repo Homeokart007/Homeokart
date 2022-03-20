@@ -18,10 +18,13 @@ const findOrCreate = require("mongoose-findorcreate");
 
 var fs = require("fs");
 var path = require("path");
-// const { resourceLimits } = require("worker_threads");
 
-const PORT = 3000;
 const app = express();
+const PORT = process.env.PORT || 3000;
+
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
+const { v4: uuidV4 } = require("uuid");
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
@@ -34,10 +37,16 @@ app.use(
 
 
 
-const server = require("http").Server(app);
-const io = require("socket.io")(server);
-const { v4: uuidV4 } = require("uuid");
+io.on("connection", (socket) => {
+	socket.on("join-room", (roomId, userId) => {
+		socket.join(roomId);
+		socket.to(roomId).emit("user-connected", userId);
 
+		socket.on("disconnect", () => {
+			socket.to(roomId).emit("user-disconnected", userId);
+		});
+	});
+});
 
 
 
@@ -491,21 +500,6 @@ app.get("/room", (req, res) => {
 app.get("/room/:room", (req, res) => {
 	res.render("room", { roomId: req.params.room });
 });
-
-io.on("connection", (socket) => {
-	socket.on("join-room", (roomId, userId) => {
-		socket.join(roomId);
-		socket.to(roomId).broadcast.emit("user-connected", userId);
-
-		socket.on("disconnect", () => {
-			socket.to(roomId).broadcast.emit("user-disconnected", userId);
-		});
-	});
-});
-
-// server.listen(3000);
-
-
 
 app.get("/categories", function (req, res) {
     // res.render("categories", {
@@ -1486,6 +1480,6 @@ app.get("/logout", function (req, res) {
     });
 });
 
-app.listen(PORT, (req, res) => {
+server.listen(PORT, (req, res) => {
     console.log("Server started on http://localhost:" + PORT);
 });
