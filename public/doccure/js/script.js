@@ -4,7 +4,7 @@ Template Name: Doccure - Bootstrap Template
 Version      : 1.3
 */
 
-(function($) {
+(function ($) {
     "use strict";
 
     // Stick Sidebar
@@ -21,13 +21,13 @@ Version      : 1.3
     // Sidebar
 
     if ($(window).width() <= 991) {
-        var Sidemenu = function() {
+        var Sidemenu = function () {
             this.$menuItem = $('.main-nav a');
         };
 
         function init() {
             var $this = Sidemenu;
-            $('.main-nav a').on('click', function(e) {
+            $('.main-nav a').on('click', function (e) {
                 if ($(this).parent().hasClass('has-submenu')) {
                     e.preventDefault();
                 }
@@ -50,7 +50,7 @@ Version      : 1.3
     // Textarea Text Count
 
     var maxLength = 100;
-    $('#review_desc').on('keyup change', function() {
+    $('#review_desc').on('keyup change', function () {
         var length = $(this).val().length;
         length = maxLength - length;
         $('#chars').text(length);
@@ -82,7 +82,7 @@ Version      : 1.3
     // Floating Label
 
     if ($('.floating').length > 0) {
-        $('.floating').on('focus blur', function(e) {
+        $('.floating').on('focus blur', function (e) {
             $(this).parents('.form-focus').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
         }).trigger('blur');
     }
@@ -90,20 +90,20 @@ Version      : 1.3
     // Mobile menu sidebar overlay
 
     $('body').append('<div class="sidebar-overlay"></div>');
-    $(document).on('click', '#mobile_btn', function() {
+    $(document).on('click', '#mobile_btn', function () {
         $('main-wrapper').toggleClass('slide-nav');
         $('.sidebar-overlay').toggleClass('opened');
         $('html').addClass('menu-opened');
         return false;
     });
 
-    $(document).on('click', '.sidebar-overlay', function() {
+    $(document).on('click', '.sidebar-overlay', function () {
         $('html').removeClass('menu-opened');
         $(this).removeClass('opened');
         $('main-wrapper').removeClass('slide-nav');
     });
 
-    $(document).on('click', '#menu_close', function() {
+    $(document).on('click', '#menu_close', function () {
         $('html').removeClass('menu-opened');
         $('.sidebar-overlay').removeClass('opened');
         $('main-wrapper').removeClass('slide-nav');
@@ -113,24 +113,24 @@ Version      : 1.3
 
     if ($('[data-bs-toggle="tooltip"]').length > 0) {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
     }
     if ($('[data-bs-toggle="popover"]').length > 0) {
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
             return new bootstrap.Popover(popoverTriggerEl)
         })
     }
     // Add More Hours
 
-    $(".hours-info").on('click', '.trash', function() {
+    $(".hours-info").on('click', '.trash', function () {
         $(this).closest('.hours-cont').remove();
         return false;
     });
 
-    $(".add-hours").on('click', function() {
+    $(".add-hours").on('click', function () {
 
         var hourscontent = '<div class="row form-row hours-cont">' +
             '<div class="col-12 col-md-10">' +
@@ -183,7 +183,7 @@ Version      : 1.3
         resizeInnerDiv();
     }
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         if ($('.content').length > 0) {
             resizeInnerDiv();
         }
@@ -212,23 +212,23 @@ Version      : 1.3
             slidesToShow: 3,
             slidesToScroll: 1,
             responsive: [{
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 776,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 567,
-                    settings: {
-                        slidesToShow: 1
-                    }
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3
                 }
+            },
+            {
+                breakpoint: 776,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 567,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
             ]
         });
     }
@@ -296,29 +296,29 @@ Version      : 1.3
             slidesToScroll: 1,
             arrows: false,
             responsive: [{
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 1
-                    }
-                },
-                {
-                    breakpoint: 800,
-                    settings: {
-                        slidesToShow: 1
-                    }
-                },
-                {
-                    breakpoint: 776,
-                    settings: {
-                        slidesToShow: 1
-                    }
-                },
-                {
-                    breakpoint: 567,
-                    settings: {
-                        slidesToShow: 1
-                    }
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 1
                 }
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 1
+                }
+            },
+            {
+                breakpoint: 776,
+                settings: {
+                    slidesToShow: 1
+                }
+            },
+            {
+                breakpoint: 567,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
             ]
         });
     }
@@ -333,29 +333,29 @@ Version      : 1.3
             slidesToScroll: 1,
             rows: 2,
             responsive: [{
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 800,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 776,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 567,
-                    settings: {
-                        slidesToShow: 1
-                    }
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3
                 }
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 776,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 567,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
             ]
         });
     }
@@ -370,29 +370,29 @@ Version      : 1.3
             slidesToScroll: 1,
             rows: 2,
             responsive: [{
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 800,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 776,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 567,
-                    settings: {
-                        slidesToShow: 1
-                    }
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3
                 }
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 776,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 567,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
             ]
         });
     }
@@ -406,29 +406,29 @@ Version      : 1.3
             slidesToShow: 4,
             slidesToScroll: 1,
             responsive: [{
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 800,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 776,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 567,
-                    settings: {
-                        slidesToShow: 1
-                    }
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3
                 }
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 776,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 567,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
             ]
         });
     }
@@ -442,29 +442,29 @@ Version      : 1.3
             slidesToShow: 3,
             slidesToScroll: 1,
             responsive: [{
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 800,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 776,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 567,
-                    settings: {
-                        slidesToShow: 1
-                    }
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 2
                 }
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 776,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 567,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
             ]
         });
     }
@@ -513,17 +513,17 @@ Version      : 1.3
     // Chat
 
     var chatAppTarget = $('.chat-window');
-    (function() {
+    (function () {
         if ($(window).width() > 991)
             chatAppTarget.removeClass('chat-slide');
 
-        $(document).on("click", ".chat-window .chat-users-list a.media", function() {
+        $(document).on("click", ".chat-window .chat-users-list a.media", function () {
             if ($(window).width() <= 991) {
                 chatAppTarget.addClass('chat-slide');
             }
             return false;
         });
-        $(document).on("click", "#back_user_list", function() {
+        $(document).on("click", "#back_user_list", function () {
             if ($(window).width() <= 991) {
                 chatAppTarget.removeClass('chat-slide');
             }
@@ -533,13 +533,13 @@ Version      : 1.3
 
     //Increment Decrement Numberes
     var quantitiy = 0;
-    $('.quantity-right-plus').click(function(e) {
+    $('.quantity-right-plus').click(function (e) {
         e.preventDefault();
         var quantity = parseInt($('#quantity').val());
         $('#quantity').val(quantity + 1);
     });
 
-    $('.quantity-left-minus').click(function(e) {
+    $('.quantity-left-minus').click(function (e) {
         e.preventDefault();
         var quantity = parseInt($('#quantity').val());
         if (quantity > 0) {
@@ -548,7 +548,7 @@ Version      : 1.3
     });
 
     //Cart Click
-    $("#cart").on("click", function(o) {
+    $("#cart").on("click", function (o) {
         o.preventDefault();
         $(".shopping-cart").fadeToggle();
         $(".shopping-cart").toggleClass('show-cart');
@@ -557,7 +557,7 @@ Version      : 1.3
     // Circle Progress Bar
 
     function animateElements() {
-        $('.circle-bar1').each(function() {
+        $('.circle-bar1').each(function () {
             var elementPos = $(this).offset().top;
             var topOfWindow = $(window).scrollTop();
             var percent = $(this).find('.circle-graph1').attr('data-percent');
@@ -574,7 +574,7 @@ Version      : 1.3
                 });
             }
         });
-        $('.circle-bar2').each(function() {
+        $('.circle-bar2').each(function () {
             var elementPos = $(this).offset().top;
             var topOfWindow = $(window).scrollTop();
             var percent = $(this).find('.circle-graph2').attr('data-percent');
@@ -591,7 +591,7 @@ Version      : 1.3
                 });
             }
         });
-        $('.circle-bar3').each(function() {
+        $('.circle-bar3').each(function () {
             var elementPos = $(this).offset().top;
             var topOfWindow = $(window).scrollTop();
             var percent = $(this).find('.circle-graph3').attr('data-percent');
@@ -617,7 +617,7 @@ Version      : 1.3
 
     // Preloader
 
-    $(window).on('load', function() {
+    $(window).on('load', function () {
         if ($('#loader').length > 0) {
             $('#loader').delay(350).fadeOut('slow');
             $('body').delay(350).css({
@@ -742,8 +742,8 @@ Version      : 1.3
     //header-fixed
 
     if ($('.header-trans').length > 0) {
-        $(document).ready(function() {
-            $(window).scroll(function() {
+        $(document).ready(function () {
+            $(window).scroll(function () {
                 var scroll = $(window).scrollTop();
                 if (scroll > 95) {
                     $(".header-trans").css("background", "#FFFFFF");
@@ -755,8 +755,8 @@ Version      : 1.3
     }
 
     if ($('.header-trans-two').length > 0) {
-        $(document).ready(function() {
-            $(window).scroll(function() {
+        $(document).ready(function () {
+            $(window).scroll(function () {
                 var scroll = $(window).scrollTop();
                 if (scroll > 95) {
                     $(".header-trans-two").css("background", "#E5F1FB");
@@ -768,8 +768,8 @@ Version      : 1.3
     }
 
     if ($('.header-trans.custom').length > 0) {
-        $(document).ready(function() {
-            $(window).scroll(function() {
+        $(document).ready(function () {
+            $(window).scroll(function () {
                 var scroll = $(window).scrollTop();
                 if (scroll > 95) {
                     $(".header-trans").css("background", "#2b6ccb");
@@ -894,7 +894,7 @@ Version      : 1.3
             },
             dataLabels: {
                 enabled: true,
-                formatter: function(val) {
+                formatter: function (val) {
                     return val + "%";
                 },
                 offsetY: -20,
@@ -938,7 +938,7 @@ Version      : 1.3
                 },
                 labels: {
                     show: false,
-                    formatter: function(val) {
+                    formatter: function (val) {
                         return val + "%";
                     }
                 }
@@ -990,8 +990,8 @@ Version      : 1.3
     }
 
     // Signup Toggle
-    $(function() {
-        $("#is_registered").click(function() {
+    $(function () {
+        $("#is_registered").click(function () {
             if ($(this).is(":checked")) {
                 $("#preg_div").show();
             } else {
@@ -1001,7 +1001,7 @@ Version      : 1.3
     });
 
     //Increment Decrement value
-    $('.inc.button').click(function() {
+    $('.inc.button').click(function () {
         var $this = $(this),
             $input = $this.prev('input'),
             $parent = $input.closest('div'),
@@ -1010,7 +1010,7 @@ Version      : 1.3
         $input.val(newValue);
         newValue += newValue;
     });
-    $('.dec.button').click(function() {
+    $('.dec.button').click(function () {
         var $this = $(this),
             $input = $this.next('input'),
             $parent = $input.closest('div'),
@@ -1026,14 +1026,14 @@ Version      : 1.3
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 $('#prof-avatar').attr('src', e.target.result);
             };
 
             reader.readAsDataURL(input.files[0]);
         }
     }
-    $("#profile_image").change(function() {
+    $("#profile_image").change(function () {
         readURL(this);
     });
 
@@ -1068,29 +1068,29 @@ Version      : 1.3
             slidesToShow: 4,
             slidesToScroll: 1,
             responsive: [{
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 800,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 776,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 567,
-                    settings: {
-                        slidesToShow: 1
-                    }
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3
                 }
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 776,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 567,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
             ]
         });
     }
@@ -1105,35 +1105,35 @@ Version      : 1.3
             slidesToShow: 4,
             slidesToScroll: 1,
             responsive: [{
-                    breakpoint: 1199,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 860,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 776,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 567,
-                    settings: {
-                        slidesToShow: 1
-                    }
+                breakpoint: 1199,
+                settings: {
+                    slidesToShow: 3
                 }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 860,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 776,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 567,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
             ]
         });
     }
@@ -1143,7 +1143,7 @@ Version      : 1.3
     var $status = $('.slider-counter-three');
     var $slickElement = $('.home-banner-three-slider');
 
-    $slickElement.on('init reInit afterChange', function(event, slick, currentSlide, nextSlide) {
+    $slickElement.on('init reInit afterChange', function (event, slick, currentSlide, nextSlide) {
         if (!slick.$dots) {
             return;
         }
@@ -1173,7 +1173,7 @@ Version      : 1.3
 
     // Favourite Btn
 
-    $('.doctor-fav-btn .fav-icon').on('click', function() {
+    $('.doctor-fav-btn .fav-icon').on('click', function () {
         $(this).toggleClass('favourite');
     });
 
@@ -1187,29 +1187,29 @@ Version      : 1.3
             slidesToShow: 4,
             slidesToScroll: 1,
             responsive: [{
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 800,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 776,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 567,
-                    settings: {
-                        slidesToShow: 1
-                    }
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3
                 }
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 776,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 567,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
             ]
         });
     }
@@ -1341,29 +1341,29 @@ Version      : 1.3
             slidesToShow: 4,
             slidesToScroll: 1,
             responsive: [{
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 800,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 776,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 567,
-                    settings: {
-                        slidesToShow: 1
-                    }
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3
                 }
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 776,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 567,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
             ]
         });
     }
@@ -1400,7 +1400,7 @@ Version      : 1.3
 
     // Scroll Down
 
-    $('a.smooth-menu').on('click', function(e) {
+    $('a.smooth-menu').on('click', function (e) {
         var $anchor = $(this);
         $('html, body').stop().animate({
             scrollTop: $($anchor.attr('href')).offset().top
@@ -1430,36 +1430,36 @@ Version      : 1.3
 
     // Inspect keyCode
 
-    $(window).on("load", function() {
-        document.onkeydown = function(e) {
-            if (e.keyCode == 123) {
-                return false;
-            }
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
-                return false;
-            }
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
-                return false;
-            }
-            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
-                return false;
-            }
+    // $(window).on("load", function() {
+    //     document.onkeydown = function(e) {
+    //         if (e.keyCode == 123) {
+    //             return false;
+    //         }
+    //         if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+    //             return false;
+    //         }
+    //         if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+    //             return false;
+    //         }
+    //         if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+    //             return false;
+    //         }
 
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
-                return false;
-            }
-        };
+    //         if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+    //             return false;
+    //         }
+    //     };
 
-    });
+    // });
 
-    document.oncontextmenu = function() {
+    document.oncontextmenu = function () {
         return false;
     };
-    $(document).mousedown(function(e) {
-        if (e.button == 2) {
-            return false;
-        }
-        return true;
-    });
+    // $(document).mousedown(function (e) {
+    //     if (e.button == 2) {
+    //         return false;
+    //     }
+    //     return true;
+    // });
 
 })(jQuery);
