@@ -6,7 +6,7 @@ const ejs = require("ejs");
 const { stringify } = require("nodemon/lib/utils");
 const multer = require("multer");
 const mime = require("mime");
-const Razorpay = require('razorpay'); 
+const Razorpay = require('razorpay');
 // const upload = multer({ dest: 'uploads/' })
 // const upload = multer({ dest: './public/uploads/' })
 
@@ -48,7 +48,7 @@ app.use(passport.session());
 var instance = new Razorpay({
     key_id: 'rzp_test_DrxDeJy6wmVzgw',
     key_secret: 'nTDmXspaYr3D6zbVg8Nj2rNK',
-  });
+});
 
 var med = mongoose.createConnection(
     process.env.MONGO_CONNECTION_URL_PRODUCTSDB,
@@ -65,12 +65,12 @@ var cart = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_CART, {
     useNewUrlParser: true
 });
 
-var appointment = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_APPOINTMENT,{
+var appointment = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_APPOINTMENT, {
     useNewUrlParser: true
 });
 
-var doctor = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_DOCTOR,{
-    useNewUrlParser:true
+var doctor = mongoose.createConnection(process.env.MONGO_CONNECTION_URL_DOCTOR, {
+    useNewUrlParser: true
 });
 
 const categorie = [
@@ -129,20 +129,20 @@ const doctorsSchema = {
         required: true
     },
     ratings: {
-        type:Number,
-        default:""
+        type: Number,
+        default: ""
     },
     degree: {
-        type:String,
-        default:""
+        type: String,
+        default: ""
     },
-    exp:{
-        type:Number,
-        default:null
+    exp: {
+        type: Number,
+        default: null
     },
-    charge:{
-        type:Number,
-        default:null
+    charge: {
+        type: Number,
+        default: null
     },
     img: {
         path: Array,
@@ -154,8 +154,8 @@ const doctorsSchema = {
             paDesc: String,
             name: String,
             // price: Number,
-            date:Date,
-            time:String,
+            date: Date,
+            time: String,
             img: {
                 path: Array,
                 contentType: String
@@ -252,40 +252,40 @@ const AppointmentSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        newApp:[{
-        username: {
-            type: String,
-            default: ""
-            // required: true
-        },
-        usermail: {
-            type: String,
-            default: ""
-            // required: true
-        },
-        phone: {
-            type: Number,
-            default: null
-            // required: true
-        },
-        age: {
-            type: Number,
-            default: null,
-            min: 18,
-            max: 100
-        },
-        gender: {
-            type: String,
-            default:""
-        },
-        department: {
-            type: String,
-            default:""
-        },
-        comments: {
-            type:String,
-            default:""
-        }
+        newApp: [{
+            username: {
+                type: String,
+                default: ""
+                // required: true
+            },
+            usermail: {
+                type: String,
+                default: ""
+                // required: true
+            },
+            phone: {
+                type: Number,
+                default: null
+                // required: true
+            },
+            age: {
+                type: Number,
+                default: null,
+                min: 18,
+                max: 100
+            },
+            gender: {
+                type: String,
+                default: ""
+            },
+            department: {
+                type: String,
+                default: ""
+            },
+            comments: {
+                type: String,
+                default: ""
+            }
         }],
         appointments: [
             {
@@ -293,8 +293,8 @@ const AppointmentSchema = new mongoose.Schema(
                 department: String,
                 name: String,
                 price: Number,
-                date:Date,
-                time:String,
+                date: Date,
+                time: String,
                 img: {
                     path: Array,
                     contentType: String
@@ -621,7 +621,7 @@ app.get("/cart", async function (req, res) {
                         price += cart.products[i].quantity * cart.products[i].price;
                     }
                     cart.totalPrice = price;
-                    
+
                     // Cart.updateOne(userId,{$set:{"totalPrice":price},function(err,results){
                     //     if(err){
                     //         console.log(err)
@@ -699,12 +699,12 @@ app.get("/cart/:productid", function (req, res) {
                         for (var i = 0; i < cart.products.length; i++) {
                             price += cart.products[i].quantity * cart.products[i].price;
                         }
-                        console.log("I am price",price)
+                        console.log("I am price", price)
                         cart.totalPrice = price;
                     } else {
                         //product does not exists in cart, add new item
                         console.log("Aagaya")
-                        
+
 
                         cart.products.push({
                             productId,
@@ -1051,7 +1051,7 @@ app.get("/product/:prdid", function (req, res) {
 
 app.post("/login", (req, res) => {
     const email = req.body.email;
-    
+
     User.findOne(
         {
             usermail: email
@@ -1124,46 +1124,47 @@ app.get("/checkout", function (req, res) {
 
         // console.log("Arr3", arr)
     } else {
-        res.redirect("/login"); 
+        res.redirect("/login");
     }
 
 });
 
-app.get("/checkout/:productid", function(req,res){
+app.get("/checkout/:productid", function (req, res) {
     const prdid = req.params.productid
     const arr = []
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         const userId = req.user.id;
-        console.log("Inside Buy Now",userId)
+        console.log("Inside Buy Now", userId)
 
-            User.findById(userId, function (err, results) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log('Results of User', results)
-                    arr.push(results)
-                    Product.findById(prdid, function(err, results) {
-                        if(err) {
-                            console.log(err);
-                        } else {
-                            console.log('Results', results)
-                            // const totalPrice = results.price
-                            
-                            const products = {img: results.img,
-                                name : results.name,
-                                price : Number(results.price)
-                            }
-                            console.log("I am products",products)
-                            arr.push({products : [products], totalPrice : Number(results.price)})
-                            console.log("Arr2", arr)
-                            res.render("checkout", { info: arr });
+        User.findById(userId, function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('Results of User', results)
+                arr.push(results)
+                Product.findById(prdid, function (err, results) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('Results', results)
+                        // const totalPrice = results.price
+
+                        const products = {
+                            img: results.img,
+                            name: results.name,
+                            price: Number(results.price)
                         }
-                    })
-                }
-            })
+                        console.log("I am products", products)
+                        arr.push({ products: [products], totalPrice: Number(results.price) })
+                        console.log("Arr2", arr)
+                        res.render("checkout", { info: arr });
+                    }
+                })
+            }
+        })
         // res.render("checkout", { info: arr });
     }
-    else{
+    else {
         res.redirect("/login")
     }
 })
@@ -1180,88 +1181,88 @@ app.get("/checkout/:productid", function(req,res){
 
 // })
 
-app.post("/create/orderId", function(req,res){
+app.post("/create/orderId", function (req, res) {
 
     var options = {
         amount: req.body.amount,  // amount in the smallest currency unit
         currency: "INR",
         receipt: "rcptid_1"
-      };
+    };
 
-      instance.orders.create(options, function(err, order) {
+    instance.orders.create(options, function (err, order) {
         console.log(order);
-        res.send({orderId : order.id});
-      });
+        res.send({ orderId: order.id });
+    });
 
 })
 
 
 
-app.post("/api/payment/verify",(req,res)=>{
+app.post("/api/payment/verify", (req, res) => {
 
     //  const razorpay_payment_id= req.body.response.razorpay_payment_id;
     //  const razorpay_order_id = req.body.response.razorpay_order_id;
     //  const razorpay_signature= req.body.response.razorpay_signature;
 
-    let body=req.body.response.razorpay_order_id + "|" + req.body.response.razorpay_payment_id;
-   
-     var crypto = require("crypto");
-     var expectedSignature = crypto.createHmac('sha256', 'nTDmXspaYr3D6zbVg8Nj2rNK')
-                                     .update(body.toString())
-                                     .digest('hex');
-                                     console.log("sig received " ,req.body.response.razorpay_signature);
-                                     console.log("sig generated " ,expectedSignature);
-     var response = {"signatureIsValid":"false"}
-     if(expectedSignature === req.body.response.razorpay_signature)
-      response={"signatureIsValid":"true"}
-         res.send(response);
-     });
+    let body = req.body.response.razorpay_order_id + "|" + req.body.response.razorpay_payment_id;
 
-app.get("/myProfile",function(req,res){
-    if(req.isAuthenticated()){
-        
+    var crypto = require("crypto");
+    var expectedSignature = crypto.createHmac('sha256', 'nTDmXspaYr3D6zbVg8Nj2rNK')
+        .update(body.toString())
+        .digest('hex');
+    console.log("sig received ", req.body.response.razorpay_signature);
+    console.log("sig generated ", expectedSignature);
+    var response = { "signatureIsValid": "false" }
+    if (expectedSignature === req.body.response.razorpay_signature)
+        response = { "signatureIsValid": "true" }
+    res.send(response);
+});
+
+app.get("/myProfile", function (req, res) {
+    if (req.isAuthenticated()) {
+
         const userId = req.user.id;
-        console.log("Inside my Profile",userId)
-        User.findById(userId,function(err,results){
-            if(err){
+        console.log("Inside my Profile", userId)
+        User.findById(userId, function (err, results) {
+            if (err) {
                 console.log(err);
             } else {
-                console.log("Updated Results in my Profile",results)
-                res.render("profileNew",{prf : results});
+                console.log("Updated Results in my Profile", results)
+                res.render("profileNew", { prf: results });
             }
         })
         // res.render("profileNew");
     } else {
         res.redirect("/login")
     }
-    
-})     
 
-app.get("/editProfile",function(req,res){
-    if(req.isAuthenticated()){
+})
+
+app.get("/editProfile", function (req, res) {
+    if (req.isAuthenticated()) {
         const userId = req.user.id;
 
-        User.findById(userId,function(err,results){
-            if(err){
+        User.findById(userId, function (err, results) {
+            if (err) {
                 console.log(err);
             } else {
-                console.log("Updated Results in edit Profile",results)
-                res.render("edit-profileNew",{prf : results});
+                console.log("Updated Results in edit Profile", results)
+                res.render("edit-profileNew", { prf: results });
             }
         })
         // res.render("edit-profileNew")
     } else {
         res.redirect("/login")
     }
-   
+
 })
 
-app.post("/editProfile",function(req,res){
+app.post("/editProfile", function (req, res) {
     const username = req.body.fullName;
     const usermail = req.body.userEmail;
     const userage = req.body.userAge;
     const userphone = req.body.userPhoneNumber;
-    const usergender= req.body.userGender;
+    const usergender = req.body.userGender;
     const userstreet1 = req.body.userStreet1;
     const userstreet2 = req.body.userStreet2
     const userpincode = req.body.userpincode;
@@ -1269,31 +1270,31 @@ app.post("/editProfile",function(req,res){
     const userstate = req.body.userState
     const usercountry = req.body.userCountry
 
-    console.log("Received value",username);
-    console.log("Received value",usermail);
-    console.log("Received value",userage);
-    console.log("Received value",userphone);
-    console.log("Received value",usergender);
-    console.log("Received value",userstreet1);
-    console.log("Received value",userpincode);
+    console.log("Received value", username);
+    console.log("Received value", usermail);
+    console.log("Received value", userage);
+    console.log("Received value", userphone);
+    console.log("Received value", usergender);
+    console.log("Received value", userstreet1);
+    console.log("Received value", userpincode);
 
     const addr = {
-        country : usercountry,
+        country: usercountry,
         street1: userstreet1,
         street2: userstreet2,
-        city:  usercity,
+        city: usercity,
         state: userstate,
         zip: userpincode
     }
 
-    console.log("addr",addr)
-    if(req.isAuthenticated()){
+    console.log("addr", addr)
+    if (req.isAuthenticated()) {
 
         const userid = req.user.id;
-        console.log("Userid inside edit profile",userid)
+        console.log("Userid inside edit profile", userid)
 
-        User.findByIdAndUpdate(userid,{username:username,usermail:usermail, age: userage,phone:userphone,address:addr },function(err,results){
-            if(err){
+        User.findByIdAndUpdate(userid, { username: username, usermail: usermail, age: userage, phone: userphone, address: addr }, function (err, results) {
+            if (err) {
                 console.log(err)
             } else {
                 console.log("Here")
@@ -1311,17 +1312,17 @@ app.post("/editProfile",function(req,res){
 
 // })
 
-app.get("/consultation",function(req,res){
+app.get("/consultation", function (req, res) {
     console.log('Entered inside consultation')
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         // console.log('Entered inside consultation')
-        Doctor.find({},function(err,results){
-            if(err){
+        Doctor.find({}, function (err, results) {
+            if (err) {
                 console.log(err)
             } else {
                 console.log("XXXXXX")
                 console.log(results)
-                res.render("consultation",{ docData : results, isAuthenticated: req.isAuthenticated()})
+                res.render("consultation", { docData: results, isAuthenticated: req.isAuthenticated() })
             }
         })
     } else {
@@ -1329,101 +1330,83 @@ app.get("/consultation",function(req,res){
     }
 })
 
-app.post("/consultation",function(req,res){
-    
-if(req.isAuthenticated()){
-    const userId = req.user.id;
-    const appn = new Appointment({
-        userId : userId,
-        newApp : [{
-            username : req.body.name,
-            usermail : req.body.email,
-            phone : req.body.phone,
-            age : req.body.age,
-            gender : req.body.gender,
-            department : req.body.department,
-            comments : req.body.comments,
-        }]
-    })
-    console.log("Entered inside consul2")
-    Appointment.create(appn,function(err,result){
-        if(err){
-            console.log(err)
-        } else {
-            console.log("Entered Here")
-            console.log(result);
-            // res.render("docCategory",{docData : result, isAuthenticated: req.isAuthenticated()})
-        }
-    })
+app.post("/consultation", function (req, res) {
 
-    Doctor.find({department : req.body.department},function(err,results){
-        if(err){
-            console.log(err);
-        } else {
-            console.log(results)
-            res.render("docCategory",{docData : results, isAuthenticated: req.isAuthenticated()})
-        }
-    })
-} else {
-    res.redirect("/login");
-}
-    
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        const appn = new Appointment({
+            userId: userId,
+            newApp: [{
+                username: req.body.name,
+                usermail: req.body.email,
+                phone: req.body.phone,
+                age: req.body.age,
+                gender: req.body.gender,
+                department: req.body.department,
+                comments: req.body.comments,
+            }]
+        })
+        console.log("Entered inside consul2")
+        Appointment.create(appn, function (err, result) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log("Entered Here")
+                console.log(result);
+                // res.render("docCategory",{docData : result, isAuthenticated: req.isAuthenticated()})
+            }
+        })
+
+        Doctor.find({ department: req.body.department }, function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(results)
+                res.render("docCategory", { docData: results, isAuthenticated: req.isAuthenticated() })
+            }
+        })
+    } else {
+        res.redirect("/login");
+    }
+
 })
 
-app.get("/registerDoc",function(req,res){
-    if(req.isAuthenticated()){
+app.get("/registerDoc", function (req, res) {
+    if (req.isAuthenticated()) {
         res.render("registerDoc")
-        
+
     } else {
         res.redirect("/login")
     }
 })
 
-app.post("/registerDoc",upload.single("productImage"),function(req,res){
+app.post("/registerDoc", upload.single("productImage"), function (req, res) {
 
 
 
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         const userId = req.user.id;
 
         const doctor = new Doctor({
-        userId : userId,
-        username : req.body.doctorName,
-        usermail : req.body.doctorEmail,
-        department : req.body.expertise,
-        description : req.body.doctordesc,
-        charge : req.body.doctorPrice,
-        ratings : req.body.doctorRating,
-        degree : req.body.doctorDegree,
-        exp : req.body.doctorExperience,
-    })
+            userId: userId,
+            username: req.body.doctorName,
+            usermail: req.body.doctorEmail,
+            department: req.body.expertise,
+            description: req.body.doctordesc,
+            charge: req.body.doctorPrice,
+            ratings: req.body.doctorRating,
+            degree: req.body.doctorDegree,
+            exp: req.body.doctorExperience,
+        })
 
-    console.log("Entered inside consul2")
-    Doctor.create(doctor,function(err,result){
-        if(err){
-            console.log(err)
-        } else {
-            console.log("Entered Here")
-            console.log(result);
-            res.redirect("/consultation")
-        }
-    })
-    } else {
-        res.redirect("/login")
-    }
-})
-
-app.get("/docCategory",function(req,res){
-
-    if(req.isAuthenticated()){
-        // console.log('Entered inside consultation')
-        Doctor.find({},function(err,results){
-            if(err){
+        console.log("Entered inside consul2")
+        Doctor.create(doctor, function (err, result) {
+            if (err) {
                 console.log(err)
             } else {
-                console.log("XXXXXX")
-                console.log(results)
-                res.render("consultation",{ docData : results, isAuthenticated: req.isAuthenticated()})
+                console.log("Entered Here")
+                console.log(result);
+                res.redirect("/consultation")
             }
         })
     } else {
@@ -1431,11 +1414,40 @@ app.get("/docCategory",function(req,res){
     }
 })
 
-app.get("/docProfile",function(req,res){
-    res.render("docProfile");
+app.get("/docCategory", function (req, res) {
+
+    if (req.isAuthenticated()) {
+        // console.log('Entered inside consultation')
+        Doctor.find({}, function (err, results) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log("XXXXXX")
+                console.log(results)
+                res.render("consultation", { docData: results, isAuthenticated: req.isAuthenticated() })
+            }
+        })
+    } else {
+        res.redirect("/login")
+    }
 })
 
-app.get("/booking",function(req,res){
+app.get("/docProfile/:id", function (req, res) {
+    const id = req.params.id;
+
+    Doctor.findById(id, function (err, results) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("docProfile", { info: results });
+        }
+    })
+
+})
+
+app.get("/booking/:id", function (req, res) {
+
+    const id = req.params.id;
     res.render("booking");
 })
 
