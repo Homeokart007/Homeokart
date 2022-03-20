@@ -32,6 +32,16 @@ app.use(
     })
 );
 
+
+
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
+const { v4: uuidV4 } = require("uuid");
+
+
+
+
+
 // app.use(express.static(__dirname+"./public/"))
 
 app.use(
@@ -471,6 +481,31 @@ app.get(
         // res.redirect('..');
     }
 );
+
+
+
+app.get("/room", (req, res) => {
+	res.redirect(`/room/${uuidV4()}`);
+});
+
+app.get("/room/:room", (req, res) => {
+	res.render("room", { roomId: req.params.room });
+});
+
+io.on("connection", (socket) => {
+	socket.on("join-room", (roomId, userId) => {
+		socket.join(roomId);
+		socket.to(roomId).broadcast.emit("user-connected", userId);
+
+		socket.on("disconnect", () => {
+			socket.to(roomId).broadcast.emit("user-disconnected", userId);
+		});
+	});
+});
+
+// server.listen(3000);
+
+
 
 app.get("/categories", function (req, res) {
     // res.render("categories", {
