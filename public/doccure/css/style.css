@@ -8076,9 +8076,9 @@ body .multi-optn {
 
 .doc-info-right {
     margin-left: auto;
-    -ms-flex: 0 0 205px;
-    flex: 0 0 205px;
-    max-width: 205px;
+    -ms-flex: 0 0 250px;
+    flex: 0 0 250px;
+    max-width: 250px;
 }
 
 .doctor-img {
