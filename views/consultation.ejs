@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Document</title>
+    <title>Doctors</title>
 
 
     <!-- Vendor CSS Files -->
@@ -69,12 +69,12 @@
 
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="#slider">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">About</a></li>
-                    <li><a class="nav-link scrollto" href="#">Services</a></li>
-                    <li><a class="nav-link scrollto" href="#">Departments</a></li>
-                    <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
-                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                    <li><a class="nav-link scrollto" href="/">Home</a></li>
+                    <li><a class="nav-link scrollto" href="/categories">Medicines</a></li>
+                    <li><a class="nav-link scrollto" href="/consultation">Doctors</a></li>
+                    <li><a class="nav-link scrollto" href="/cart">Cart</a></li>
+                    <li><a class="nav-link scrollto" href="/myProfile">My Profile</a></li>
+                    <!-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
                             <li><a href="#">Drop Down 1</a></li>
                             <li><a href="#">Drop Down 2</a></li>
@@ -82,14 +82,12 @@
                             <li><a href="#">Drop Down 4</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
-
-            <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span>
-                Appointment</a>
-
+            <a href=<%= isAuthenticated ? "/logout" : "/login" %>
+                        class="appointment-btn scrollto"><span><%= isAuthenticated ? "Logout" : "Login" %></span></a> 
         </div>
     </header><!-- End Header -->
     <main>
@@ -309,6 +307,18 @@
                                         <input type="text" name="gender" class="form-control" id="gender"
                                             placeholder="Your Gender" data-rule="minlen:1"
                                             data-msg="Please enter at least 1 chars" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i
+                                                    class="fa-solid fa-venus-mars text-info"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" name="history" class="form-control" id="history"
+                                            placeholder="Your Medical History" data-msg="Please enter at least 1 chars" />
                                     </div>
                                 </div>
 
@@ -556,10 +566,10 @@
                     <div class="col-lg-2 col-md-6 footer-links">
                         <h4>Useful Links</h4>
                         <ul>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="/categories">Medicines</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="/consultation">Doctors</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="/cart">Cart</a></li>
                             <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
                         </ul>
                     </div>
@@ -567,17 +577,15 @@
                     <div class="col-lg-3 col-md-6 footer-links">
                         <h4>Our Services</h4>
                         <ul>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                            <% for(var i=0; i<category.length; i++) { %>
+                            <li><i class="bx bx-chevron-right"></i> <a href="/products/<%=category[i].name%>"><%=category[i].name%></a></li>
+                            <% } %>
                         </ul>
                     </div>
 
                     <div class="col-lg-4 col-md-6 footer-newsletter">
                         <h4>Join Our Newsletter</h4>
-                        <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+                        <p>Get a free subscription to our health and fitness tip and stay tuned to our latest offers</p>
                         <form action="" method="post">
                             <input type="email" name="email"><input type="submit" value="Subscribe">
                         </form>

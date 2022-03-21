@@ -174,6 +174,8 @@ const doctorsSchema = {
 			paDesc: String,
 			name: String,
 			// price: Number,
+			roomId: String,
+			patientHistory: String,
 			date: Date,
 			time: String,
 			img: {
@@ -303,6 +305,10 @@ const AppointmentSchema = new mongoose.Schema(
 					type: String,
 					default: ""
 				},
+				history: {
+					type: String,
+					default: ""
+				},
 				comments: {
 					type: String,
 					default: ""
@@ -315,6 +321,7 @@ const AppointmentSchema = new mongoose.Schema(
 				department: String,
 				name: String,
 				price: Number,
+				roomId: String,
 				date: Date,
 				time: String,
 				img: {
@@ -1088,6 +1095,7 @@ app.get("/products/:category", function (req, res) {
 					// allProducts: resourceLimits,
 					category: categorie,
 					allProducts: results,
+					category:categorie,
 					isAuthenticated: req.isAuthenticated()
 				});
 			}
@@ -1105,6 +1113,7 @@ app.get("/product/:prdid", function (req, res) {
 			// console.log("Found Results: ", results);
 			res.render("productNew", {
 				product: results,
+				category:categorie,
 				isAuthenticated: req.isAuthenticated()
 			});
 		}
@@ -1194,18 +1203,22 @@ app.get("/checkout", function (req, res) {
 				console.log("Results", results);
 				arr.push(results);
 
-				Cart.findOne({ userId: userId }, function (err, results) {
-					if (err) {
-						console.log(err);
-					} else {
-						console.log("Arr1", arr);
-						console.log("Got the results");
-						console.log("Cart Results", results);
-						arr.push(results);
-						console.log("Arr2", arr);
-						res.render("checkout", { info: arr });
-					}
-				});
+                Cart.findOne({ userId: userId }, function (err, results) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log("Arr1", arr);
+                        console.log("Got the results");
+                        console.log("Cart Results", results);
+                        arr.push(results);
+                        console.log("Arr2", arr);
+                        res.render("checkout", { info: arr,
+							prf: results,
+							category:categorie,
+							isAuthenticated: req.isAuthenticated()
+						});
+                    }
+                });
 			}
 		});
 
@@ -1246,7 +1259,11 @@ app.get("/checkout/:productid", function (req, res) {
 							totalPrice: Number(results.price)
 						});
 						console.log("Arr2", arr);
-						res.render("checkout", { info: arr });
+						res.render("checkout", { info: arr , 
+							prf: results,
+							category:categorie,
+							isAuthenticated: req.isAuthenticated() 
+						});
 					}
 				});
 			}
@@ -1313,7 +1330,11 @@ app.get("/myProfile", function (req, res) {
 				console.log(err);
 			} else {
 				console.log("Updated Results in my Profile", results);
-				res.render("profileNew", { prf: results });
+				res.render("profileNew", {
+					prf: results,
+					category:categorie,
+					isAuthenticated: req.isAuthenticated()
+				});
 			}
 		});
 		// res.render("profileNew");
@@ -1415,6 +1436,7 @@ app.get("/consultation", function (req, res) {
 				console.log(results);
 				res.render("consultation", {
 					docData: results,
+					category:categorie,
 					isAuthenticated: req.isAuthenticated()
 				});
 			}
@@ -1435,6 +1457,7 @@ app.post("/consultation", function (req, res) {
 					usermail: req.body.email,
 					phone: req.body.phone,
 					age: req.body.age,
+					history: req.body.history,
 					gender: req.body.gender,
 					department: req.body.department,
 					comments: req.body.comments
@@ -1533,6 +1556,7 @@ app.get("/docCategory", function (req, res) {
 app.get("/docProfile/:id", function (req, res) {
 	const id = req.params.id;
 
+
 	Doctor.findById(id, function (err, results) {
 		if (err) {
 			console.log(err);
@@ -1542,18 +1566,148 @@ app.get("/docProfile/:id", function (req, res) {
 	});
 });
 
+
+
 app.post("/docProfile/booking/:id", function (req, res) {
-	const id = req.params.id;
-	const roomId = req.body.appointmentDateAndTime;
-	console.log(roomId);
-	// res.render("booking");
-	res.redirect("/room/" + id + "-" + roomId);
+
+	if (req.isAuthenticated()) {
+		const id = req.params.id;
+		console.log("Dr id", id);
+		const userId = req.user.id;
+		const date = req.body.appointmentDateAndTime.slice(0, 10)
+		const time = req.body.appointmentDateAndTime.slice(11, 16)
+		console.log(date);
+		console.log(time);
+// 		const appoi = [];
+// const docAppoi = [];
+		const room = req.body.appointmentDateAndTime;
+		const roomId = "/room/" + id + "-" + room;
+		console.log(roomId);
+
+		Doctor.findById(id, function (err, results) {
+			if (err) {
+				console.log(err);
+			} else {
+				const appo = {
+					doctorId: id,
+					department: results.department,
+					name: results.username,
+					price: results.charge,
+					date: date,
+					time: time,
+					roomId: roomId
+				}
+				// appoi.push(appo)
+				// { $set: { appointments: appointments.push(appo) } }
+				Appointment.findOneAndUpdate(userId,{ $push: { appointments: appo  } } ,
+					{
+					  new: true,
+					  upsert: true,
+					}, function (err, result) {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log(result);
+
+						const len = result.newApp.length;
+
+						const docAppo = {
+							patientId: userId,
+							paDesc: result.newApp[len - 1].comments,
+							name: result.newApp[len - 1].username,
+							roomId: roomId,
+							patientHistory: result.newApp[len - 1].history,
+							date: date,
+							time: time
+						}
+
+						// docAppoi.push(docAppo);
+						// console.log("docAppoi1", docAppoi);
+						console.log("DR id", id)
+						// {$set: { appoin: appoin.push(docAppo) }}
+						Doctor.findByIdAndUpdate(id,{ $push: { appoin: docAppo  } } ,
+							{
+							  new: true,
+							  upsert: true,
+							}, function(err, result) {
+								if (err) {
+									console.log(err);
+								} else {
+									// console.log("docAppoi2", docAppoi);
+									console.log("Inside Doc result", result);
+								}
+						})
+
+						console.log("Appointment", result)
+						res.render("patient-appointment", { info: result })
+					}
+				})
+
+			}
+			
+		})
+		// });
+
+		// console.log("Data", ap);
+
+		// const roomId = req.body.appointmentDateAndTime;
+		// console.log(roomId);
+
+		// res.render("booking");
+		// res.redirect("/room/" + id + "-" + roomId);
+	} else {
+		res.redirect("/login");
+	}
+
 });
+
+app.get("/docDashboard",function(req,res){
+	if(req.isAuthenticated()){
+		const userId = req.user.id;
+		console.log(userId)
+
+		Doctor.find({userId:userId},function(err,result){
+			if(err){
+				console.log(err);
+			} else {
+				console.log(result);
+				res.render("doctor-appointment",{info:result});
+			}
+		})
+	} else {
+		res.redirect("/login")
+	}
+	// res.render("doctor-appointment");
+})
 
 app.get("/booking/:id", function (req, res) {
 	const id = req.params.id;
 	res.render("booking");
 });
+
+app.get("/patientDashboard", function (req, res) {
+
+	if(req.isAuthenticated()){
+		const userId = req.user.id;
+
+		Appointment.find({userId : userId},function(err,result){
+			if(err){
+				console.log(err)
+			} else {
+				console.log(result);
+				res.render("patient-dashboard", {info:result});
+			}
+		})
+
+	} else {
+		res.redirect("/login");
+	}
+	
+})
+
+app.get("/patientAppointment", function (req, res) {
+	res.render("patient-appointment")
+})
 
 app.get("/logout", function (req, res) {
 	console.log("Logged out");
