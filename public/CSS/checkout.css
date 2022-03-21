@@ -42,6 +42,8 @@
   --------------------------------------------------------------*/
   #header {
     height: auto;
+    font-family: "Open Sans", sans-serif;
+    color: #444444;
 }
 
 #header a {
@@ -170,7 +172,7 @@ h6 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 14px;
+    font-size: 1.5rem;
     /* color: #2c4964; */
     white-space: nowrap;
     transition: 0.3s;
@@ -649,7 +651,7 @@ label {
     }
 }
 
-/* Footer Started */
+/* Footer Start */
 #footer {
     color: #444444;
     font-size: 14px;
@@ -757,6 +759,11 @@ label {
   #footer .footer-newsletter form input[type=submit]:hover {
     background: #1c84e3;
   }
+
+  #footer .footer-ending{
+      justify-content: space-between;
+  }
+
   #footer .credits {
     padding-top: 5px;
     font-size: 13px;

@@ -1033,6 +1033,7 @@ app.get("/products/:category", function (req, res) {
 				res.render("categories", {
 					// allProducts: resourceLimits,
 					allProducts: results,
+					category:categorie,
 					isAuthenticated: req.isAuthenticated()
 				});
 			}
@@ -1050,6 +1051,7 @@ app.get("/product/:prdid", function (req, res) {
 			// console.log("Found Results: ", results);
 			res.render("productNew", {
 				product: results,
+				category:categorie,
 				isAuthenticated: req.isAuthenticated()
 			});
 		}
@@ -1148,7 +1150,11 @@ app.get("/checkout", function (req, res) {
                         console.log("Cart Results", results);
                         arr.push(results);
                         console.log("Arr2", arr);
-                        res.render("checkout", { info: arr });
+                        res.render("checkout", { info: arr,
+							prf: results,
+							category:categorie,
+							isAuthenticated: req.isAuthenticated()
+						});
                     }
                 });
 			}
@@ -1193,7 +1199,11 @@ app.get("/checkout/:productid", function (req, res) {
 							totalPrice: Number(results.price)
 						});
 						console.log("Arr2", arr);
-						res.render("checkout", { info: arr });
+						res.render("checkout", { info: arr , 
+							prf: results,
+							category:categorie,
+							isAuthenticated: req.isAuthenticated() 
+						});
 					}
 				});
 			}
@@ -1260,7 +1270,11 @@ app.get("/myProfile", function (req, res) {
 				console.log(err);
 			} else {
 				console.log("Updated Results in my Profile", results);
-				res.render("profileNew", { prf: results });
+				res.render("profileNew", {
+					prf: results,
+					category:categorie,
+					isAuthenticated: req.isAuthenticated()
+				});
 			}
 		});
 		// res.render("profileNew");
@@ -1295,7 +1309,7 @@ app.post("/editProfile", function (req, res) {
 	const usergender = req.body.userGender;
 	const userstreet1 = req.body.userStreet1;
 	const userstreet2 = req.body.userStreet2;
-	const userpincode = req.body.userpincode;
+	const userpincode = req.body.userPincode;
 	const usercity = req.body.userCity;
 	const userstate = req.body.userState;
 	const usercountry = req.body.userCountry;
@@ -1362,6 +1376,7 @@ app.get("/consultation", function (req, res) {
 				console.log(results);
 				res.render("consultation", {
 					docData: results,
+					category:categorie,
 					isAuthenticated: req.isAuthenticated()
 				});
 			}
