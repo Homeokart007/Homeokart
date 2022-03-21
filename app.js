@@ -1295,7 +1295,7 @@ app.post("/editProfile", function (req, res) {
 	const usergender = req.body.userGender;
 	const userstreet1 = req.body.userStreet1;
 	const userstreet2 = req.body.userStreet2;
-	const userpincode = req.body.userpincode;
+	const userpincode = req.body.userPincode;
 	const usercity = req.body.userCity;
 	const userstate = req.body.userState;
 	const usercountry = req.body.userCountry;
