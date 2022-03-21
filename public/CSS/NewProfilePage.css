@@ -150,3 +150,12 @@ body{
 .profile-imgDiv{
     margin-bottom: 30px;
 }
+
+.gender-select{
+    margin: 0 12px;
+}
+
+.edit-div{
+    width: 165px !important;
+    padding: 0px !important;
+}

@@ -1145,21 +1145,23 @@ app.get("/checkout", function (req, res) {
 			} else {
 				console.log("Results", results);
 				arr.push(results);
+
+                Cart.findOne({ userId: userId }, function (err, results) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log("Arr1", arr);
+                        console.log("Got the results");
+                        console.log("Cart Results", results);
+                        arr.push(results);
+                        console.log("Arr2", arr);
+                        res.render("checkout", { info: arr });
+                    }
+                });
 			}
 		});
 
-		Cart.findOne({ userId: userId }, function (err, results) {
-			if (err) {
-				console.log(err);
-			} else {
-				console.log("Arr1", arr);
-				console.log("Got the results");
-				console.log("Cart Results", results);
-				arr.push(results);
-				console.log("Arr2", arr);
-				res.render("checkout", { info: arr });
-			}
-		});
+		
 
 		// console.log("Arr3", arr)
 	} else {
@@ -1300,7 +1302,7 @@ app.post("/editProfile", function (req, res) {
 	const usergender = req.body.userGender;
 	const userstreet1 = req.body.userStreet1;
 	const userstreet2 = req.body.userStreet2;
-	const userpincode = req.body.userpincode;
+	const userpincode = req.body.userPincode;
 	const usercity = req.body.userCity;
 	const userstate = req.body.userState;
 	const usercountry = req.body.userCountry;
