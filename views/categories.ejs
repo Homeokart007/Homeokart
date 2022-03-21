@@ -320,16 +320,12 @@
                         <section class="product-section">
                             <h2>All Products</h2>
                             <div class="row">
-                                <!-- <div class="product-container"> -->
                                 <% allProducts.forEach(function(prd) { %>
                                 <div
                                     class="col-lg-3 col-md-6 col-sm-12 product-card"
                                 >
                                     <div class="product-card-inner">
                                         <a href="/product/<%= prd._id %>">
-                                            <p class="product-discount">
-                                                20% off
-                                            </p>
                                             <div class="product-card-img">
                                                 <img
                                                     src="<%=prd.img.path[0]%>"
@@ -346,10 +342,7 @@
                                                 %>
                                             </h5>
                                             <p class="product-price">
-                                                <span class="new-price"
-                                                    >Rs. <%= prd.price %></span
-                                                >
-                                                <del>₹3,195</del>
+                                                <span class="new-price">Rs. <%= prd.price %></span>
                                             </p>
                                         </a>
                                         <button
@@ -361,7 +354,6 @@
                                     </div>
                                 </div>
                                 <% }); %>
-                                <!-- </div> -->
                             </div>
                         </section>
                     </div>
