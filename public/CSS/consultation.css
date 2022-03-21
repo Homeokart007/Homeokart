@@ -27,6 +27,10 @@
 	background: #ecf0f1;
 }
 
+#doctor-section .doc-card{
+    margin: 0 auto 3rem;
+}
+
 #doctor-section .card-content {
 	background: #ffffff;
 	border: 4px;
@@ -69,6 +73,7 @@
 }
 #doctor-section .card-desc {
 	padding: 1.25rem;
+    height: 200px;
 }
 
 #doctor-section .card-desc h3 {
@@ -129,6 +134,7 @@
 }
 
 #doctor-section .button-div {
+    padding: 1.25rem;
     display: flex;
     justify-content: center;
 }

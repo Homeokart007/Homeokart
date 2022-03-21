@@ -384,7 +384,7 @@
                     <div class="row">
 
                         <% docData.forEach(function(doc) {%>
-                        <div class="col-md-3">
+                        <div class="doc-card col-md-3">
                             <div class="card-content">
                                 <div class="card-img">
                                     <img src="assets/img/doctors/doctors-1.jpg" class="img-fluid" alt="" />
@@ -397,8 +397,8 @@
                                     <h3><%=doc.username%></h3>
                                     <h4><%=doc.department%></h4>
                                     <p> <%=doc.description%></p>
-                                          <div class="button-div"><a href="#" class="btn-card">Request Consultation</a></div> 
                                 </div>
+                                <div class="button-div"><a href="#" class="btn-card">Request Consultation</a></div> 
                             </div>
                         </div>
                         <% })%>

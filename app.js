@@ -502,36 +502,90 @@ app.get("/room/:room", (req, res) => {
 	res.render("room", { roomId: req.params.room });
 });
 
-app.get("/categories", function (req, res) {
-	// res.render("categories", {
-	//     allProducts: allProducts
-	// });
-	// Product.find(
-	// 	{ tag: "Body Care Product", name: "Dolo-sss" },  // Filters
-	// 	{ name: 1, img: 1, _id: 0 },                     // What To display
-	// 	function (err, results) {
-	// 		if (err) {
-	// 			console.log(err);
-	// 		} else {
-	// 			console.log("Found Results", results);
-	// 			res.render("categories", {
-	// 				allProducts: results
-	// 			});
-	// 		}
-	// 	}
-	// );
+app.get("/categories", async function (req, res) {
+	const productsInCart = [];
+	if (req.isAuthenticated()) {
+		const userId = req.user.id;
 
-	Product.find({}, function (err, results) {
-		if (err) {
-			console.log(err);
-		} else {
-			// console.log("Found Results: ", results);
-			res.render("categories", {
-				allProducts: results,
-				isAuthenticated: req.isAuthenticated()
+		try {
+			let cart = await Cart.findOne({
+				userId
 			});
+			console.log("Hey Cart", cart);
+			if (cart) {
+				//cart exists for user
+
+				if (cart.products) {
+					console.log("Found");
+					// console.log(cart.products);
+					for (let i = 0; i < cart.products.length; i++) {
+						productsInCart.push(cart.products[i].productId);
+						// console.log(cart.products[i].productId);
+					}
+					// console.log(productsInCart);
+
+					Product.find({}, function (err, results) {
+						if (err) {
+							console.log(err);
+						} else {
+							// console.log("Found Results: ", results);
+							res.render("categories", {
+								productsInCart: productsInCart,
+								category: categorie,
+								allProducts: results,
+								isAuthenticated: req.isAuthenticated()
+							});
+						}
+					});
+				}
+				// return res.status(201).send(cart);
+			} else {
+				Product.find({}, function (err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						// console.log("Found Results: ", results);
+						res.render("categories", {
+							cartProducts: [],
+							category: categorie,
+							allProducts: results,
+							isAuthenticated: req.isAuthenticated()
+						});
+					}
+				});
+			}
+		} catch (err) {
+			console.log(err);
+			res.status(500).send("Something went wrong");
 		}
-	});
+	} else {
+		Product.find({}, function (err, results) {
+			if (err) {
+				console.log(err);
+			} else {
+				// console.log("Found Results: ", results);
+				res.render("categories", {
+					cartProducts: [],
+					category: categorie,
+					allProducts: results,
+					isAuthenticated: req.isAuthenticated()
+				});
+			}
+		});
+	}
+
+	// Product.find({}, function (err, results) {
+	// 	if (err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		// console.log("Found Results: ", results);
+	// 		res.render("categories", {
+	// 			category: categorie,
+	// 			allProducts: results,
+	// 			isAuthenticated: req.isAuthenticated()
+	// 		});
+	// 	}
+	// });
 });
 
 app.get("/login", function (req, res) {
@@ -1032,6 +1086,7 @@ app.get("/products/:category", function (req, res) {
 				// console.log("Found Results: ", results);
 				res.render("categories", {
 					// allProducts: resourceLimits,
+					category: categorie,
 					allProducts: results,
 					isAuthenticated: req.isAuthenticated()
 				});
@@ -1139,22 +1194,20 @@ app.get("/checkout", function (req, res) {
 				console.log("Results", results);
 				arr.push(results);
 
-                Cart.findOne({ userId: userId }, function (err, results) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log("Arr1", arr);
-                        console.log("Got the results");
-                        console.log("Cart Results", results);
-                        arr.push(results);
-                        console.log("Arr2", arr);
-                        res.render("checkout", { info: arr });
-                    }
-                });
+				Cart.findOne({ userId: userId }, function (err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log("Arr1", arr);
+						console.log("Got the results");
+						console.log("Cart Results", results);
+						arr.push(results);
+						console.log("Arr2", arr);
+						res.render("checkout", { info: arr });
+					}
+				});
 			}
 		});
-
-		
 
 		// console.log("Arr3", arr)
 	} else {
@@ -1491,10 +1544,10 @@ app.get("/docProfile/:id", function (req, res) {
 
 app.post("/docProfile/booking/:id", function (req, res) {
 	const id = req.params.id;
-    const roomId = req.body.appointmentDateAndTime;
-    console.log(roomId);
+	const roomId = req.body.appointmentDateAndTime;
+	console.log(roomId);
 	// res.render("booking");
-    res.redirect("/room/" + id + "-" + roomId );
+	res.redirect("/room/" + id + "-" + roomId);
 });
 
 app.get("/booking/:id", function (req, res) {

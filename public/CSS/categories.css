@@ -5,6 +5,7 @@ body {
     box-sizing: border-box;
     min-height: 100vh;
     min-height: -webkit-fill-available;
+    box-shadow: none !important;
 }
 
 a {
@@ -21,11 +22,13 @@ html {
 
 main {
     display: flex;
+    position: sticky;
+    top: 0;
     flex-wrap: nowrap;
     height: 100vh;
     height: -webkit-fill-available;
     max-height: 100vh;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
 }
 
@@ -67,7 +70,7 @@ main {
 .btn-toggle:hover,
 .btn-toggle:focus {
     color: rgba(0, 0, 0, 0.85);
-    background-color: #d2f4ea;
+    /* background-color: #d2f4ea; */
 }
 
 .btn-toggle::before {
