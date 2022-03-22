@@ -99,7 +99,7 @@
                         <div class="row">
 
                             <!-- USER AGE -->
-                            <div class="col-6 mb-3">
+                            <div class="col-4 mb-3">
                                 <div class="form-floating">
                                     <input required type="number" min="1" max="100" id="user-age" name="userAge"
                                         class="form-control" placeholder="Age" value="<%=prf.age%>">
@@ -108,25 +108,27 @@
                             </div>
 
                             <!-- USER NUMBER -->
-                            <div class="col-6 mb-3">
+                            <div class="col-4 mb-3">
                                 <div class="form-floating">
                                     <input required type="tel" id="user-phone-number" name="userPhoneNumber"
                                         class="form-control" placeholder="Phone Number" pattern="[6-9]{1}[0-9]{9}" value="<%=prf.phone%>">
                                     <label for="user-phone-number">PHONE NUMBER</label>
                                 </div>
                             </div>
-                        </div>
 
                             <!-- GENDER -->
 
-                            <div class="row">
-                                <select class="col-5 form-select mb-3 gender-select" aria-label="Gender" name="userGender" required>
+                            <div class="col-4 mb-3">
+                                <select class="form-select gender-select" aria-label="Gender" name="userGender" required>
                                     <option selected value="">SELECT GENDER</option>
                                     <option value="MALE">MALE</option>
                                     <option value="FEMALE">FEMALE</option>
                                     <option value="OTHERS">OTHERS</option>
                                 </select>
                             </div>
+                        </div>
+
+                            
                             
 
 
