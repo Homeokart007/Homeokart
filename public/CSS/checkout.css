@@ -85,7 +85,7 @@ h6 {
     background: #fff;
     /* transition: all 0.5s; */
     z-index: 997;
-    padding: 15px 0;
+    /* padding: 15px 0; */
     /* top: 40px; */
     box-shadow: 0px 2px 15px rgba(25, 119, 204, 0.1);
 }
@@ -172,7 +172,7 @@ h6 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     /* color: #2c4964; */
     white-space: nowrap;
     transition: 0.3s;
@@ -713,6 +713,7 @@ label {
     transition: 0.3s;
     display: inline-block;
     line-height: 1;
+    text-decoration: none;
   }
   #footer .footer-top .footer-links ul a:hover {
     text-decoration: none;
