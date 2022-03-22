@@ -10,17 +10,15 @@
 
     <link rel="stylesheet" href="/doccure/css/bootstrap.min.css" />
 
-    <link
-        href="/assets/vendor/fontawesome-free/css/all.min.css"
-        rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/doccure/daterangepicker/daterangepicker.css"></link>
+    <link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/doccure/daterangepicker/daterangepicker.css">
+    </link>
 
     <link rel="stylesheet" href="/doccure/css/feather.css" />
 
     <link rel="stylesheet" href="/doccure/CSS/style.css" />
 
-<link rel="stylesheet" href="assets/plugins/apex/apexcharts.css">
+    <link rel="stylesheet" href="assets/plugins/apex/apexcharts.css">
 
 </head>
 
@@ -245,39 +243,39 @@
                                     <ul>
                                         <li>
                                             <a href="/">
-<i class="fas fa-columns"></i>
-<span>Dashboard</span>
-</a>
+                                                <i class="fas fa-columns"></i>
+                                                <span>Dashboard</span>
+                                            </a>
                                         </li>
                                         <li class="active">
                                             <a href="appointments.html">
-<i class="fas fa-calendar-check"></i>
-<span>Appointments</span>
-</a>
+                                                <i class="fas fa-calendar-check"></i>
+                                                <span>Appointments</span>
+                                            </a>
                                         </li>
                                         <li>
                                             <a href="my-patients.html">
-<i class="fas fa-user-injured"></i>
-<span>Home</span>
-</a>
+                                                <i class="fas fa-user-injured"></i>
+                                                <span>Home</span>
+                                            </a>
                                         </li>
                                         <li>
                                             <a href="schedule-timings.html">
-<i class="fas fa-hourglass-start"></i>
-<span>Medicines</span>
-</a>
+                                                <i class="fas fa-hourglass-start"></i>
+                                                <span>Medicines</span>
+                                            </a>
                                         </li>
                                         <li>
                                             <a href="available-timings.html">
-<i class="fas fa-clock"></i>
-<span>Cart</span>
-</a>
+                                                <i class="fas fa-clock"></i>
+                                                <span>Cart</span>
+                                            </a>
                                         </li>
                                         <li>
                                             <a href="invoices.html">
-<i class="fas fa-file-invoice"></i>
-<span>Invoices</span>
-</a>
+                                                <i class="fas fa-file-invoice"></i>
+                                                <span>Invoices</span>
+                                            </a>
                                         </li>
                                         <!-- <li>
                                             <a href="accounts.html">
@@ -318,9 +316,9 @@
                                         </li> -->
                                         <li>
                                             <a href="index.html">
-<i class="fas fa-sign-out-alt"></i>
-<span>Logout</span>
-</a>
+                                                <i class="fas fa-sign-out-alt"></i>
+                                                <span>Logout</span>
+                                            </a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -336,21 +334,27 @@
                             <div class="appointment-list">
                                 <div class="profile-info-widget">
                                     <a href="patient-profile.html" class="booking-doc-img">
-                                    <img src="/doccure/pat-app img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                                        <img src="/doccure/pat-app img/doctors/doctor-thumb-02.jpg" loading="lazy"
+                                            alt="User Image">
                                     </a>
                                     <div class="profile-det-info">
                                         <h3><a href="patient-profile.html"><%=appointment.name%></a></h3>
                                         <div class="patient-details">
                                             <h5><i class="fas fa-graduation-cap"></i> <%=appointment.department%></h5>
-                                            <h5><i class="far fa-clock"></i> <%=appointment.date%>, <%=appointment.time%></h5>
+                                            <h5><i class="far fa-clock"></i> <%=appointment.date%>,
+                                                <%=appointment.time%></h5>
                                             <h5><i class="fas fa-map-marker-alt"></i> Sahyajigunj, Vadodara</h5>
-                                            <h5><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c7b5aea4afa6b5a387a2bfa6aab7aba2e9a4a8aa">[email&#160;protected]</a></h5>
+                                            <h5><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection"
+                                                    class="__cf_email__"
+                                                    data-cfemail="c7b5aea4afa6b5a387a2bfa6aab7aba2e9a4a8aa">[email&#160;protected]</a>
+                                            </h5>
                                             <h5 class="mb-0"><i class="fas fa-phone"></i>923 782 4575</h5>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="appointment-action">
-                                    <a href="#" class="btn btn-sm bg-info-light" data-bs-toggle="modal" data-bs-target="#appt_details">
+                                    <a href="#" class="btn btn-sm bg-info-light" data-bs-toggle="modal"
+                                        data-bs-target="#appt_details">
                                         <i class="far fa-eye"></i> View
                                     </a>
                                     <a href="<%=appointment.roomId%>" class="btn btn-sm bg-success-light">
@@ -684,11 +688,11 @@
                         </div>
                     </div>
                 </div> -->
-            </div>
-        </div>
+                        </div>
+                    </div>
 
 
-        <!-- <footer class="footer">
+                    <!-- <footer class="footer">
 
             <div class="footer-top">
                 <div class="container-fluid">
@@ -805,70 +809,69 @@
 
         </footer> -->
 
-    </div>
-
-
-    <div class="modal fade custom-modal" id="appt_details">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Appointment Details</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
                 </div>
-                <div class="modal-body">
-                    <ul class="info-details">
-                        <li>
-                            <div class="details-header">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <span class="title">#APT0001</span>
-                                        <span class="text">21 Oct 2019 10:00 AM</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="text-end">
-                                            <button type="button" class="btn bg-success-light btn-sm" id="topup_status">Completed</button>
-                                        </div>
-                                    </div>
-                                </div>
+
+
+                <div class="modal fade custom-modal" id="appt_details">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Appointment Details</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                        </li>
-                        <li>
-                            <span class="title">Status:</span>
-                            <span class="text">Completed</span>
-                        </li>
-                        <li>
-                            <span class="title">Confirm Date:</span>
-                            <span class="text">29 Jun 2019</span>
-                        </li>
-                        <li>
-                            <span class="title">Paid Amount</span>
-                            <span class="text">$450</span>
-                        </li>
-                    </ul>
+                            <div class="modal-body">
+                                <ul class="info-details">
+                                    <li>
+                                        <div class="details-header">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span class="title">#APT0001</span>
+                                                    <span class="text">21 Oct 2019 10:00 AM</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="text-end">
+                                                        <button type="button" class="btn bg-success-light btn-sm"
+                                                            id="topup_status">Completed</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="title">Status:</span>
+                                        <span class="text">Completed</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">Confirm Date:</span>
+                                        <span class="text">29 Jun 2019</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">Paid Amount</span>
+                                        <span class="text">$450</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <script
-    data-cfasync="false"
-    src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
-></script>
-<script src="/doccure/js/jquery-3.6.0.min.js"></script>
+                <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+                </script>
+                <script src="/doccure/js/jquery-3.6.0.min.js"></script>
 
-<script src="/doccure/js/bootstrap.bundle.min.js"></script>
+                <script src="/doccure/js/bootstrap.bundle.min.js"></script>
 
 
-<script src="/doccure/js/moment.min.js"></script>
-<script src="/doccure/daterangepicker/daterangepicker.js"></script>
+                <script src="/doccure/js/moment.min.js"></script>
+                <script src="/doccure/daterangepicker/daterangepicker.js"></script>
 
-<script src="/doccure/fancybox/jquery.fancybox.min.js"></script>
+                <script src="/doccure/fancybox/jquery.fancybox.min.js"></script>
 
-<script src="/doccure/js/feather.min.js"></script>
+                <script src="/doccure/js/feather.min.js"></script>
 
-<script src="/doccure/js/script.js"></script>
+                <script src="/doccure/js/script.js"></script>
 </body>
 
 </html>

@@ -52,7 +52,7 @@
                     </li> -->
                     <li><a class="nav-link scrollto" href="/myProfile">My Profile</a></li>
                     <a href=<%= isAuthenticated ? "/logout" : "/login" %>
-                        class="appointment-btn scrollto"><span><%= isAuthenticated ? "Logout" : "Login" %></span></a>        
+                        class="appointment-btn scrollto"><span><%= isAuthenticated ? "Logout" : "Login" %></span></a>
                 </ul>
 
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -81,7 +81,7 @@
                                 <!-- <img src="<%=prf.profImg%>" alt="Admin"
                                     class="rounded-circle"> -->
                                 <img src="https://www.seekpng.com/png/small/966-9665493_my-profile-icon-blank-profile-image-circle.png"
-                                    alt="Admin" class="rounded-circle">
+                                    alt="Admin" loading="lazy" class="rounded-circle">
 
                             </div>
                         </div>
@@ -231,7 +231,8 @@
                         <h4>Medicine Categories</h4>
                         <ul>
                             <% for(var i=0; i<category.length; i++) { %>
-                            <li><i class="fa fa-solid fa-angle-right"></i> <a href="/products/<%=category[i].name%>"><%=category[i].name%></a></li>
+                            <li><i class="fa fa-solid fa-angle-right"></i> <a
+                                    href="/products/<%=category[i].name%>"><%=category[i].name%></a></li>
                             <% } %>
                         </ul>
                     </div>
