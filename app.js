@@ -538,7 +538,7 @@ app.get("/categories", async function (req, res) {
 							// console.log("Found Results: ", results);
 							res.render("categories", {
 								productsInCart: productsInCart,
-								category: categorie,
+								category:categorie,
 								allProducts: results,
 								isAuthenticated: req.isAuthenticated()
 							});
@@ -1352,7 +1352,10 @@ app.get("/editProfile", function (req, res) {
 				console.log(err);
 			} else {
 				console.log("Updated Results in edit Profile", results);
-				res.render("edit-profileNew", { prf: results });
+				res.render("edit-profileNew", { prf: results,
+					category:categorie,
+					isAuthenticated: req.isAuthenticated()
+				 });
 			}
 		});
 		// res.render("edit-profileNew")
