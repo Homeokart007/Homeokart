@@ -726,6 +726,7 @@ app.get("/cart", async function (req, res) {
 				cart = await cart.save();
 				res.render("cart", {
 					cart: cart,
+					category:categorie,
 					isAuthenticated: req.isAuthenticated()
 				});
 				// return res.status(201).send(cart);
