@@ -553,7 +553,7 @@ app.get("/categories", async function (req, res) {
 					} else {
 						// console.log("Found Results: ", results);
 						res.render("categories", {
-							cartProducts: [],
+							productsInCart: [],
 							category: categorie,
 							allProducts: results,
 							isAuthenticated: req.isAuthenticated()
@@ -572,7 +572,7 @@ app.get("/categories", async function (req, res) {
 			} else {
 				// console.log("Found Results: ", results);
 				res.render("categories", {
-					cartProducts: [],
+					productsInCart: [],
 					category: categorie,
 					allProducts: results,
 					isAuthenticated: req.isAuthenticated()
@@ -1079,28 +1079,90 @@ app.post("/uploadData", upload.array("productImage"), (req, res) => {
 	});
 });
 
-app.get("/products/:category", function (req, res) {
+app.get("/products/:category", async function (req, res) {
 	const catTag = req.params.category;
 	console.log(catTag);
-	Product.find(
-		{
-			tag: catTag
-		},
-		function (err, results) {
+    const productsInCart = [];
+
+	if (req.isAuthenticated()) {
+		const userId = req.user.id;
+
+		try {
+			let cart = await Cart.findOne({
+				userId
+			});
+			console.log("Hey Cart", cart);
+			if (cart) {
+				//cart exists for user
+
+				if (cart.products) {
+					console.log("Found");
+					// console.log(cart.products);
+					for (let i = 0; i < cart.products.length; i++) {
+						productsInCart.push(cart.products[i].productId);
+						// console.log(cart.products[i].productId);
+					}
+					// console.log(productsInCart);
+
+					Product.find({tag: catTag}, function (err, results) {
+						if (err) {
+							console.log(err);
+						} else {
+							// console.log("Found Results: ", results);
+							res.render("categories", {
+								productsInCart: productsInCart,
+								category: categorie,
+								allProducts: results,
+								isAuthenticated: req.isAuthenticated()
+							});
+						}
+					});
+				}
+				// return res.status(201).send(cart);
+			} else {
+				Product.find({tag: catTag}, function (err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						// console.log("Found Results: ", results);
+						res.render("categories", {
+							productsInCart: [],
+							category: categorie,
+							allProducts: results,
+							isAuthenticated: req.isAuthenticated()
+						});
+					}
+				});
+			}
+		} catch (err) {
+			console.log(err);
+			res.status(500).send("Something went wrong");
+		}
+	} else {
+		Product.find({tag: catTag}, function (err, results) {
 			if (err) {
 				console.log(err);
 			} else {
 				// console.log("Found Results: ", results);
 				res.render("categories", {
-					// allProducts: resourceLimits,
+					productsInCart: [],
 					category: categorie,
 					allProducts: results,
-					category:categorie,
 					isAuthenticated: req.isAuthenticated()
 				});
 			}
-		}
-	);
+		});
+	}
+
+
+
+
+
+
+
+
+
+
 });
 
 app.get("/product/:prdid", function (req, res) {
