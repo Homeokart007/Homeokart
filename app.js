@@ -538,7 +538,7 @@ app.get("/categories", async function (req, res) {
 							// console.log("Found Results: ", results);
 							res.render("categories", {
 								productsInCart: productsInCart,
-								category:categorie,
+								category: categorie,
 								allProducts: results,
 								isAuthenticated: req.isAuthenticated()
 							});
@@ -726,7 +726,7 @@ app.get("/cart", async function (req, res) {
 				cart = await cart.save();
 				res.render("cart", {
 					cart: cart,
-					category:categorie,
+					category: categorie,
 					isAuthenticated: req.isAuthenticated()
 				});
 				// return res.status(201).send(cart);
@@ -812,9 +812,9 @@ app.get("/cart/:productid", function (req, res) {
 
 					// res.redirect("/cart");
 					res.render("cart", {
-					    cart: cart,
-                        category:categorie,
-					    isAuthenticated: req.isAuthenticated()
+						cart: cart,
+						category: categorie,
+						isAuthenticated: req.isAuthenticated()
 					});
 					// return res.status(201).send(cart);
 				} else {
@@ -826,9 +826,9 @@ app.get("/cart/:productid", function (req, res) {
 
 					// res.redirect("/cart");
 					res.render("cart", {
-					    cart: newCart,
-                        category:categorie,
-					    isAuthenticated: req.isAuthenticated()
+						cart: newCart,
+						category: categorie,
+						isAuthenticated: req.isAuthenticated()
 					});
 					// return res.status(201).send(newCart);
 				}
@@ -883,9 +883,9 @@ app.get("/cart/:id/incrqty", async function (req, res) {
 				cart = await cart.save();
 				// res.redirect("/cart");
 				res.render("cart", {
-				    cart: cart,
-					category:categorie,
-				    isAuthenticated: req.isAuthenticated()
+					cart: cart,
+					category: categorie,
+					isAuthenticated: req.isAuthenticated()
 				});
 			} else {
 				console.log("Cart doesnot exists");
@@ -936,9 +936,9 @@ app.get("/cart/:id/decrqty", async function (req, res) {
 				cart = await cart.save();
 				// res.redirect("/cart");
 				res.render("cart", {
-				    cart: cart,
-					category:categorie,
-				    isAuthenticated: req.isAuthenticated()
+					cart: cart,
+					category: categorie,
+					isAuthenticated: req.isAuthenticated()
 				});
 			} else {
 				console.log("Cart does not exists");
@@ -981,9 +981,9 @@ app.get("/cart/:id/remove", async function (req, res) {
 				cart = await cart.save();
 				// res.redirect("/cart");
 				res.render("cart", {
-				    cart: cart,
-					category:categorie,
-				    isAuthenticated: req.isAuthenticated()
+					cart: cart,
+					category: categorie,
+					isAuthenticated: req.isAuthenticated()
 				});
 				// return res.status(201).send(cart);
 			} else {
@@ -1088,7 +1088,7 @@ app.post("/uploadData", upload.array("productImage"), (req, res) => {
 app.get("/products/:category", async function (req, res) {
 	const catTag = req.params.category;
 	console.log(catTag);
-    const productsInCart = [];
+	const productsInCart = [];
 
 	if (req.isAuthenticated()) {
 		const userId = req.user.id;
@@ -1110,7 +1110,7 @@ app.get("/products/:category", async function (req, res) {
 					}
 					// console.log(productsInCart);
 
-					Product.find({tag: catTag}, function (err, results) {
+					Product.find({ tag: catTag }, function (err, results) {
 						if (err) {
 							console.log(err);
 						} else {
@@ -1126,7 +1126,7 @@ app.get("/products/:category", async function (req, res) {
 				}
 				// return res.status(201).send(cart);
 			} else {
-				Product.find({tag: catTag}, function (err, results) {
+				Product.find({ tag: catTag }, function (err, results) {
 					if (err) {
 						console.log(err);
 					} else {
@@ -1145,7 +1145,7 @@ app.get("/products/:category", async function (req, res) {
 			res.status(500).send("Something went wrong");
 		}
 	} else {
-		Product.find({tag: catTag}, function (err, results) {
+		Product.find({ tag: catTag }, function (err, results) {
 			if (err) {
 				console.log(err);
 			} else {
@@ -1171,7 +1171,7 @@ app.get("/product/:prdid", function (req, res) {
 			// console.log("Found Results: ", results);
 			res.render("productNew", {
 				product: results,
-				category:categorie,
+				category: categorie,
 				isAuthenticated: req.isAuthenticated()
 			});
 		}
@@ -1261,22 +1261,23 @@ app.get("/checkout", function (req, res) {
 				console.log("Results", results);
 				arr.push(results);
 
-                Cart.findOne({ userId: userId }, function (err, results) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log("Arr1", arr);
-                        console.log("Got the results");
-                        console.log("Cart Results", results);
-                        arr.push(results);
-                        console.log("Arr2", arr);
-                        res.render("checkout", { info: arr,
+				Cart.findOne({ userId: userId }, function (err, results) {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log("Arr1", arr);
+						console.log("Got the results");
+						console.log("Cart Results", results);
+						arr.push(results);
+						console.log("Arr2", arr);
+						res.render("checkout", {
+							info: arr,
 							prf: results,
-							category:categorie,
+							category: categorie,
 							isAuthenticated: req.isAuthenticated()
 						});
-                    }
-                });
+					}
+				});
 			}
 		});
 
@@ -1317,10 +1318,11 @@ app.get("/checkout/:productid", function (req, res) {
 							totalPrice: Number(results.price)
 						});
 						console.log("Arr2", arr);
-						res.render("checkout", { info: arr , 
+						res.render("checkout", {
+							info: arr,
 							prf: results,
-							category:categorie,
-							isAuthenticated: req.isAuthenticated() 
+							category: categorie,
+							isAuthenticated: req.isAuthenticated()
 						});
 					}
 				});
@@ -1390,7 +1392,7 @@ app.get("/myProfile", function (req, res) {
 				console.log("Updated Results in my Profile", results);
 				res.render("profileNew", {
 					prf: results,
-					category:categorie,
+					category: categorie,
 					isAuthenticated: req.isAuthenticated()
 				});
 			}
@@ -1410,10 +1412,11 @@ app.get("/editProfile", function (req, res) {
 				console.log(err);
 			} else {
 				console.log("Updated Results in edit Profile", results);
-				res.render("edit-profileNew", { prf: results,
-					category:categorie,
+				res.render("edit-profileNew", {
+					prf: results,
+					category: categorie,
 					isAuthenticated: req.isAuthenticated()
-				 });
+				});
 			}
 		});
 		// res.render("edit-profileNew")
@@ -1497,7 +1500,7 @@ app.get("/consultation", function (req, res) {
 				console.log(results);
 				res.render("consultation", {
 					docData: results,
-					category:categorie,
+					category: categorie,
 					isAuthenticated: req.isAuthenticated()
 				});
 			}
@@ -1557,7 +1560,9 @@ app.post("/consultation", function (req, res) {
 
 app.get("/registerDoc", function (req, res) {
 	if (req.isAuthenticated()) {
-		res.render("registerDoc");
+		res.render("registerDoc", {
+			isAuthenticated: req.isAuthenticated()
+		});
 	} else {
 		res.redirect("/login");
 	}
@@ -1617,30 +1622,29 @@ app.get("/docCategory", function (req, res) {
 app.get("/docProfile/:id", function (req, res) {
 	const id = req.params.id;
 
-
 	Doctor.findById(id, function (err, results) {
 		if (err) {
 			console.log(err);
 		} else {
-			res.render("docProfile", { info: results });
+			res.render("docProfile", {
+				info: results,
+				isAuthenticated: req.isAuthenticated()
+			});
 		}
 	});
 });
 
-
-
 app.post("/docProfile/booking/:id", function (req, res) {
-
 	if (req.isAuthenticated()) {
 		const id = req.params.id;
 		console.log("Dr id", id);
 		const userId = req.user.id;
-		const date = req.body.appointmentDateAndTime.slice(0, 10)
-		const time = req.body.appointmentDateAndTime.slice(11, 16)
+		const date = req.body.appointmentDateAndTime.slice(0, 10);
+		const time = req.body.appointmentDateAndTime.slice(11, 16);
 		console.log(date);
 		console.log(time);
-// 		const appoi = [];
-// const docAppoi = [];
+		// 		const appoi = [];
+		// const docAppoi = [];
 		const room = req.body.appointmentDateAndTime;
 		const roomId = "/room/" + id + "-" + room;
 		console.log(roomId);
@@ -1657,56 +1661,68 @@ app.post("/docProfile/booking/:id", function (req, res) {
 					date: date,
 					time: time,
 					roomId: roomId
-				}
+				};
 				// appoi.push(appo)
 				// { $set: { appointments: appointments.push(appo) } }
-				Appointment.findOneAndUpdate(userId,{ $push: { appointments: appo  } } ,
+				Appointment.findOneAndUpdate(
+					userId,
+					{ $push: { appointments: appo } },
 					{
-					  new: true,
-					  upsert: true,
-					}, function (err, result) {
-					if (err) {
-						console.log(err);
-					} else {
-						console.log(result);
+						new: true,
+						upsert: true
+					},
+					function (err, result) {
+						if (err) {
+							console.log(err);
+						} else {
+							console.log(result);
 
-						const len = result.newApp.length;
+							const len = result.newApp.length;
 
-						const docAppo = {
-							patientId: userId,
-							paDesc: result.newApp[len - 1].comments,
-							name: result.newApp[len - 1].username,
-							roomId: roomId,
-							patientHistory: result.newApp[len - 1].history,
-							date: date,
-							time: time
-						}
+							const docAppo = {
+								patientId: userId,
+								paDesc: result.newApp[len - 1].comments,
+								name: result.newApp[len - 1].username,
+								roomId: roomId,
+								patientHistory: result.newApp[len - 1].history,
+								date: date,
+								time: time
+							};
 
-						// docAppoi.push(docAppo);
-						// console.log("docAppoi1", docAppoi);
-						console.log("DR id", id)
-						// {$set: { appoin: appoin.push(docAppo) }}
-						Doctor.findByIdAndUpdate(id,{ $push: { appoin: docAppo  } } ,
-							{
-							  new: true,
-							  upsert: true,
-							}, function(err, result) {
-								if (err) {
-									console.log(err);
-								} else {
-									// console.log("docAppoi2", docAppoi);
-									console.log("Inside Doc result", result);
+							// docAppoi.push(docAppo);
+							// console.log("docAppoi1", docAppoi);
+							console.log("DR id", id);
+							// {$set: { appoin: appoin.push(docAppo) }}
+							Doctor.findByIdAndUpdate(
+								id,
+								{ $push: { appoin: docAppo } },
+								{
+									new: true,
+									upsert: true
+								},
+								function (err, result) {
+									if (err) {
+										console.log(err);
+									} else {
+										// console.log("docAppoi2", docAppoi);
+										console.log(
+											"Inside Doc result",
+											result
+										);
+									}
 								}
-						})
+							);
 
-						console.log("Appointment", result)
-						res.render("patient-appointment", { info: result })
+							console.log("Appointment", result);
+							res.render("patient-appointment", {
+								info: result,
+								isAuthenticated: req.isAuthenticated()
+							});
+						}
 					}
-				})
-
+				);
 			}
-			
-		})
+		});
 		// });
 
 		// console.log("Data", ap);
@@ -1719,56 +1735,60 @@ app.post("/docProfile/booking/:id", function (req, res) {
 	} else {
 		res.redirect("/login");
 	}
-
 });
 
-app.get("/docDashboard",function(req,res){
-	if(req.isAuthenticated()){
+app.get("/docDashboard", function (req, res) {
+	if (req.isAuthenticated()) {
 		const userId = req.user.id;
-		console.log(userId)
+		console.log(userId);
 
-		Doctor.find({userId:userId},function(err,result){
-			if(err){
+		Doctor.find({ userId: userId }, function (err, result) {
+			if (err) {
 				console.log(err);
 			} else {
 				console.log(result);
-				res.render("doctor-appointment",{info:result});
+				res.render("doctor-appointment", {
+					info: result,
+					isAuthenticated: req.isAuthenticated()
+				});
 			}
-		})
-	} else {
-		res.redirect("/login")
-	}
-	// res.render("doctor-appointment");
-})
-
-app.get("/booking/:id", function (req, res) {
-	const id = req.params.id;
-	res.render("booking");
-});
-
-app.get("/patientDashboard", function (req, res) {
-
-	if(req.isAuthenticated()){
-		const userId = req.user.id;
-
-		Appointment.find({userId : userId},function(err,result){
-			if(err){
-				console.log(err)
-			} else {
-				console.log(result);
-				res.render("patient-dashboard", {info:result});
-			}
-		})
-
+		});
 	} else {
 		res.redirect("/login");
 	}
-	
-})
+	// res.render("doctor-appointment");
+});
+
+app.get("/booking/:id", function (req, res) {
+	const id = req.params.id;
+	res.render("booking", { isAuthenticated: req.isAuthenticated() });
+});
+
+app.get("/patientDashboard", function (req, res) {
+	if (req.isAuthenticated()) {
+		const userId = req.user.id;
+
+		Appointment.find({ userId: userId }, function (err, result) {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log(result);
+				res.render("patient-dashboard", {
+					info: result,
+					isAuthenticated: req.isAuthenticated()
+				});
+			}
+		});
+	} else {
+		res.redirect("/login");
+	}
+});
 
 app.get("/patientAppointment", function (req, res) {
-	res.render("patient-appointment")
-})
+	res.render("patient-appointment", {
+		isAuthenticated: req.isAuthenticated()
+	});
+});
 
 app.get("/logout", function (req, res) {
 	console.log("Logged out");
@@ -1782,7 +1802,7 @@ app.get("/logout", function (req, res) {
 	});
 });
 
-app.get("/paymentSuccessfull",function (req,res){
+app.get("/paymentSuccessfull", function (req, res) {
 	res.render("paymentSuccessfull");
 });
 

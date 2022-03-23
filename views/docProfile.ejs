@@ -8,6 +8,25 @@
 
     <link href="/doccure/img/favicon.png" rel="icon" />
 
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="/CSS/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <!-- <link href="/CSS/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="/CSS/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/CSS/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+
+    <!-- CSS File -->
+    <link href="/CSS/navbarFooter.css" rel="stylesheet" />
+    <link href="/CSS/docProfile.css" rel="stylesheet" />
+
+
+
     <link rel="stylesheet" href="/doccure/css/bootstrap.min.css" />
 
     <!-- <link rel="stylesheet" href="/doccure/css/fontawesome.min.css" /> -->
@@ -23,8 +42,13 @@
 </head>
 
 <body>
+
+
+
+
+    <!-- NAVBAR STARTS -->
     <header id="header" class="fixed-top">
-        <div class="container d-flex align-items-center">
+        <div class="container header-container">
 
             <h1 class="logo me-auto"><a href="/">HomeoKart</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
@@ -32,21 +56,21 @@
 
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="/">Home</a></li>
+                    <li><a class="nav-link scrollto" href="/">Home</a></li>
                     <li><a class="nav-link scrollto" href="/categories">Medicines</a></li>
                     <li><a class="nav-link scrollto" href="/consultation">Doctors</a></li>
                     <li><a class="nav-link scrollto" href="/uploadData">UploadData</a></li>
                     <li><a class="nav-link scrollto" href="/cart">Cart</a></li>
                     <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
-                            <li><a href="#">Drop Down 1</a></li>
-                            <li><a href="#">Drop Down 2</a></li>
+                            <li><a href="/room">ROOM</a></li>
+                            <li><a href="/docProfile/623607e3060c92c64c4d18fd">Doctor profile</a></li>
                             <li><a href="#">Drop Down 3</a></li>
                             <li><a href="#">Drop Down 4</a></li>
                         </ul>
                     </li>
 
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    <li><a class="nav-link scrollto" href="/myProfile">My Profile</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -55,7 +79,15 @@
                 class="appointment-btn scrollto"><%= isAuthenticated ? "Logout" : "Login" %></a>
 
         </div>
-    </header><!-- End Header -->
+    </header>
+    <!-- NAVBAR ENDS -->
+
+
+
+
+
+
+
     <div class="main-wrapper">
         <!-- <header class="header">
             <nav class="navbar navbar-expand-lg header-nav">

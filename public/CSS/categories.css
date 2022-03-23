@@ -178,6 +178,7 @@ main {
     height: 200px;
     justify-content: center;
     margin-bottom: 1rem;
+    border-radius: 10px;
     overflow: hidden;
 }
 
@@ -185,13 +186,13 @@ main {
     margin: 0;
     width: 100%;
     height: auto;
-    border-radius: 10px;
     object-fit: cover;
 }
 
 .product-card-img img:hover {
     transition: transform 0.5s ease;
     transform: scale(1.2);
+    filter: brightness(90%);
 }
 
 .product-card h5 {
