@@ -317,20 +317,19 @@
                             and also they protect our skin from the harm rays of sun.</p>
                     </div>
                 </div> -->
-                <% for(var i=0; i<category.length; i++) { %>
+                <% data[0].forEach(function(data){ %>
                 <div class="col-sm-12 col-lg-4">
                     <div class="card" style="width: 300px;margin: auto;">
-                        <img src="/images/9.jpg" loading="lazy" class="card-img-top">
+                        <img src="\<%=data.img.path[0]%>" loading="lazy" class="card-img-top">
                         <div class="card-body">
-                            <h4 class="card-title"><%=category[i].name%></h4>
-                            <p class="card-text">Skin masks help us to make are skin fresh
-                                and also they protect our skin from the harm rays of sun</p>
-                            <a href="/products/<%= category[i].name %> " type="button"
+                            <h4 class="card-title"><%=data.name%></h4>
+                            <p class="card-text"><%=data.description.slice(0,50)%></p>
+                            <a href="/products/<%= data.id %> %> " type="button"
                                 class="btn btn-warning">SEARCH</a>
                         </div>
                     </div>
                 </div>
-                <% } %>
+                <% }) %>
 
             </div>
         </section>
