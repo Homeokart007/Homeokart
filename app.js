@@ -810,11 +810,12 @@ app.get("/cart/:productid", function (req, res) {
 					}
 					cart = await cart.save();
 
-					res.redirect("/cart");
-					// res.render("cart", {
-					//     cart: cart,
-					//     isAuthenticated: req.isAuthenticated()
-					// });
+					// res.redirect("/cart");
+					res.render("cart", {
+					    cart: cart,
+                        category:categorie,
+					    isAuthenticated: req.isAuthenticated()
+					});
 					// return res.status(201).send(cart);
 				} else {
 					//no cart for user, create new cart
@@ -823,11 +824,12 @@ app.get("/cart/:productid", function (req, res) {
 						products: [{ productId, quantity, name, price, img }]
 					});
 
-					res.redirect("/cart");
-					// res.render("cart", {
-					//     cart: newCart,
-					//     isAuthenticated: req.isAuthenticated()
-					// });
+					// res.redirect("/cart");
+					res.render("cart", {
+					    cart: newCart,
+                        category:categorie,
+					    isAuthenticated: req.isAuthenticated()
+					});
 					// return res.status(201).send(newCart);
 				}
 			} catch (err) {
@@ -879,11 +881,12 @@ app.get("/cart/:id/incrqty", async function (req, res) {
 					cart.totalPrice = price;
 				}
 				cart = await cart.save();
-				res.redirect("/cart");
-				// res.render("cart", {
-				//     cart: cart,
-				//     isAuthenticated: req.isAuthenticated()
-				// });
+				// res.redirect("/cart");
+				res.render("cart", {
+				    cart: cart,
+					category:categorie,
+				    isAuthenticated: req.isAuthenticated()
+				});
 			} else {
 				console.log("Cart doesnot exists");
 			}
@@ -931,13 +934,14 @@ app.get("/cart/:id/decrqty", async function (req, res) {
 					cart.totalPrice = price;
 				}
 				cart = await cart.save();
-				res.redirect("/cart");
-				// res.render("cart", {
-				//     cart: cart,
-				//     isAuthenticated: req.isAuthenticated()
-				// });
+				// res.redirect("/cart");
+				res.render("cart", {
+				    cart: cart,
+					category:categorie,
+				    isAuthenticated: req.isAuthenticated()
+				});
 			} else {
-				console.log("Cart doesnot exists");
+				console.log("Cart does not exists");
 			}
 		} catch (err) {
 			console.log(err);
@@ -975,11 +979,12 @@ app.get("/cart/:id/remove", async function (req, res) {
 					cart.totalPrice = price;
 				}
 				cart = await cart.save();
-				res.redirect("/cart");
-				// return res.render("cart", {
-				//     cart: cart,
-				//     isAuthenticated: req.isAuthenticated()
-				// });
+				// res.redirect("/cart");
+				res.render("cart", {
+				    cart: cart,
+					category:categorie,
+				    isAuthenticated: req.isAuthenticated()
+				});
 				// return res.status(201).send(cart);
 			} else {
 				//no cart for user, create new cart
@@ -1154,16 +1159,6 @@ app.get("/products/:category", async function (req, res) {
 			}
 		});
 	}
-
-
-
-
-
-
-
-
-
-
 });
 
 app.get("/product/:prdid", function (req, res) {
