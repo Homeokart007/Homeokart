@@ -1787,6 +1787,10 @@ app.get("/logout", function (req, res) {
 	});
 });
 
+app.get("/paymentSuccessfull",function (req,res){
+	res.render("paymentSuccessfull");
+});
+
 server.listen(PORT, (req, res) => {
 	console.log("Server started on http://localhost:" + PORT);
 });
