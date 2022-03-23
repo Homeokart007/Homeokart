@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Doccure</title>
+    <title>Doctor Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
 
     <link href="/doccure/img/favicon.png" rel="icon" />
@@ -18,11 +18,44 @@
 
     <link rel="stylesheet" href="/doccure/fancybox/jquery.fancybox.min.css" />
 
-    <link rel="stylesheet" href="/doccure/CSS/style.css" />
-    <link rel="stylesheet" href="/CSS/docProfile.css" />
+    <link rel="stylesheet" href="/doccure/css/style.css" />
+    <!-- <link rel="stylesheet" href="/CSS/docProfile.css" /> -->
 </head>
 
 <body>
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+
+            <h1 class="logo me-auto"><a href="/">HomeoKart</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="/">Home</a></li>
+                    <li><a class="nav-link scrollto" href="/categories">Medicines</a></li>
+                    <li><a class="nav-link scrollto" href="/consultation">Doctors</a></li>
+                    <li><a class="nav-link scrollto" href="/uploadData">UploadData</a></li>
+                    <li><a class="nav-link scrollto" href="/cart">Cart</a></li>
+                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="#">Drop Down 1</a></li>
+                            <li><a href="#">Drop Down 2</a></li>
+                            <li><a href="#">Drop Down 3</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+            <a href=<%= isAuthenticated ? "/logout" : "/login" %>
+                class="appointment-btn scrollto"><%= isAuthenticated ? "Logout" : "Login" %></a>
+
+        </div>
+    </header><!-- End Header -->
     <div class="main-wrapper">
         <!-- <header class="header">
             <nav class="navbar navbar-expand-lg header-nav">
