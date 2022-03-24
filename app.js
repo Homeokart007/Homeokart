@@ -1788,6 +1788,7 @@ app.post("/docProfile/booking/:id", function (req, res) {
 							console.log("Appointment", result);
 							res.render("patient-appointment", {
 								info: result,
+								category: categorie,
 								isAuthenticated: req.isAuthenticated()
 							});
 						}
