@@ -477,37 +477,164 @@ const docImages = [
 
 app.get("/", async function (req, res) {
 	console.log(req.isAuthenticated());
+    
+    const productsInCart = [];
 
-	Product.find({}, async function (err, productResults) {
-		if (err) {
-			console.log(err);
-		} else {
-			Doctor.find({}, async function (err, docResults) {
-				if (err) {
-					console.log(err);
-				} else {
-					// console.log(results);
-					res.render("homepageNew", {
-						productsInCart: [],
-						allProducts: [
-							productResults[0],
-							productResults[1],
-							productResults[2]
-						],
-						docData: [
-							docResults[0],
-							docResults[1],
-							docResults[2],
-							docResults[3]
-						],
-						docImages: docImages,
-						category: categorie,
-						isAuthenticated: req.isAuthenticated()
+	if (req.isAuthenticated()) {
+		const userId = req.user.id;
+
+		try {
+			let cart = await Cart.findOne({
+				userId
+			});
+			console.log("Hey Cart", cart);
+			if (cart) {
+				//cart exists for user
+
+				if (cart.products) {
+					console.log("Found");
+					// console.log(cart.products);
+					for (let i = 0; i < cart.products.length; i++) {
+						productsInCart.push(cart.products[i].productId);
+						// console.log(cart.products[i].productId);
+					}
+					// console.log(productsInCart);
+
+					Product.find({}, function (err, productResults) {
+						if (err) {
+							console.log(err);
+						} else {
+							// console.log("Found Results: ", results);
+                            Doctor.find({}, function (err, docResults) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    // console.log(results);
+                                    res.render("homepageNew", {
+                                        productsInCart: productsInCart,
+                                        allProducts: [
+                                            productResults[0],
+                                            productResults[1],
+                                            productResults[2]
+                                        ],
+                                        docData: [
+                                            docResults[0],
+                                            docResults[1],
+                                            docResults[2],
+                                            docResults[3]
+                                        ],
+                                        docImages: docImages,
+                                        category: categorie,
+                                        isAuthenticated: req.isAuthenticated()
+                                    });
+                                }
+                            });
+						}
 					});
 				}
-			});
+				// return res.status(201).send(cart);
+			} else {
+				Product.find({}, function (err, productResults) {
+					if (err) {
+						console.log(err);
+					} else {
+						// console.log("Found Results: ", results);
+                        Doctor.find({}, function (err, docResults) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                // console.log(results);
+                                res.render("homepageNew", {
+                                    productsInCart: [],
+                                    allProducts: [
+                                        productResults[0],
+                                        productResults[1],
+                                        productResults[2]
+                                    ],
+                                    docData: [
+                                        docResults[0],
+                                        docResults[1],
+                                        docResults[2],
+                                        docResults[3]
+                                    ],
+                                    docImages: docImages,
+                                    category: categorie,
+                                    isAuthenticated: req.isAuthenticated()
+                                });
+                            }
+                        });
+					}
+				});
+			}
+		} catch (err) {
+			console.log(err);
+			res.status(500).send("Something went wrong");
 		}
-	});
+	} else {
+		Product.find({}, function (err, productResults) {
+            if (err) {
+                console.log(err);
+            } else {
+                Doctor.find({}, function (err, docResults) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        // console.log(results);
+                        res.render("homepageNew", {
+                            productsInCart: [],
+                            allProducts: [
+                                productResults[0],
+                                productResults[1],
+                                productResults[2]
+                            ],
+                            docData: [
+                                docResults[0],
+                                docResults[1],
+                                docResults[2],
+                                docResults[3]
+                            ],
+                            docImages: docImages,
+                            category: categorie,
+                            isAuthenticated: req.isAuthenticated()
+                        });
+                    }
+                });
+            }
+        });
+	}
+
+
+
+	// Product.find({}, function (err, productResults) {
+	// 	if (err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		Doctor.find({}, function (err, docResults) {
+	// 			if (err) {
+	// 				console.log(err);
+	// 			} else {
+	// 				// console.log(results);
+	// 				res.render("homepageNew", {
+	// 					productsInCart: [],
+	// 					allProducts: [
+	// 						productResults[0],
+	// 						productResults[1],
+	// 						productResults[2]
+	// 					],
+	// 					docData: [
+	// 						docResults[0],
+	// 						docResults[1],
+	// 						docResults[2],
+	// 						docResults[3]
+	// 					],
+	// 					docImages: docImages,
+	// 					category: categorie,
+	// 					isAuthenticated: req.isAuthenticated()
+	// 				});
+	// 			}
+	// 		});
+	// 	}
+	// });
 });
 
 app.get(
