@@ -5,22 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/CSS/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/CSS/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
     <!-- CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
+    <!-- <link href="assets/css/style.css" rel="stylesheet"> -->
     <!-- <link href="assets/css/card.css" rel="stylesheet"> -->
 
     <!-- CSS File -->
     <link href="/CSS/consultation.css" rel="stylesheet">
+    <link href="/CSS/navbarFooter.css" rel="stylesheet" />
 
 
 
@@ -39,55 +46,57 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- Top Bar -->
-    <div id="topbar" class="d-flex align-items-center fixed-top">
-        <div class="container d-flex justify-content-between">
-            <div class="contact-info d-flex align-items-center">
-                <i class="bi bi-envelope"></i> <a href="mailto:contact@example.com">contact@example.com</a>
-                <i class="bi bi-phone"></i> +91 55895 54885
-            </div>
-            <div class="d-none d-lg-flex social-links align-items-center">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-            </div>
-        </div>
-    </div>
+    
+    
 
-    <!-- Header -->
+    <!-- NAVBAR STARTS -->
     <header id="header" class="fixed-top">
-        <div class="container d-flex align-items-center">
+        <div class="container header-container">
 
-            <h1 class="logo me-auto"><a href="homepage.html">HomeoKart</a></h1>
+            <h1 class="logo me-auto"><a href="/">HomeoKart</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="#slider">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">About</a></li>
-                    <li><a class="nav-link scrollto" href="#">Services</a></li>
-                    <li><a class="nav-link scrollto" href="#">Departments</a></li>
-                    <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
+                    <li><a class="nav-link scrollto" href="/">Home</a></li>
+                    <li><a class="nav-link scrollto" href="/categories">Medicines</a></li>
+                    <li><a class="nav-link scrollto" href="/consultation">Doctors</a></li>
+                    <li><a class="nav-link scrollto" href="/uploadData">UploadData</a></li>
+                    <li><a class="nav-link scrollto" href="/cart">Cart</a></li>
                     <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
-                            <li><a href="#">Drop Down 1</a></li>
-                            <li><a href="#">Drop Down 2</a></li>
+                            <li><a href="/room">ROOM</a></li>
+                            <li><a href="/docProfile/623607e3060c92c64c4d18fd">Doctor profile</a></li>
                             <li><a href="#">Drop Down 3</a></li>
                             <li><a href="#">Drop Down 4</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+
+                    <li><a class="nav-link scrollto" href="/myProfile">My Profile</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
 
-            <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span>
-                Appointment</a>
+            <a href=<%= isAuthenticated ? "/logout" : "/login" %>
+                class="appointment-btn scrollto"><%= isAuthenticated ? "Logout" : "Login" %></a>
 
         </div>
     </header>
+    <!-- NAVBAR ENDS -->
+
+
+
+
+
+
+
+
+
+
+
+
+
     <section class="details-card" id="doctor-section">
         <div class="container">
             <div class="section-title">

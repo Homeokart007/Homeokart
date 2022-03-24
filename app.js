@@ -93,40 +93,41 @@ var doctor = mongoose.createConnection(
 	}
 );
 
+// https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg
 const categorie = [
 	{
 		name: "Hair Care",
 		linkName: "hair_care",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+		img: "/images/shampoo.png"
 	},
 	{
 		name: "Skin Care",
 		linkName: "skin_care",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+		img: "/images/skin-care.png"
 	},
 	{
 		name: "Covid",
 		linkName: "covid",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
-	},
-	{
-		name: "Trituration",
-		linkName: "trituration",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+		img: "/images/covid.png"
 	},
 	{
 		name: "Dilutions",
 		linkName: "dilutions",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+		img: "/images/dilution.png"
 	},
 	{
 		name: "Mother tincture",
 		linkName: "mother_tincture",
-		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
+		img: "/images/mother-tincture.png"
 	},
 	{
 		name: "Baby essentials",
 		linkName: "baby_essentials",
+		img: "/images/baby-products.png"
+	},
+	{
+		name: "Trituration",
+		linkName: "trituration",
 		img: "https://www.mynanganallur.com/wp-content/uploads/2019/07/health-care-product.jpg"
 	}
 ];
@@ -467,19 +468,46 @@ passport.use(
 
 const Hairitems = [];
 
+const docImages = [
+	"/assets/img/doctors/doctors-1.jpg",
+	"/assets/img/doctors/doctors-2.jpg",
+	"/assets/img/doctors/doctors-3.jpg",
+	"/assets/img/doctors/doctors-4.jpg"
+];
+
 app.get("/", async function (req, res) {
 	console.log(req.isAuthenticated());
-	res.render("homepageNEW", {
-		category: categorie,
-		isAuthenticated: req.isAuthenticated()
+
+	Product.find({}, function (err, productResults) {
+		if (err) {
+			console.log(err);
+		} else {
+			Doctor.find({}, function (err, docResults) {
+				if (err) {
+					console.log(err);
+				} else {
+					// console.log(results);
+					res.render("homepageNew", {
+						productsInCart: [],
+						allProducts: [
+							productResults[0],
+							productResults[1],
+							productResults[2]
+						],
+						docData: [
+							docResults[0],
+							docResults[1],
+							docResults[2],
+							docResults[3]
+						],
+						docImages: docImages,
+						category: categorie,
+						isAuthenticated: req.isAuthenticated()
+					});
+				}
+			});
+		}
 	});
-	// Product.find({ tag: "Haircare" }, function (err, results) {
-	//     if (err) {
-	//         console.log(err);
-	//     } else {
-	//         console.log("Found Results", results);
-	//     }
-	// });
 });
 
 app.get(
@@ -881,12 +909,12 @@ app.get("/cart/:id/incrqty", async function (req, res) {
 					cart.totalPrice = price;
 				}
 				cart = await cart.save();
-				// res.redirect("/cart");
-				res.render("cart", {
-					cart: cart,
-					category: categorie,
-					isAuthenticated: req.isAuthenticated()
-				});
+				res.redirect("/cart");
+				// res.render("cart", {
+				// 	cart: cart,
+				// 	category: categorie,
+				// 	isAuthenticated: req.isAuthenticated()
+				// });
 			} else {
 				console.log("Cart doesnot exists");
 			}
@@ -934,12 +962,12 @@ app.get("/cart/:id/decrqty", async function (req, res) {
 					cart.totalPrice = price;
 				}
 				cart = await cart.save();
-				// res.redirect("/cart");
-				res.render("cart", {
-					cart: cart,
-					category: categorie,
-					isAuthenticated: req.isAuthenticated()
-				});
+				res.redirect("/cart");
+				// res.render("cart", {
+				// 	cart: cart,
+				// 	category: categorie,
+				// 	isAuthenticated: req.isAuthenticated()
+				// });
 			} else {
 				console.log("Cart does not exists");
 			}
@@ -979,12 +1007,12 @@ app.get("/cart/:id/remove", async function (req, res) {
 					cart.totalPrice = price;
 				}
 				cart = await cart.save();
-				// res.redirect("/cart");
-				res.render("cart", {
-					cart: cart,
-					category: categorie,
-					isAuthenticated: req.isAuthenticated()
-				});
+				res.redirect("/cart");
+				// res.render("cart", {
+				// 	cart: cart,
+				// 	category: categorie,
+				// 	isAuthenticated: req.isAuthenticated()
+				// });
 				// return res.status(201).send(cart);
 			} else {
 				//no cart for user, create new cart
