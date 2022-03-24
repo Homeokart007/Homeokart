@@ -475,7 +475,7 @@ const docImages = [
 	"/assets/img/doctors/doctors-4.jpg"
 ];
 
-app.get("/", async function (req, res) {
+app.get("/", function (req, res) {
 	console.log(req.isAuthenticated());
 
 	Product.find({}, function (err, productResults) {
