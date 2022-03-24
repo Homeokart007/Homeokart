@@ -8,23 +8,29 @@
 
     <title>Doctors</title>
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/CSS/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/CSS/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/CSS/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
     <!-- CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
+    <!-- <link href="assets/css/style.css" rel="stylesheet"> -->
     <!-- <link href="assets/css/card.css" rel="stylesheet"> -->
 
     <!-- CSS File -->
     <link href="/CSS/consultation.css" rel="stylesheet">
+    <link href="/CSS/navbarFooter.css" rel="stylesheet" />
 
 
 
@@ -44,26 +50,16 @@
 
 <body>
     <!-- <%- include('partials/header',{isAuthenticated:isAuthenticated}) %> -->
-    <!-- Top Bar -->
-    <div id="topbar" class="d-flex align-items-center fixed-top">
-        <div class="container d-flex justify-content-between">
-            <div class="contact-info d-flex align-items-center">
-                <i class="bi bi-envelope"></i> <a href="mailto:Homeokart007@gmail.com">Homeokart007@gmail.com</a>
-            </div>
-            <div class="d-none d-lg-flex social-links align-items-center">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-            </div>
-        </div>
-    </div>
 
-    <!-- Header -->
+
+
+
+
+    <!-- NAVBAR STARTS -->
     <header id="header" class="fixed-top">
-        <div class="container d-flex align-items-center">
+        <div class="container header-container">
 
-            <h1 class="logo me-auto"><a href="homepage.html">HomeoKart</a></h1>
+            <h1 class="logo me-auto"><a href="/">HomeoKart</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -72,24 +68,39 @@
                     <li><a class="nav-link scrollto" href="/">Home</a></li>
                     <li><a class="nav-link scrollto" href="/categories">Medicines</a></li>
                     <li><a class="nav-link scrollto" href="/consultation">Doctors</a></li>
+                    <li><a class="nav-link scrollto" href="/uploadData">UploadData</a></li>
                     <li><a class="nav-link scrollto" href="/cart">Cart</a></li>
-                    <li><a class="nav-link scrollto" href="/myProfile">My Profile</a></li>
-                    <!-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
-                            <li><a href="#">Drop Down 1</a></li>
-                            <li><a href="#">Drop Down 2</a></li>
+                            <li><a href="/room">ROOM</a></li>
+                            <li><a href="/docProfile/623607e3060c92c64c4d18fd">Doctor profile</a></li>
                             <li><a href="#">Drop Down 3</a></li>
                             <li><a href="#">Drop Down 4</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
+
+                    <li><a class="nav-link scrollto" href="/myProfile">My Profile</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
+
             <a href=<%= isAuthenticated ? "/logout" : "/login" %>
-                        class="appointment-btn scrollto"><span><%= isAuthenticated ? "Logout" : "Login" %></span></a> 
+                class="appointment-btn scrollto"><%= isAuthenticated ? "Logout" : "Login" %></a>
+
         </div>
-    </header><!-- End Header -->
+    </header>
+    <!-- NAVBAR ENDS -->
+
+
+
+
+
+
+
+
+
+
+
     <main>
         <!-- cards section
         <div class="container-fluid card-sec-1" style="margin-top:200px;">
@@ -250,9 +261,14 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><i class="fa fa-user text-info"></i></div>
                                         </div>
-                                        <input type="text" class="form-control" id="name" name="name"
+                                        <!-- <input type="text" class="form-control" id="name" name="name"
                                             placeholder="Your Name" data-rule="minlen:4"
-                                            data-msg="Please enter at least 4 chars" required>
+                                            data-msg="Please enter at least 4 chars" required> -->
+                                        <div class="form-floating">
+                                            <input required type="text" id="name" name="name" class="form-control"
+                                                placeholder="Full name">
+                                            <label for="name">FULL NAME</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -261,9 +277,14 @@
                                             <div class="input-group-text"><i class="fa fa-envelope text-info"></i>
                                             </div>
                                         </div>
-                                        <input type="email" class="form-control" id="email" name="email"
+                                        <!-- <input type="email" class="form-control" id="email" name="email"
                                             placeholder="Your Email" data-rule="email"
-                                            data-msg="Please enter a valid email" required>
+                                            data-msg="Please enter a valid email" required> -->
+                                        <div class="form-floating">
+                                            <input required type="email" class="form-control" id="email" name="email"
+                                                placeholder="name@example.com">
+                                            <label for="email">Email address</label>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -278,9 +299,14 @@
                                             <div class="input-group-text"><i class="fa-solid fa-phone text-info"></i>
                                             </div>
                                         </div>
-                                        <input type="tel" class="form-control" name="phone" id="phone"
+                                        <!-- <input type="tel" class="form-control" name="phone" id="phone"
                                             placeholder="Your Phone" data-rule="minlen:4"
-                                            data-msg="Please enter at least 4 chars" />
+                                            data-msg="Please enter at least 4 chars" /> -->
+                                        <div class="form-floating">
+                                            <input required type="tel" id="phone" name="phone" class="form-control"
+                                                placeholder="Phone Number" pattern="[6-9]{1}[0-9]{9}">
+                                            <label for="phone">PHONE NUMBER</label>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -291,9 +317,13 @@
                                                     class="fa-solid fa-person-circle-question text-info"></i>
                                             </div>
                                         </div>
-                                        <input type="number" class="form-control" name="age" id="age"
-                                            placeholder="Your Age" data-rule="minlen:1"
-                                            data-msg="Please enter at least 1 chars" />
+                                        <!-- <input type="number" class="form-control" name="age" id="age"
+                                            placeholder="Your Age" min=18 data-msg="Please enter at least 1 chars" /> -->
+                                        <div class="form-floating">
+                                            <input required type="number" min="18" max="100" id="age" name="age"
+                                                class="form-control" placeholder="Age" />
+                                            <label for="age">AGE</label>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -304,9 +334,16 @@
                                                     class="fa-solid fa-venus-mars text-info"></i>
                                             </div>
                                         </div>
-                                        <input type="text" name="gender" class="form-control" id="gender"
+                                        <!-- <input type="text" name="gender" class="form-control" id="gender"
                                             placeholder="Your Gender" data-rule="minlen:1"
-                                            data-msg="Please enter at least 1 chars" />
+                                            data-msg="Please enter at least 1 chars" /> -->
+                                        <select class="form-select" aria-label="Gender" id="gender" name="gender"
+                                            required>
+                                            <option selected value="">SELECT GENDER</option>
+                                            <option value="MALE">MALE</option>
+                                            <option value="FEMALE">FEMALE</option>
+                                            <option value="OTHERS">OTHERS</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -318,7 +355,8 @@
                                             </div>
                                         </div>
                                         <input type="text" name="history" class="form-control" id="history"
-                                            placeholder="Your Medical History" data-msg="Please enter at least 1 chars" />
+                                            placeholder="Your Medical History"
+                                            data-msg="Please enter at least 1 chars" />
                                     </div>
                                 </div>
 
@@ -329,7 +367,7 @@
                                                     class="fa-solid fa-building-user text-info"></i>
                                             </div>
                                         </div>
-                                        <select name="department" id="department" class="form-select">
+                                        <select name="department" id="department" class="form-select" required>
                                             <option value="">Select Department</option>
                                             <option value="Orthopedic">Orthopedic</option>
                                             <option value="Gynaecologist">Gynaecologist</option>
@@ -349,7 +387,8 @@
                                             </div>
                                         </div>
                                         <textarea class="form-control" name="comments" rows="3"
-                                            placeholder="Message (Optional)" required></textarea>
+                                            placeholder="Message for doctor (optional)"></textarea>
+                                        
                                     </div>
                                 </div>
 
@@ -370,49 +409,51 @@
                 </div>
             </div>
         </div>
-                <!-- </section> -->
-            <!-- End Appointment Section -->
+        <!-- </section> -->
+        <!-- End Appointment Section -->
 
 
 
 
-            <!--  Doctors Section  -->
+        <!--  Doctors Section  -->
 
 
-            <section class="details-card" id="doctor-section">
-                <div class="container">
-                    <div class="section-title">
-                        <h2 id="doctor-head">Doctors</h2>
-                        <p>
-                            Magnam dolores commodi suscipit. Necessitatibus eius
-                            consequatur ex aliquid fuga eum quidem. Sit sint consectetur
-                            velit. Quisquam quos quisquam cupiditate. Et nemo qui
-                            impedit suscipit alias ea. Quia fugiat sit in iste officiis
-                            commodi quidem hic quas.
-                        </p>
-                    </div>
-                    <div class="row">
+        <section class="details-card" id="doctor-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2 id="doctor-head">Doctors</h2>
+                    <p>
+                        Magnam dolores commodi suscipit. Necessitatibus eius
+                        consequatur ex aliquid fuga eum quidem. Sit sint consectetur
+                        velit. Quisquam quos quisquam cupiditate. Et nemo qui
+                        impedit suscipit alias ea. Quia fugiat sit in iste officiis
+                        commodi quidem hic quas.
+                    </p>
+                </div>
+                <div class="row">
 
-                        <% docData.forEach(function(doc) {%>
-                        <div class="doc-card col-md-3">
-                            <div class="card-content">
-                                <div class="card-img">
-                                    <img src="assets/img/doctors/doctors-1.jpg" class="img-fluid" loading="lazy" alt="" />
-                                <span><h4>
-                                    <i class="fa-solid fa-star"></i>
-                                    <%=doc.ratings%>/5
-                                </h4></span>
-                                </div>
-                                <div class="card-desc">
-                                    <h3><%=doc.username%></h3>
-                                    <h4><%=doc.department%></h4>
-                                    <p> <%=doc.description%></p>
-                                </div>
-                                <div class="button-div"><a href="#" class="btn-card">Request Consultation</a></div> 
+                    <% docData.forEach(function(doc) {%>
+                    <div class="doc-card col-md-3">
+                        <div class="card-content">
+                            <div class="card-img">
+                                <img src="assets/img/doctors/doctors-1.jpg" class="img-fluid" loading="lazy" alt="" />
+                                <span>
+                                    <h4>
+                                        <i class="fa-solid fa-star"></i>
+                                        <%=doc.ratings%>/5
+                                    </h4>
+                                </span>
                             </div>
+                            <div class="card-desc">
+                                <h3><%=doc.username%></h3>
+                                <h4><%=doc.department%></h4>
+                                <p> <%=doc.description%></p>
+                            </div>
+                            <div class="button-div"><a href="#" class="btn-card">Request Consultation</a></div>
                         </div>
-                        <% })%>
-                        <!-- <div class="col-md-3">
+                    </div>
+                    <% })%>
+                    <!-- <div class="col-md-3">
                             <div class="card-content">
                                 <div class="card-img">
                                     <img src="assets/img/doctors/doctors-2.jpg" class="img-fluid" alt="" />
@@ -470,14 +511,14 @@
                                 </div>
                             </div>
                         </div> -->
-                    </div>
-
-                    </div>
                 </div>
-            </section>
-            <!-- End Doctors Section -->
 
-            
+            </div>
+            </div>
+        </section>
+        <!-- End Doctors Section -->
+
+
         <!--  Contact Section  -->
         <!-- <section id="contact" class="contact">
             <div class="container">
@@ -561,7 +602,8 @@
                         <h4>Our Services</h4>
                         <ul>
                             <% for(var i=0; i<category.length; i++) { %>
-                            <li><i class="bx bx-chevron-right"></i> <a href="/products/<%=category[i].name%>"><%=category[i].name%></a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a
+                                    href="/products/<%=category[i].name%>"><%=category[i].name%></a></li>
                             <% } %>
                         </ul>
                     </div>

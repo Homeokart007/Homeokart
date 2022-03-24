@@ -98,14 +98,14 @@
 
     <main id="main">
 
-        <!--  slider Section  -->
-        <section id="slider" class="" style="margin-top:200px;">
+        <!--  CAROUSEL SECTION  -->
+        <section id="slider" class="">
             <div class="container">
 
                 <div class="row">
                     <div class="banner-container">
                         <div id="carouselExampleIndicators" class="carousel slide  carousel-fade"
-                            data-bs-ride="carousel " data-interval="5000">
+                            data-bs-ride="carousel " data-interval="3000">
                             <div class="carousel-indicators">
                                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
                                     class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -139,10 +139,14 @@
                     </div>
 
                 </div>
-        </section><!-- End  Section -->
+        </section>
+        <!-- End  Section -->
 
-        <!--  Services Section  -->
-        <section id="about" class="services">
+
+
+
+        <!--  FEATURES CARD SECTION  -->
+        <!-- <section id="about" class="services">
             <div class="container">
 
                 <div class="section-title">
@@ -180,114 +184,133 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                        <div class="icon-box">
-                            <img src="Images/6.jpeg">
-                            <p>Homeopathic medicines are made from a variety of sources, such as plants, animals and
-                                minerals. They are prepared according to guidelines set out in international
-                                pharmacopoeias. Homeopathic medicines are considered safe and free from serious adverse
-                                reactions.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                        <div class="icon-box">
-                            <img src="/images/6.jpeg" loading="lazy" />
-                            <p> Get consultation being at your comfortable space.
-                                Get Homeopatheic medicines home delivered.
-                                Easy navigating medicines from the mentioned categories.
-                                We believe in "Heal with Homeopathy"</p>
-                        </div>
-                    </div>
-
-                    <!-- <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                        <div class="icon-box">
-                            <img src="/images/6.jpeg" loading="lazy" />
-                            <p> Get consultation being at your comfortable space.
-                                Get Homeopatheic medicines home delivered.
-                                Easy navigating medicines from the mentioned categories.
-                                We believe in "Heal with Homeopathy"</p>
-                        </div>
-                    </div> -->
-
                 </div>
 
             </div>
-        </section><!-- End about Section -->
+        </section> -->
 
-        <!-- cards-1 section -->
-        <section>
-            <div class="section-title">
-                <h2>Categories</h2>
-                <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                    fugiat sit in iste officiis commodi quidem hic quas.</p>
+
+
+
+
+
+
+
+
+
+
+
+        <section id="features-section">
+            <div class="features">
+                <h1>Reliable, efficient delivery</h1>
+                <h1>Powered by Technology</h1>
+
+                <p>Our Artificial Intelligence powered tools use millions of project data points
+                    to ensure that your project is successful</p>
             </div>
-            <div class="container-fluid  card-sec-1">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div id="inam" class="carousel slide " data-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active data">
-                                    <div class="container">
-                                        <div class="row">
+            <div class="row1-container">
+                <div class="box box-down cyan">
+                    <h2>Supervisor</h2>
+                    <p>Monitors activity to identify project roadblocks</p>
+                    <img src="https://assets.codepen.io/2301174/icon-supervisor.svg" alt="">
+                </div>
 
-                                            <% for(var i=0; i<3;i++) { %>
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card" style="width: 300px;margin: auto;">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title"><%=category[i].name%></h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and also they protect our skin from the harm rays of sun</p>
-                                                        <a href="/products/<%= category[i].name %> " type="button"
-                                                            class="btn btn-warning">SEARCH</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <% } %>
+                <div class="box red">
+                    <h2>Team Builder</h2>
+                    <p>Scans our talent network to create the optimal team for your project</p>
+                    <img src="https://assets.codepen.io/2301174/icon-team-builder.svg" alt="">
+                </div>
 
-                                        </div>
+                <div class="box box-down blue">
+                    <h2>Calculator</h2>
+                    <p>Uses data from past projects to provide better delivery estimates</p>
+                    <img src="https://assets.codepen.io/2301174/icon-calculator.svg" alt="">
+                </div>
+            </div>
+            <div class="row2-container">
+                <div class="box orange">
+                    <h2>Karma</h2>
+                    <p>Regularly evaluates our talent to ensure quality</p>
+                    <img src="https://assets.codepen.io/2301174/icon-karma.svg" alt="">
+                </div>
+            </div>
 
-                                    </div>
+        </section>
 
 
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="container">
-                                        <div class="row">
 
-                                            <% for(var i=3; i<category.length;i++) { %>
-                                            <div class="col-sm-12 col-lg-3">
-                                                <div class="card" style="width: 300px;margin: auto;">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title"><%=category[i].name%></h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and also they protect our skin from the harm rays of sun</p>
-                                                        <a href="/products/<%= category[i].name %> " type="button"
-                                                            class="btn btn-warning">SEARCH</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <% } %>
 
-                                        </div>
-                                    </div>
-                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- ORDER MEDICINES -->
+        <section class="product-section">
+            <h2>ORDER MEDICINES</h2>
+            <hr>
+            <div class="row">
+                <% allProducts.forEach(function(prd) { %>
+                <div class="col-lg-3 col-md-6 col-sm-12 product-card">
+                    <div class="product-card-inner">
+                        <a href="/product/<%= prd._id %>">
+                            <div class="product-card-img">
+                                <img src="/<%=prd.img.path[0]%>" loading="lazy" alt="" />
                             </div>
-                            <a href="#inam" class="carousel-control-prev" data-slide="prev">
-                                <span class="carousel-control-prev-icon"></span>
-                            </a>
-                            <a href="#inam" class="carousel-control-next" data-slide="next">
-                                <span class="carousel-control-next-icon"></span>
-                            </a>
-                        </div>
+
+                            <p class="product-brand">
+                                <%= prd.man_name %>
+                            </p>
+                            <h5>
+                                <%= prd.name.slice(0,20) %><%=
+                                    prd.name.length >20 ? "..." : ""
+                                    %>
+                            </h5>
+                            <p class="product-price">
+                                <span class="new-price">Rs. <%= prd.price %></span>
+                            </p>
+                        </a>
+                        <% let flag = 0; %>
+                        <% for(let i=0; i<productsInCart.length; i++){ %>
+                        <% if(prd._id == productsInCart[i]){ %>
+                        <% flag = 1; %>
+                        <% break; %>
+                        <% }} %>
+
+                        <% if(flag == 0){ %>
+                        <a href="/cart/<%= prd._id %>">
+                            <button type="button" class="btn btn-warning">
+                                ADD TO CART
+                            </button>
+                        </a>
+                        <% } else{%>
+                        <!-- <a href=""> -->
+                        <button type="button" class="btn btn-dark">
+                            ADDED TO CART
+                        </button>
+                        <!-- </a> -->
+                        <% } %>
                     </div>
                 </div>
+                <% }); %>
+
+                <div class="col-lg-3 col-md-6 col-sm-12 view-all-div">
+                    <a href="/categories">
+                        VIEW ALL MEDICINES <i class="bi bi-chevron-double-right"></i>
+                    </a>
+                </div>
+
             </div>
         </section>
-        <!-- cards-1 section end -->
 
 
 
@@ -297,50 +320,31 @@
 
 
 
-        <section class="product">
-            <div class="section-title">
-                <h2>Categories</h2>
 
-            </div>
-            <button class="pre-btn"><img src="images/arrow.png" loading="lazy" alt=""></button>
-            <button class="nxt-btn"><img src="images/arrow.png" loading="lazy" alt=""></button>
-            <div class="product-container">
-                <!-- <div class="product-card">
-                    <div class="product-image">
-                        <img src="images/card1.jpg" class="product-thumb" alt="">
-                        <button class="card-btn">Buy Now</button>
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-brand">brand</h2>
-                        <p class="product-short-description">a short line about the cloth..</p>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="/images/9.jpg" class="product-thumb" alt="">
-                        <button class="card-btn">Buy Now</button>
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-brand"><%=category[0].name%></h2>
-                        <p class="product-short-description">Skin masks help us to make are skin fresh
-                            and also they protect our skin from the harm rays of sun.</p>
-                    </div>
-                </div> -->
-                <% for(var i=0; i<category.length; i++) { %>
-                <div class="col-sm-12 col-lg-4">
-                    <div class="card" style="width: 300px;margin: auto;">
-                        <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                        <div class="card-body">
-                            <h4 class="card-title"><%=category[i].name%></h4>
-                            <p class="card-text">Skin masks help us to make are skin fresh
-                                and also they protect our skin from the harm rays of sun</p>
-                            <a href="/products/<%= category[i].name %> " type="button"
-                                class="btn btn-warning">SEARCH</a>
+
+
+
+        <!-- ALL CATEGORIES SECTION -->
+        <section id="all-medicine-categories" class="product-section">
+            <!-- <h2>MEDICINE CATEGORIES</h2> -->
+            <h2>SHOP BY CATEGORY</h2>
+            <hr>
+            <div class="row">
+                <% for(var i=0; i<category.length-1; i++) { %>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="category-card">
+                        <div class="category-card-img-div">
+                            <img src=<%= category[i].img %> loading="lazy" class="category-card-img">
+                        </div>
+                        <div class="category-card-body">
+                            <h4 class="category-card-title"><%=category[i].name%></h4>
+                            <a href="/products/<%= category[i].name %>">
+                                <button class="btn btn-warning">SEARCH</button>
+                            </a>
                         </div>
                     </div>
                 </div>
                 <% } %>
-
             </div>
         </section>
 
@@ -349,283 +353,90 @@
 
 
 
+        <!-- DOCTOR CARDS SECTION -->
+        <section id="doctors" class="doctors product-section">
+            <div class="container">
+                <div class="">
+                    <h2>CONSULT DOCTORS</h2>
+                    <hr>
+                    <!-- <p>
+                        Magnam dolores commodi suscipit. Necessitatibus eius
+                        consequatur ex aliquid fuga eum quidem. Sit sint consectetur
+                        velit. Quisquam quos quisquam cupiditate. Et nemo qui
+                        impedit suscipit alias ea. Quia fugiat sit in iste officiis
+                        commodi quidem hic quas.
+                    </p> -->
+                </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- cards-2 section -->
-        <section>
-            <div class="section-title">
-                <h2>Medicines</h2>
-                <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                    fugiat sit in iste officiis commodi quidem hic quas.</p>
-            </div>
-            <div class="container-fluid  card-sec-2">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div id="inam3" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card" style="width: 300px;margin: auto;">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-
-                                </div>
-                                <div class="carousel-item" id="nam4">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <!-- <div class="col-lg-6">
+                        <div class="member d-flex align-items-start">
+                            <div class="pic">
+                                <img src="assets/img/doctors/doctors-1.jpg" class="img-fluid" alt="" />
+                            </div>
+                            <div class="member-info">
+                                <h4>Walter White</h4>
+                                <span>Chief Medical Officer</span>
+                                <p>
+                                    Explicabo voluptatem mollitia et repellat qui
+                                    dolorum quasi
+                                </p>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-instagram"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
                                 </div>
                             </div>
-                            <a href="#inam3" class="carousel-control-prev" data-slide="prev">
-                                <span class="carousel-control-prev-icon"></span>
-                            </a>
-                            <a href="#inam3" class="carousel-control-next" data-slide="next">
-                                <span class="carousel-control-next-icon"></span>
-                            </a>
+                        </div>
+                    </div> -->
+
+
+
+
+
+                    <% for(let i=0; i<docData.length; i++){ %>
+                    <div class="col-lg-6 mt-4 mt-lg-0">
+                        <div class="member d-flex align-items-center">
+                            <div class="pic">
+                                <img src=<%= docImages[i] %> class="img-fluid" alt="" />
+                            </div>
+                            <!-- <div class="doctor-ratings">
+                                    <i class="fa fa-solid fa-star"></i>
+                                    <h6><%= docData[i].ratings %>/5</h6>
+                            </div> -->
+                            <div class="member-info">
+                                <h4><%= docData[i].username %></h4>
+                                <span><%= docData[i].department %></span>
+                                <p>
+                                    <%= docData[i].description %>
+                                </p>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-instagram"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                                <a href="/consultation" type="button" class="btn-grad">Request Consultation</a>
+                            </div>
                         </div>
                     </div>
+                    <% } %>
+
+
+
                 </div>
             </div>
         </section>
-        <!-- cards-2 section end -->
-
-        <!-- cards-3 section -->
-        <section>
-            <div class="section-title">
-                <h2>Other Products</h2>
-                <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                    fugiat sit in iste officiis commodi quidem hic quas.</p>
-            </div>
-            <div class="container-fluid  card-sec-3">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div id="inam5" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card" style="width: 300px;margin: auto;">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
 
 
-                                </div>
-                                <div class="carousel-item" id="inam6">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
 
-                                                    </div>
 
-                                                </div>
 
-                                            </div>
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
 
-                                                    </div>
 
-                                                </div>
 
-                                            </div>
-                                            <div class="col-sm-12 col-lg-4">
-                                                <div class="card">
-                                                    <img src="/images/9.jpg" loading="lazy" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Why you should use skin masks ?</h4>
-                                                        <p class="card-text">Skin masks help us to make are skin fresh
-                                                            and
-                                                            also they protect our skin from the harm rays of sun</p>
-                                                        <button type="button" class="btn btn-warning">Read More</button>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#inam5" class="carousel-control-prev" data-slide="prev">
-                                <span class="carousel-control-prev-icon"></span>
-                            </a>
-                            <a href="#inam5" class="carousel-control-next" data-slide="next">
-                                <span class="carousel-control-next-icon"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- cards-3 section end -->
-
-    </main><!-- End #main -->
+    </main>
 
     <!-- ======= Footer ======= -->
     <!-- <%- include('partials/footer') %> -->
@@ -715,7 +526,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <script>
+    <!-- <script>
         const productContainers = [...document.querySelectorAll('.product-container')];
         const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
         const preBtn = [...document.querySelectorAll('.pre-btn')];
@@ -732,7 +543,7 @@
                 item.scrollLeft -= containerWidth;
             })
         })
-    </script>
+    </script> -->
 </body>
 
 </html>
