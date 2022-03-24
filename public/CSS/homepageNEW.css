@@ -105,7 +105,9 @@ h1:last-of-type {
 }
 
 img {
-    float: right;
+    /* float: right; */
+    width: 100%;
+    object-fit: cover;
 }
 
 @media (max-width: 450px) {

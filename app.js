@@ -1703,6 +1703,7 @@ app.get("/docProfile/:id", function (req, res) {
 		} else {
 			res.render("docProfile", {
 				info: results,
+				category: categorie,
 				isAuthenticated: req.isAuthenticated()
 			});
 		}
