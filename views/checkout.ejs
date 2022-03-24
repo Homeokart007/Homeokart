@@ -282,9 +282,11 @@
             // "order_id": `${orderId}`,
             "handler": function (response) {
                 console.log(response);
+                window.location.href = "http://localhost:3000/paymentSuccessfull";
                 alert(response.razorpay_payment_id);
                 alert(response.razorpay_order_id);
                 alert(response.razorpay_signature)
+
 
                 var settings = {
                     "url": "/api/payment/verify",
