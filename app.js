@@ -1419,9 +1419,12 @@ app.post("/api/payment/verify", (req, res) => {
 		.digest("hex");
 	console.log("sig received ", req.body.response.razorpay_signature);
 	console.log("sig generated ", expectedSignature);
+	
 	var response = { signatureIsValid: "false" };
 	if (expectedSignature === req.body.response.razorpay_signature)
 		response = { signatureIsValid: "true" };
+
+		
 	res.send(response);
 });
 
