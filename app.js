@@ -1192,18 +1192,62 @@ app.get("/products/:category", async function (req, res) {
 app.get("/product/:prdid", function (req, res) {
 	const prdid = req.params.prdid;
 	console.log("Prdid", prdid);
-	Product.findById(prdid, function (err, results) {
-		if (err) {
+	const data = []
+
+	Product.findById(prdid, function(err,results){
+		if(err) {
 			console.log(err);
 		} else {
-			// console.log("Found Results: ", results);
-			res.render("productNew", {
-				product: results,
-				category: categorie,
-				isAuthenticated: req.isAuthenticated()
-			});
+			const tag = results.tag;
+			// for(var i=0;i<tag.length;tag++){
+			// 	var tg=tag[i]
+				console.log(tag)
+				Product.find({ tag: tag }, function(err, results){
+					if(err){
+						console.log(err);
+					} else {
+						data.push(results);
+						// console.log("Data am",data)
+						Product.findById(prdid, function (err, results) {
+							if (err) {
+								console.log(err);
+							} else {
+								// console.log("Found Results: ", results);
+								data[0].forEach(function(data){
+									console.log("Data here",data.name);
+								})
+								
+								res.render("productNew", {
+									product: results,
+									category:categorie,
+									data: data,
+									isAuthenticated: req.isAuthenticated()
+								});
+							}
+						});
+					}
+				})
+			
+				
+			// }
+			
 		}
-	});
+	})
+	// console.log("Data here 1",data);
+	// Product.findById(prdid, function (err, results) {
+	// 	if (err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		// console.log("Found Results: ", results);
+	// 		console.log("Data here",data);
+	// 		res.render("productNew", {
+	// 			product: results,
+	// 			category:categorie,
+	// 			data: data,
+	// 			isAuthenticated: req.isAuthenticated()
+	// 		});
+	// 	}
+	// });
 });
 
 // app.post("/login", function (req, res) {
