@@ -477,8 +477,8 @@ const docImages = [
 
 app.get("/", async function (req, res) {
 	console.log(req.isAuthenticated());
-    
-    const productsInCart = [];
+
+	const productsInCart = [];
 
 	if (req.isAuthenticated()) {
 		const userId = req.user.id;
@@ -505,30 +505,30 @@ app.get("/", async function (req, res) {
 							console.log(err);
 						} else {
 							// console.log("Found Results: ", results);
-                            Doctor.find({}, function (err, docResults) {
-                                if (err) {
-                                    console.log(err);
-                                } else {
-                                    // console.log(results);
-                                    res.render("homepageNew", {
-                                        productsInCart: productsInCart,
-                                        allProducts: [
-                                            productResults[0],
-                                            productResults[1],
-                                            productResults[2]
-                                        ],
-                                        docData: [
-                                            docResults[0],
-                                            docResults[1],
-                                            docResults[2],
-                                            docResults[3]
-                                        ],
-                                        docImages: docImages,
-                                        category: categorie,
-                                        isAuthenticated: req.isAuthenticated()
-                                    });
-                                }
-                            });
+							Doctor.find({}, function (err, docResults) {
+								if (err) {
+									console.log(err);
+								} else {
+									// console.log(results);
+									res.render("homepageNew", {
+										productsInCart: productsInCart,
+										allProducts: [
+											productResults[0],
+											productResults[1],
+											productResults[2]
+										],
+										docData: [
+											docResults[0],
+											docResults[1],
+											docResults[2],
+											docResults[3]
+										],
+										docImages: docImages,
+										category: categorie,
+										isAuthenticated: req.isAuthenticated()
+									});
+								}
+							});
 						}
 					});
 				}
@@ -539,30 +539,30 @@ app.get("/", async function (req, res) {
 						console.log(err);
 					} else {
 						// console.log("Found Results: ", results);
-                        Doctor.find({}, function (err, docResults) {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                // console.log(results);
-                                res.render("homepageNew", {
-                                    productsInCart: [],
-                                    allProducts: [
-                                        productResults[0],
-                                        productResults[1],
-                                        productResults[2]
-                                    ],
-                                    docData: [
-                                        docResults[0],
-                                        docResults[1],
-                                        docResults[2],
-                                        docResults[3]
-                                    ],
-                                    docImages: docImages,
-                                    category: categorie,
-                                    isAuthenticated: req.isAuthenticated()
-                                });
-                            }
-                        });
+						Doctor.find({}, function (err, docResults) {
+							if (err) {
+								console.log(err);
+							} else {
+								// console.log(results);
+								res.render("homepageNew", {
+									productsInCart: [],
+									allProducts: [
+										productResults[0],
+										productResults[1],
+										productResults[2]
+									],
+									docData: [
+										docResults[0],
+										docResults[1],
+										docResults[2],
+										docResults[3]
+									],
+									docImages: docImages,
+									category: categorie,
+									isAuthenticated: req.isAuthenticated()
+								});
+							}
+						});
 					}
 				});
 			}
@@ -572,38 +572,36 @@ app.get("/", async function (req, res) {
 		}
 	} else {
 		Product.find({}, function (err, productResults) {
-            if (err) {
-                console.log(err);
-            } else {
-                Doctor.find({}, function (err, docResults) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        // console.log(results);
-                        res.render("homepageNew", {
-                            productsInCart: [],
-                            allProducts: [
-                                productResults[0],
-                                productResults[1],
-                                productResults[2]
-                            ],
-                            docData: [
-                                docResults[0],
-                                docResults[1],
-                                docResults[2],
-                                docResults[3]
-                            ],
-                            docImages: docImages,
-                            category: categorie,
-                            isAuthenticated: req.isAuthenticated()
-                        });
-                    }
-                });
-            }
-        });
+			if (err) {
+				console.log(err);
+			} else {
+				Doctor.find({}, function (err, docResults) {
+					if (err) {
+						console.log(err);
+					} else {
+						// console.log(results);
+						res.render("homepageNew", {
+							productsInCart: [],
+							allProducts: [
+								productResults[0],
+								productResults[1],
+								productResults[2]
+							],
+							docData: [
+								docResults[0],
+								docResults[1],
+								docResults[2],
+								docResults[3]
+							],
+							docImages: docImages,
+							category: categorie,
+							isAuthenticated: req.isAuthenticated()
+						});
+					}
+				});
+			}
+		});
 	}
-
-
 
 	// Product.find({}, function (err, productResults) {
 	// 	if (err) {
@@ -854,8 +852,9 @@ app.get("/cart", async function (req, res) {
 			console.log("Hey Cart", cart);
 			if (cart) {
 				//cart exists for user
+				console.log(cart.products.length);
 
-				if (cart.products) {
+				if (cart.products.length > 0) {
 					// if (ite?mIndex > -1) {
 					//product exists in the cart, update the quantity
 					console.log("Found");
@@ -877,13 +876,16 @@ app.get("/cart", async function (req, res) {
 					//         console.log("Updated Results",results);
 					//     }
 					// }})
+					cart = await cart.save();
+					res.render("cart", {
+						cart: cart,
+						category: categorie,
+						isAuthenticated: req.isAuthenticated()
+					});
+				} else {
+					res.render("emptycart");
 				}
-				cart = await cart.save();
-				res.render("cart", {
-					cart: cart,
-					category: categorie,
-					isAuthenticated: req.isAuthenticated()
-				});
+
 				// return res.status(201).send(cart);
 			} else {
 				//no cart for user, create new cart
@@ -962,6 +964,14 @@ app.get("/cart/:productid", function (req, res) {
 							price,
 							img
 						});
+
+						let pricee = 0;
+						for (var i = 0; i < cart.products.length; i++) {
+							pricee +=
+								cart.products[i].quantity *
+								cart.products[i].price;
+						}
+						cart.totalPrice = pricee;
 					}
 					cart = await cart.save();
 
@@ -1081,7 +1091,12 @@ app.get("/cart/:id/decrqty", async function (req, res) {
 					let price = 0;
 					let productItem = cart.products[itemIndex];
 					productItem.quantity = productItem.quantity - 1;
-					cart.products[itemIndex] = productItem;
+
+					if (productItem.quantity === 0) {
+						cart.products.splice(itemIndex, 1);
+					}
+
+					// cart.products[itemIndex] = productItem;
 					for (var i = 0; i < cart.products.length; i++) {
 						price +=
 							cart.products[i].quantity * cart.products[i].price;
@@ -1319,47 +1334,45 @@ app.get("/products/:category", async function (req, res) {
 app.get("/product/:prdid", function (req, res) {
 	const prdid = req.params.prdid;
 	console.log("Prdid", prdid);
-	const data = []
+	const data = [];
 
-	Product.findById(prdid, function(err,results){
-		if(err) {
+	Product.findById(prdid, function (err, results) {
+		if (err) {
 			console.log(err);
 		} else {
 			const tag = results.tag;
 			// for(var i=0;i<tag.length;tag++){
 			// 	var tg=tag[i]
-				console.log(tag)
-				Product.find({ tag: tag }, function(err, results){
-					if(err){
-						console.log(err);
-					} else {
-						data.push(results);
-						// console.log("Data am",data)
-						Product.findById(prdid, function (err, results) {
-							if (err) {
-								console.log(err);
-							} else {
-								// console.log("Found Results: ", results);
-								data[0].forEach(function(data){
-									console.log("Data here",data.name);
-								})
-								
-								res.render("productNew", {
-									product: results,
-									category:categorie,
-									data: data,
-									isAuthenticated: req.isAuthenticated()
-								});
-							}
-						});
-					}
-				})
-			
-				
+			console.log(tag);
+			Product.find({ tag: tag }, function (err, results) {
+				if (err) {
+					console.log(err);
+				} else {
+					data.push(results);
+					// console.log("Data am",data)
+					Product.findById(prdid, function (err, results) {
+						if (err) {
+							console.log(err);
+						} else {
+							// console.log("Found Results: ", results);
+							data[0].forEach(function (data) {
+								console.log("Data here", data.name);
+							});
+
+							res.render("productNew", {
+								product: results,
+								category: categorie,
+								data: data,
+								isAuthenticated: req.isAuthenticated()
+							});
+						}
+					});
+				}
+			});
+
 			// }
-			
 		}
-	})
+	});
 	// console.log("Data here 1",data);
 	// Product.findById(prdid, function (err, results) {
 	// 	if (err) {
@@ -1574,12 +1587,11 @@ app.post("/api/payment/verify", (req, res) => {
 		.digest("hex");
 	console.log("sig received ", req.body.response.razorpay_signature);
 	console.log("sig generated ", expectedSignature);
-	
+
 	var response = { signatureIsValid: "false" };
 	if (expectedSignature === req.body.response.razorpay_signature)
 		response = { signatureIsValid: "true" };
 
-		
 	res.send(response);
 });
 
