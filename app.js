@@ -749,7 +749,7 @@ app.get("/categories", async function (req, res) {
 });
 
 app.get("/login", function (req, res) {
-	res.render("login");
+	res.render("login",{response : false});
 });
 
 // app.post("/login", passport.authenticate('local', { failureRedirect: '/', failureMessage: true }),
@@ -1431,6 +1431,8 @@ app.post("/login", (req, res) => {
 					u.authenticate(req.body.password, (err, model, info) => {
 						if (info) {
 							console.log("Wrong email or password!");
+							res.render("login",{response : true})
+							// res.status(400).send("Wrong email or password!");
 						}
 						if (err) {
 							console.log(err);
@@ -1452,7 +1454,8 @@ app.post("/login", (req, res) => {
 						}
 					});
 				} else {
-					res.send("Wrong email or password!");
+					// res.send("Wrong email or password!");
+					res.render("login",{response : true})
 				}
 			}
 		}
