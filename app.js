@@ -351,13 +351,6 @@ const AppointmentSchema = new mongoose.Schema(
 
 const Appointment = appointment.model("Appointment", AppointmentSchema);
 
-// const userSchema = new mongoose.Schema({
-//     username: String,
-//     usermail: String,
-//     password: String,
-//     googleId: String,
-// });
-
 const userSchema = new mongoose.Schema({
 	// userId: Number,
 	username: {
@@ -451,7 +444,6 @@ passport.use(
 		},
 
 		function (request, accessToken, refreshToken, profile, done) {
-			// console.log(profile);
 			User.findOrCreate(
 				{
 					googleId: profile.id
@@ -487,29 +479,24 @@ app.get("/", async function (req, res) {
 			let cart = await Cart.findOne({
 				userId
 			});
-			console.log("Hey Cart", cart);
 			if (cart) {
 				//cart exists for user
 
 				if (cart.products) {
-					console.log("Found");
 					// console.log(cart.products);
 					for (let i = 0; i < cart.products.length; i++) {
 						productsInCart.push(cart.products[i].productId);
 						// console.log(cart.products[i].productId);
 					}
-					// console.log(productsInCart);
 
 					Product.find({}, function (err, productResults) {
 						if (err) {
 							console.log(err);
 						} else {
-							// console.log("Found Results: ", results);
 							Doctor.find({}, function (err, docResults) {
 								if (err) {
 									console.log(err);
 								} else {
-									// console.log(results);
 									res.render("homepageNew", {
 										productsInCart: productsInCart,
 										allProducts: [
@@ -538,12 +525,10 @@ app.get("/", async function (req, res) {
 					if (err) {
 						console.log(err);
 					} else {
-						// console.log("Found Results: ", results);
 						Doctor.find({}, function (err, docResults) {
 							if (err) {
 								console.log(err);
 							} else {
-								// console.log(results);
 								res.render("homepageNew", {
 									productsInCart: [],
 									allProducts: [
@@ -579,7 +564,6 @@ app.get("/", async function (req, res) {
 					if (err) {
 						console.log(err);
 					} else {
-						// console.log(results);
 						res.render("homepageNew", {
 							productsInCart: [],
 							allProducts: [
@@ -602,37 +586,6 @@ app.get("/", async function (req, res) {
 			}
 		});
 	}
-
-	// Product.find({}, function (err, productResults) {
-	// 	if (err) {
-	// 		console.log(err);
-	// 	} else {
-	// 		Doctor.find({}, function (err, docResults) {
-	// 			if (err) {
-	// 				console.log(err);
-	// 			} else {
-	// 				// console.log(results);
-	// 				res.render("homepageNew", {
-	// 					productsInCart: [],
-	// 					allProducts: [
-	// 						productResults[0],
-	// 						productResults[1],
-	// 						productResults[2]
-	// 					],
-	// 					docData: [
-	// 						docResults[0],
-	// 						docResults[1],
-	// 						docResults[2],
-	// 						docResults[3]
-	// 					],
-	// 					docImages: docImages,
-	// 					category: categorie,
-	// 					isAuthenticated: req.isAuthenticated()
-	// 				});
-	// 			}
-	// 		});
-	// 	}
-	// });
 });
 
 app.get(
@@ -650,7 +603,6 @@ app.get(
 	function (req, res) {
 		// Successful authentication, redirect home.
 		res.redirect("/");
-		// res.redirect('..');
 	}
 );
 
@@ -674,13 +626,9 @@ app.get("/categories", async function (req, res) {
 			console.log("Hey Cart", cart);
 			if (cart) {
 				//cart exists for user
-
 				if (cart.products) {
-					console.log("Found");
-					// console.log(cart.products);
 					for (let i = 0; i < cart.products.length; i++) {
 						productsInCart.push(cart.products[i].productId);
-						// console.log(cart.products[i].productId);
 					}
 					// console.log(productsInCart);
 
@@ -688,7 +636,6 @@ app.get("/categories", async function (req, res) {
 						if (err) {
 							console.log(err);
 						} else {
-							// console.log("Found Results: ", results);
 							res.render("categories", {
 								productsInCart: productsInCart,
 								category: categorie,
@@ -704,7 +651,6 @@ app.get("/categories", async function (req, res) {
 					if (err) {
 						console.log(err);
 					} else {
-						// console.log("Found Results: ", results);
 						res.render("categories", {
 							productsInCart: [],
 							category: categorie,
@@ -723,7 +669,6 @@ app.get("/categories", async function (req, res) {
 			if (err) {
 				console.log(err);
 			} else {
-				// console.log("Found Results: ", results);
 				res.render("categories", {
 					productsInCart: [],
 					category: categorie,
@@ -733,19 +678,6 @@ app.get("/categories", async function (req, res) {
 			}
 		});
 	}
-
-	// Product.find({}, function (err, results) {
-	// 	if (err) {
-	// 		console.log(err);
-	// 	} else {
-	// 		// console.log("Found Results: ", results);
-	// 		res.render("categories", {
-	// 			category: categorie,
-	// 			allProducts: results,
-	// 			isAuthenticated: req.isAuthenticated()
-	// 		});
-	// 	}
-	// });
 });
 
 app.get("/login", function (req, res) {
@@ -763,7 +695,6 @@ app.get("/login", function (req, res) {
 //     res.redirect('/');
 // })
 
-//
 app.get("/register", function (req, res) {
 	res.render("register");
 });
@@ -841,8 +772,6 @@ app.post("/register", (req, res) => {
 
 app.get("/cart", async function (req, res) {
 	if (req.isAuthenticated()) {
-		// console.log("Inside cart", req);
-		// console.log("Inside cart", req.user.id);
 		const userId = req.user.id;
 
 		try {
@@ -857,7 +786,6 @@ app.get("/cart", async function (req, res) {
 				if (cart.products.length > 0) {
 					// if (ite?mIndex > -1) {
 					//product exists in the cart, update the quantity
-					console.log("Found");
 					let price = 0;
 					// let productItem = cart.products[itemIndex];
 					// productItem.quantity = quantity;
@@ -916,8 +844,6 @@ app.get("/cart/:productid", function (req, res) {
 	const producId = req.params.productid;
 	if (req.isAuthenticated()) {
 		const userId = req.user.id;
-		// console.log(req);
-		// console.log("userId", req);
 
 		Product.findById(producId, async function (err, results) {
 			if (err) {
@@ -926,7 +852,6 @@ app.get("/cart/:productid", function (req, res) {
 				console.log("Found Results inside cart block: ", results);
 			}
 			const { img, id, quantity = 1, name, price } = results;
-			console.log("Image Paths", img);
 			const productId = id;
 			try {
 				let cart = await Cart.findOne({
@@ -939,7 +864,6 @@ app.get("/cart/:productid", function (req, res) {
 						(p) => p.productId == productId
 					);
 
-					console.log("item Index", itemIndex);
 					if (itemIndex > -1) {
 						//product exists in the cart, update the quantity
 						let price = 0;
@@ -951,11 +875,9 @@ app.get("/cart/:productid", function (req, res) {
 								cart.products[i].quantity *
 								cart.products[i].price;
 						}
-						console.log("I am price", price);
 						cart.totalPrice = price;
 					} else {
 						//product does not exists in cart, add new item
-						console.log("Aagaya");
 
 						cart.products.push({
 							productId,
@@ -1003,36 +925,26 @@ app.get("/cart/:productid", function (req, res) {
 			}
 		});
 	}
-
 	// res.render("Cart");
-
-	// User.findOneAndUpdate({ googleId: "112129154840141555781" }, { phone: 7048105061 })
 	else {
 		res.redirect("/login");
 	}
 });
 
 app.get("/cart/:id/incrqty", async function (req, res) {
-	console.log("Here I am");
 	const productId = req.params.id;
-	console.log(productId);
 
 	if (req.isAuthenticated()) {
 		const userId = req.user.id;
-		console.log(userId);
 
 		try {
-			console.log("Enter in try");
 			let cart = await Cart.findOne({ userId });
-			console.log(cart);
-			console.log(cart.products);
+
 			if (cart) {
 				//cart exists for user
-				// let itemIndex = cart.products.findIndex(p => p.productId == productId);
 				let itemIndex = cart.products.findIndex(
 					(p) => p.productId == productId
 				);
-				console.log("This", itemIndex);
 				let price = 0;
 				if (itemIndex > -1) {
 					//product exists in the cart, update the quantity
@@ -1065,26 +977,20 @@ app.get("/cart/:id/incrqty", async function (req, res) {
 });
 
 app.get("/cart/:id/decrqty", async function (req, res) {
-	console.log("Here I am");
 	const productId = req.params.id;
-	console.log(productId);
 
 	if (req.isAuthenticated()) {
 		const userId = req.user.id;
-		console.log(userId);
 
 		try {
-			console.log("Enter in try");
 			let cart = await Cart.findOne({ userId });
-			console.log(cart);
-			console.log(cart.products);
+
 			if (cart) {
 				//cart exists for user
 				// let itemIndex = cart.products.findIndex(p => p.productId == productId);
 				let itemIndex = cart.products.findIndex(
 					(p) => p.productId == productId
 				);
-				console.log("This", itemIndex);
 
 				if (itemIndex > -1) {
 					//product exists in the cart, update the quantity
@@ -1123,21 +1029,17 @@ app.get("/cart/:id/decrqty", async function (req, res) {
 });
 
 app.get("/cart/:id/remove", async function (req, res) {
-	console.log("Removed");
 	const productId = req.params.id;
 	if (req.isAuthenticated()) {
 		const userId = req.user.id;
 
 		try {
 			let cart = await Cart.findOne({ userId });
-			console.log(cart);
-			// console.log(cart.products)
 			if (cart) {
 				//cart exists for user
 				let itemIndex = cart.products.findIndex(
 					(p) => p.productId == productId
 				);
-				console.log(itemIndex);
 				if (itemIndex > -1) {
 					//product exists in the cart, update the quantity
 					let price = 0;
@@ -1219,13 +1121,11 @@ var upload = multer({
 });
 
 app.post("/uploadData", upload.array("productImage"), (req, res) => {
-	// console.log(req.files);
-	// console.log(req.files[0].path);
+
 	var imageArray = [];
 	req.files.map((data, index) => {
 		imageArray.push(data.path.replace("public\\", ""));
 	});
-	// console.log(imageArray);
 
 	const product = new Product({
 		name: req.body.productName,
@@ -1247,8 +1147,6 @@ app.post("/uploadData", upload.array("productImage"), (req, res) => {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log("Data added successfully");
-			console.log(product);
 			// res.redirect("/");
 			res.send(product);
 		}
@@ -1257,7 +1155,6 @@ app.post("/uploadData", upload.array("productImage"), (req, res) => {
 
 app.get("/products/:category", async function (req, res) {
 	const catTag = req.params.category;
-	console.log(catTag);
 	const productsInCart = [];
 
 	if (req.isAuthenticated()) {
@@ -1272,8 +1169,6 @@ app.get("/products/:category", async function (req, res) {
 				//cart exists for user
 
 				if (cart.products) {
-					console.log("Found");
-					// console.log(cart.products);
 					for (let i = 0; i < cart.products.length; i++) {
 						productsInCart.push(cart.products[i].productId);
 						// console.log(cart.products[i].productId);
@@ -1300,7 +1195,6 @@ app.get("/products/:category", async function (req, res) {
 					if (err) {
 						console.log(err);
 					} else {
-						// console.log("Found Results: ", results);
 						res.render("categories", {
 							productsInCart: [],
 							category: categorie,
@@ -1319,7 +1213,6 @@ app.get("/products/:category", async function (req, res) {
 			if (err) {
 				console.log(err);
 			} else {
-				// console.log("Found Results: ", results);
 				res.render("categories", {
 					productsInCart: [],
 					category: categorie,
@@ -1333,7 +1226,6 @@ app.get("/products/:category", async function (req, res) {
 
 app.get("/product/:prdid", function (req, res) {
 	const prdid = req.params.prdid;
-	console.log("Prdid", prdid);
 	const data = [];
 
 	Product.findById(prdid, function (err, results) {
@@ -1341,20 +1233,15 @@ app.get("/product/:prdid", function (req, res) {
 			console.log(err);
 		} else {
 			const tag = results.tag;
-			// for(var i=0;i<tag.length;tag++){
-			// 	var tg=tag[i]
-			console.log(tag);
 			Product.find({ tag: tag }, function (err, results) {
 				if (err) {
 					console.log(err);
 				} else {
 					data.push(results);
-					// console.log("Data am",data)
 					Product.findById(prdid, function (err, results) {
 						if (err) {
 							console.log(err);
 						} else {
-							// console.log("Found Results: ", results);
 							data[0].forEach(function (data) {
 								console.log("Data here", data.name);
 							});
@@ -1369,25 +1256,8 @@ app.get("/product/:prdid", function (req, res) {
 					});
 				}
 			});
-
-			// }
 		}
 	});
-	// console.log("Data here 1",data);
-	// Product.findById(prdid, function (err, results) {
-	// 	if (err) {
-	// 		console.log(err);
-	// 	} else {
-	// 		// console.log("Found Results: ", results);
-	// 		console.log("Data here",data);
-	// 		res.render("productNew", {
-	// 			product: results,
-	// 			category:categorie,
-	// 			data: data,
-	// 			isAuthenticated: req.isAuthenticated()
-	// 		});
-	// 	}
-	// });
 });
 
 // app.post("/login", function (req, res) {
@@ -1463,28 +1333,20 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/checkout", function (req, res) {
-	console.log("Entered");
-	// const userId = req.user.id;
 	const arr = [];
 	if (req.isAuthenticated()) {
 		const userId = req.user.id;
-		console.log(userId);
 		User.findById(userId, function (err, results) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log("Results", results);
 				arr.push(results);
 
 				Cart.findOne({ userId: userId }, function (err, results) {
 					if (err) {
 						console.log(err);
 					} else {
-						console.log("Arr1", arr);
-						console.log("Got the results");
-						console.log("Cart Results", results);
 						arr.push(results);
-						console.log("Arr2", arr);
 						res.render("checkout", {
 							info: arr,
 							prf: results,
@@ -1496,7 +1358,6 @@ app.get("/checkout", function (req, res) {
 			}
 		});
 
-		// console.log("Arr3", arr)
 	} else {
 		res.redirect("/login");
 	}
@@ -1507,32 +1368,26 @@ app.get("/checkout/:productid", function (req, res) {
 	const arr = [];
 	if (req.isAuthenticated()) {
 		const userId = req.user.id;
-		console.log("Inside Buy Now", userId);
 
 		User.findById(userId, function (err, results) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log("Results of User", results);
 				arr.push(results);
 				Product.findById(prdid, function (err, results) {
 					if (err) {
 						console.log(err);
 					} else {
-						console.log("Results", results);
-						// const totalPrice = results.price
 
 						const products = {
 							img: results.img,
 							name: results.name,
 							price: Number(results.price)
 						};
-						console.log("I am products", products);
 						arr.push({
 							products: [products],
 							totalPrice: Number(results.price)
 						});
-						console.log("Arr2", arr);
 						res.render("checkout", {
 							info: arr,
 							prf: results,
@@ -1548,17 +1403,6 @@ app.get("/checkout/:productid", function (req, res) {
 		res.redirect("/login");
 	}
 });
-
-// app.post("/checkout",function(req,res){
-//     const checkoutmail= req.body.checkoutemail;
-//     const checkoutPhone = req.body.checkoutphone;
-//     const checkoutname = req.body.checkoutname;
-//     const checkoutaddress = req.body.checkoutaddress;
-//     const checkoutcity = req.body.checkoutcity;
-//     const checkoutcountry = req.body.checkoutcountry;
-//     const checkoutpostal = req.body.checkoutpostal;
-
-// })
 
 app.post("/create/orderId", function (req, res) {
 	var options = {
@@ -1601,12 +1445,10 @@ app.post("/api/payment/verify", (req, res) => {
 app.get("/myProfile", function (req, res) {
 	if (req.isAuthenticated()) {
 		const userId = req.user.id;
-		console.log("Inside my Profile", userId);
 		User.findById(userId, function (err, results) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log("Updated Results in my Profile", results);
 				res.render("profileNew", {
 					prf: results,
 					category: categorie,
@@ -1628,7 +1470,6 @@ app.get("/editProfile", function (req, res) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log("Updated Results in edit Profile", results);
 				res.render("edit-profileNew", {
 					prf: results,
 					category: categorie,
@@ -1655,14 +1496,6 @@ app.post("/editProfile", function (req, res) {
 	const userstate = req.body.userState;
 	const usercountry = req.body.userCountry;
 
-	console.log("Received value", username);
-	console.log("Received value", usermail);
-	console.log("Received value", userage);
-	console.log("Received value", userphone);
-	console.log("Received value", usergender);
-	console.log("Received value", userstreet1);
-	console.log("Received value", userpincode);
-
 	const addr = {
 		country: usercountry,
 		street1: userstreet1,
@@ -1672,10 +1505,8 @@ app.post("/editProfile", function (req, res) {
 		zip: userpincode
 	};
 
-	console.log("addr", addr);
 	if (req.isAuthenticated()) {
 		const userid = req.user.id;
-		console.log("Userid inside edit profile", userid);
 
 		User.findByIdAndUpdate(
 			userid,
@@ -1690,8 +1521,6 @@ app.post("/editProfile", function (req, res) {
 				if (err) {
 					console.log(err);
 				} else {
-					console.log("Here");
-					console.log(results);
 					res.redirect("/myProfile");
 				}
 			}
@@ -1701,20 +1530,12 @@ app.post("/editProfile", function (req, res) {
 	}
 });
 
-// app.post("/myProfile",function(req,res){
-
-// })
-
 app.get("/consultation", function (req, res) {
-	console.log("Entered inside consultation");
 	if (req.isAuthenticated()) {
-		// console.log('Entered inside consultation')
 		Doctor.find({}, function (err, results) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log("XXXXXX");
-				console.log(results);
 				res.render("consultation", {
 					docData: results,
 					category: categorie,
@@ -1745,14 +1566,11 @@ app.post("/consultation", function (req, res) {
 				}
 			]
 		});
-		console.log("Entered inside consul2");
 		Appointment.create(appn, function (err, result) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log("Entered Here");
 				console.log(result);
-				// res.render("docCategory",{docData : result, isAuthenticated: req.isAuthenticated()})
 			}
 		});
 
@@ -1762,7 +1580,6 @@ app.post("/consultation", function (req, res) {
 				if (err) {
 					console.log(err);
 				} else {
-					console.log(results);
 					res.render("docCategory", {
 						docData: results,
 						isAuthenticated: req.isAuthenticated()
@@ -1801,13 +1618,10 @@ app.post("/registerDoc", upload.single("productImage"), function (req, res) {
 			exp: req.body.doctorExperience
 		});
 
-		console.log("Entered inside consul2");
 		Doctor.create(doctor, function (err, result) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log("Entered Here");
-				console.log(result);
 				res.redirect("/consultation");
 			}
 		});
@@ -1817,14 +1631,12 @@ app.post("/registerDoc", upload.single("productImage"), function (req, res) {
 });
 
 app.get("/docCategory", function (req, res) {
+
 	if (req.isAuthenticated()) {
-		// console.log('Entered inside consultation')
 		Doctor.find({}, function (err, results) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log("XXXXXX");
-				console.log(results);
 				res.render("consultation", {
 					docData: results,
 					isAuthenticated: req.isAuthenticated()
@@ -1855,14 +1667,10 @@ app.get("/docProfile/:id", function (req, res) {
 app.post("/docProfile/booking/:id", function (req, res) {
 	if (req.isAuthenticated()) {
 		const id = req.params.id;
-		console.log("Dr id", id);
 		const userId = req.user.id;
 		const date = req.body.appointmentDateAndTime.slice(0, 10);
 		const time = req.body.appointmentDateAndTime.slice(11, 16);
-		console.log(date);
-		console.log(time);
-		// 		const appoi = [];
-		// const docAppoi = [];
+
 		const room = req.body.appointmentDateAndTime;
 		const roomId = "/room/" + id + "-" + room;
 		console.log(roomId);
@@ -1880,8 +1688,7 @@ app.post("/docProfile/booking/:id", function (req, res) {
 					time: time,
 					roomId: roomId
 				};
-				// appoi.push(appo)
-				// { $set: { appointments: appointments.push(appo) } }
+
 				Appointment.findOneAndUpdate(
 					userId,
 					{ $push: { appointments: appo } },
@@ -1893,7 +1700,6 @@ app.post("/docProfile/booking/:id", function (req, res) {
 						if (err) {
 							console.log(err);
 						} else {
-							console.log(result);
 
 							const len = result.newApp.length;
 
@@ -1907,10 +1713,6 @@ app.post("/docProfile/booking/:id", function (req, res) {
 								time: time
 							};
 
-							// docAppoi.push(docAppo);
-							// console.log("docAppoi1", docAppoi);
-							console.log("DR id", id);
-							// {$set: { appoin: appoin.push(docAppo) }}
 							Doctor.findByIdAndUpdate(
 								id,
 								{ $push: { appoin: docAppo } },
@@ -1918,11 +1720,10 @@ app.post("/docProfile/booking/:id", function (req, res) {
 									new: true,
 									upsert: true
 								},
-								function (err, result) {
+							 	function (err, result) {
 									if (err) {
 										console.log(err);
 									} else {
-										// console.log("docAppoi2", docAppoi);
 										console.log(
 											"Inside Doc result",
 											result
@@ -1931,7 +1732,6 @@ app.post("/docProfile/booking/:id", function (req, res) {
 								}
 							);
 
-							console.log("Appointment", result);
 							res.render("patient-appointment", {
 								info: result,
 								category: categorie,
@@ -1942,15 +1742,6 @@ app.post("/docProfile/booking/:id", function (req, res) {
 				);
 			}
 		});
-		// });
-
-		// console.log("Data", ap);
-
-		// const roomId = req.body.appointmentDateAndTime;
-		// console.log(roomId);
-
-		// res.render("booking");
-		// res.redirect("/room/" + id + "-" + roomId);
 	} else {
 		res.redirect("/login");
 	}
@@ -1959,13 +1750,11 @@ app.post("/docProfile/booking/:id", function (req, res) {
 app.get("/docDashboard", function (req, res) {
 	if (req.isAuthenticated()) {
 		const userId = req.user.id;
-		console.log(userId);
 
 		Doctor.find({ userId: userId }, function (err, result) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log(result);
 				res.render("doctor-appointment", {
 					info: result,
 					isAuthenticated: req.isAuthenticated()
@@ -1991,7 +1780,6 @@ app.get("/patientDashboard", function (req, res) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log(result);
 				res.render("patient-dashboard", {
 					info: result,
 					isAuthenticated: req.isAuthenticated()
