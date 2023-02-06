@@ -26,7 +26,7 @@ const server = require("http").Server(app);
 const io = require("socket.io")(server);
 const { v4: uuidV4 } = require("uuid");
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "/public")));
 app.engine("ejs", require("ejs").renderFile);
 app.set("views", path.join(__dirname, "views/"));
 app.set("view engine", "ejs");
@@ -499,7 +499,7 @@ app.get("/", async function (req, res) {
 								if (err) {
 									console.log(err);
 								} else {
-									res.render("homepageNew.ejs", {
+									res.render("./homepageNew.ejs", {
 										productsInCart: productsInCart,
 										allProducts: [
 											productResults[0],
@@ -531,7 +531,7 @@ app.get("/", async function (req, res) {
 							if (err) {
 								console.log(err);
 							} else {
-								res.render("homepageNew.ejs", {
+								res.render("./homepageNew.ejs", {
 									productsInCart: [],
 									allProducts: [
 										productResults[0],
@@ -566,7 +566,7 @@ app.get("/", async function (req, res) {
 					if (err) {
 						console.log(err);
 					} else {
-						res.render("homepageNew.ejs", {
+						res.render("./homepageNew.ejs", {
 							productsInCart: [],
 							allProducts: [
 								productResults[0],
