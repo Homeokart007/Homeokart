@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -681,7 +681,7 @@ app.get("/categories", async function (req, res) {
 });
 
 app.get("/login", function (req, res) {
-	res.render("login",{response : false});
+	res.render("login", { response: false });
 });
 
 // app.post("/login", passport.authenticate('local', { failureRedirect: '/', failureMessage: true }),
@@ -1121,7 +1121,6 @@ var upload = multer({
 });
 
 app.post("/uploadData", upload.array("productImage"), (req, res) => {
-
 	var imageArray = [];
 	req.files.map((data, index) => {
 		imageArray.push(data.path.replace("public\\", ""));
@@ -1301,7 +1300,7 @@ app.post("/login", (req, res) => {
 					u.authenticate(req.body.password, (err, model, info) => {
 						if (info) {
 							console.log("Wrong email or password!");
-							res.render("login",{response : true})
+							res.render("login", { response: true });
 							// res.status(400).send("Wrong email or password!");
 						}
 						if (err) {
@@ -1325,7 +1324,7 @@ app.post("/login", (req, res) => {
 					});
 				} else {
 					// res.send("Wrong email or password!");
-					res.render("login",{response : true})
+					res.render("login", { response: true });
 				}
 			}
 		}
@@ -1357,7 +1356,6 @@ app.get("/checkout", function (req, res) {
 				});
 			}
 		});
-
 	} else {
 		res.redirect("/login");
 	}
@@ -1378,7 +1376,6 @@ app.get("/checkout/:productid", function (req, res) {
 					if (err) {
 						console.log(err);
 					} else {
-
 						const products = {
 							img: results.img,
 							name: results.name,
@@ -1631,7 +1628,6 @@ app.post("/registerDoc", upload.single("productImage"), function (req, res) {
 });
 
 app.get("/docCategory", function (req, res) {
-
 	if (req.isAuthenticated()) {
 		Doctor.find({}, function (err, results) {
 			if (err) {
@@ -1700,7 +1696,6 @@ app.post("/docProfile/booking/:id", function (req, res) {
 						if (err) {
 							console.log(err);
 						} else {
-
 							const len = result.newApp.length;
 
 							const docAppo = {
@@ -1720,7 +1715,7 @@ app.post("/docProfile/booking/:id", function (req, res) {
 									new: true,
 									upsert: true
 								},
-							 	function (err, result) {
+								function (err, result) {
 									if (err) {
 										console.log(err);
 									} else {
