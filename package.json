@@ -8,7 +8,7 @@
     "description": "Homeokart",
     "main": "app.js",
     "scripts": {
-        "start": "node -r dotenv/config app.js dotenv_config_path=/etc/secrets/.env dotenv_config_debug=true",
+        "start": "node app.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
