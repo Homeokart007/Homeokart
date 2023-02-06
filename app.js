@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 3000;
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 const { v4: uuidV4 } = require("uuid");
-console.log(path.join(__dirname, "views"));
+
 app.use(express.static(path.join(__dirname, "public")));
 app.engine("ejs", require("ejs").renderFile);
 app.set("views", path.join(__dirname, "views"));
@@ -440,7 +440,8 @@ passport.use(
 		{
 			clientID: process.env.CLIENT_ID,
 			clientSecret: process.env.CLIENT_SECRET,
-			callbackURL: "http://localhost:3000/auth/google/homeokart",
+			// callbackURL: "http://localhost:3000/auth/google/homeokart",
+			callbackURL: "https://homeokart.onrender.com/auth/google/homeokart",
 			// userProfileURL: "https://www.googleapis.com/oauth/v3/userinfo",
 			passReqToCallback: true
 		},
