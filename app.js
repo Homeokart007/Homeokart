@@ -500,7 +500,7 @@ app.get("/", async function (req, res) {
 								if (err) {
 									console.log(err);
 								} else {
-									res.render("homepageNew", {
+									res.render("homepageNEW", {
 										productsInCart: productsInCart,
 										allProducts: [
 											productResults[0],
@@ -532,7 +532,7 @@ app.get("/", async function (req, res) {
 							if (err) {
 								console.log(err);
 							} else {
-								res.render("homepageNew", {
+								res.render("homepageNEW", {
 									productsInCart: [],
 									allProducts: [
 										productResults[0],
@@ -567,7 +567,7 @@ app.get("/", async function (req, res) {
 					if (err) {
 						console.log(err);
 					} else {
-						res.render("homepageNew", {
+						res.render("homepageNEW", {
 							productsInCart: [],
 							allProducts: [
 								productResults[0],
