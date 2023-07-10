@@ -81,8 +81,7 @@ passport.use(
 		{
 			clientID: process.env.CLIENT_ID,
 			clientSecret: process.env.CLIENT_SECRET,
-			callbackURL: "http://homeokart.onrender.com/auth/google/secrets",
-			// localhost:3000
+			callbackURL: "http://localhost:3000/auth/google/secrets",
 			// userProfileURL: "https://www.googleapis.com/oauth/v3/userinfo",
 			passReqToCallback: true
 		},
