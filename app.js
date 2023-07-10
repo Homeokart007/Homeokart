@@ -1811,6 +1811,6 @@ app.get("/paymentSuccessfull", function (req, res) {
 	res.render("paymentSuccessfull");
 });
 
-app.listen(PORT, (req, res) => {
+server.listen(PORT, (req, res) => {
 	console.log("Server started on http://localhost:" + PORT);
 });
