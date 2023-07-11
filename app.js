@@ -473,10 +473,14 @@ const docImages = [
 app.get("/", async function (req, res) {
 	console.log(req.isAuthenticated());
 
+	let isAdmin = false;
 	const productsInCart = [];
 
 	if (req.isAuthenticated()) {
 		const userId = req.user.id;
+		if (userId === "63e1de7cc1a21758d601a85b") {
+			isAdmin = true;
+		}
 
 		try {
 			let cart = await Cart.findOne({
@@ -515,7 +519,8 @@ app.get("/", async function (req, res) {
 										],
 										docImages: docImages,
 										category: categorie,
-										isAuthenticated: req.isAuthenticated()
+										isAuthenticated: req.isAuthenticated(),
+										isAdmin: isAdmin
 									});
 								}
 							});
@@ -547,7 +552,8 @@ app.get("/", async function (req, res) {
 									],
 									docImages: docImages,
 									category: categorie,
-									isAuthenticated: req.isAuthenticated()
+									isAuthenticated: req.isAuthenticated(),
+									isAdmin: isAdmin
 								});
 							}
 						});
@@ -582,7 +588,8 @@ app.get("/", async function (req, res) {
 							],
 							docImages: docImages,
 							category: categorie,
-							isAuthenticated: req.isAuthenticated()
+							isAuthenticated: req.isAuthenticated(),
+							isAdmin: isAdmin
 						});
 					}
 				});
@@ -1102,9 +1109,11 @@ app.get("/cart/:id/remove", async function (req, res) {
 // })
 
 app.get("/uploadData", function (req, res) {
-	res.render("uploadData", {
-		isAuthenticated: req.isAuthenticated()
-	});
+	if (req.isAuthenticated() && req.user.id === "63e1de7cc1a21758d601a85b") {
+		res.render("uploadData");
+	} else {
+		res.redirect("/");
+	}
 });
 
 const storage = multer.diskStorage({

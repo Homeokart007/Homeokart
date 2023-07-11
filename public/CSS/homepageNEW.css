@@ -21,7 +21,9 @@ button {
     margin: 0 auto;
 }
 
-
+.hidden {
+    opacity: 0;
+}
 
 
 
@@ -104,7 +106,7 @@ h1:last-of-type {
     margin: 20px;
 }
 
-.features-img-div{
+.features-img-div {
     display: flex;
     /* height: 200px; */
     width: 100px;
@@ -135,7 +137,8 @@ h1:last-of-type {
         text-align: center;
         height: 180px;
     }
-    p{
+
+    p {
         font-size: 0.75rem;
     }
 }

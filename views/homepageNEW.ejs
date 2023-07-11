@@ -62,10 +62,12 @@
 
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto" href="/">Home</a></li>
+                    <li>
+                        <a class=<%= isAuthenticated && isAdmin ? "nav-link scrollto" : "nav-link scrollto hidden" %>
+                            href="/uploadData">Upload Data</a>
+                    </li>
                     <li><a class="nav-link scrollto" href="/categories">Medicines</a></li>
                     <li><a class="nav-link scrollto" href="/consultation">Doctors</a></li>
-                    <!-- <li><a class="nav-link scrollto" href="/uploadData">UploadData</a></li> -->
                     <li><a class="nav-link scrollto" href="/cart">Cart</a></li>
                     <!-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
