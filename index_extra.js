@@ -1,3 +1,5 @@
+/*
+
 //jshint esversion:6
 require("dotenv").config();
 const express = require("express");
@@ -268,3 +270,4 @@ app.get("/logout", function (req, res) {
 app.listen(5000, function (req, res) {
 	console.log("server started on port 3000..!!!");
 });
+*/
