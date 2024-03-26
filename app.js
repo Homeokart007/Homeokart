@@ -814,7 +814,7 @@ app.get("/cart", async function (req, res) {
 					//     }
 					// }})
 					cart = await cart.save();
-					res.render("cart", {
+					res.render("Cart", {
 						cart: cart,
 						category: categorie,
 						isAuthenticated: req.isAuthenticated()
@@ -903,7 +903,7 @@ app.get("/cart/:productid", function (req, res) {
 					cart = await cart.save();
 
 					// res.redirect("/cart");
-					res.render("cart", {
+					res.render("Cart", {
 						cart: cart,
 						category: categorie,
 						isAuthenticated: req.isAuthenticated()
@@ -917,7 +917,7 @@ app.get("/cart/:productid", function (req, res) {
 					});
 
 					// res.redirect("/cart");
-					res.render("cart", {
+					res.render("Cart", {
 						cart: newCart,
 						category: categorie,
 						isAuthenticated: req.isAuthenticated()
