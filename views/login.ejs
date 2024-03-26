@@ -2,42 +2,42 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <title>Wellcome to HomeoKart</title>
+  <meta charset="utf-8" />
+  <title>Wellcome to HomeoKart</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-    <link rel="stylesheet" type="text/css" href="/CSS/my-login.css" />
-    <script src="https://kit.fontawesome.com/5b2ed83021.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="/CSS/my-login.css" />
+  <script src="https://kit.fontawesome.com/5b2ed83021.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-   
-    <main class="my-login-page">
-       
-        <section class="h-100">
-            
-            <div class="container h-100">
-                
-                <div class="row justify-content-md-center h-100">
-                    
-                    <div class="card-wrapper">
-                        <div class="card fat">
-                            <div class="card-body">
-                                <% if(response === true) {%>
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>Wrong Email or password..!!</strong> Please Enter correct credentials
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <%}%>
+
+  <main class="my-login-page">
+
+    <section class="h-100">
+
+      <div class="container h-100">
+
+        <div class="row justify-content-md-center h-100">
+
+          <div class="card-wrapper">
+            <div class="card fat">
+              <div class="card-body">
+                <% if(response === true) {%>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Wrong Email or password..!!</strong> Please Enter correct credentials
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <%}%>
                                 <h4 class="card-title">Login</h4>
 
                                 <form action="/login" method="POST">
