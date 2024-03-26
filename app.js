@@ -801,8 +801,7 @@ app.get("/cart", async function (req, res) {
 					// productItem.quantity = quantity;
 					// cart.products[itemIndex] = productItem;
 					for (var i = 0; i < cart.products.length; i++) {
-						price +=
-							cart.products[i].quantity * cart.products[i].price;
+						price += cart.products[i].quantity * cart.products[i].price;
 					}
 					cart.totalPrice = price;
 
@@ -881,9 +880,7 @@ app.get("/cart/:productid", function (req, res) {
 						productItem.quantity = quantity;
 						cart.products[itemIndex] = productItem;
 						for (var i = 0; i < cart.products.length; i++) {
-							price +=
-								cart.products[i].quantity *
-								cart.products[i].price;
+							price += cart.products[i].quantity * cart.products[i].price;
 						}
 						cart.totalPrice = price;
 					} else {
@@ -899,9 +896,7 @@ app.get("/cart/:productid", function (req, res) {
 
 						let pricee = 0;
 						for (var i = 0; i < cart.products.length; i++) {
-							pricee +=
-								cart.products[i].quantity *
-								cart.products[i].price;
+							pricee += cart.products[i].quantity * cart.products[i].price;
 						}
 						cart.totalPrice = pricee;
 					}
@@ -959,11 +954,12 @@ app.get("/cart/:id/incrqty", async function (req, res) {
 				if (itemIndex > -1) {
 					//product exists in the cart, update the quantity
 					let productItem = cart.products[itemIndex];
-					productItem.quantity = productItem.quantity + 1;
+					if (productItem.quantity < 5) {
+						productItem.quantity = productItem.quantity + 1;
+					}
 					cart.products[itemIndex] = productItem;
 					for (var i = 0; i < cart.products.length; i++) {
-						price +=
-							cart.products[i].quantity * cart.products[i].price;
+						price += cart.products[i].quantity * cart.products[i].price;
 					}
 					cart.totalPrice = price;
 				}
@@ -975,7 +971,7 @@ app.get("/cart/:id/incrqty", async function (req, res) {
 				// 	isAuthenticated: req.isAuthenticated()
 				// });
 			} else {
-				console.log("Cart doesnot exists");
+				console.log("Cart does not exists");
 			}
 		} catch (err) {
 			console.log(err);
@@ -1014,8 +1010,7 @@ app.get("/cart/:id/decrqty", async function (req, res) {
 
 					// cart.products[itemIndex] = productItem;
 					for (var i = 0; i < cart.products.length; i++) {
-						price +=
-							cart.products[i].quantity * cart.products[i].price;
+						price += cart.products[i].quantity * cart.products[i].price;
 					}
 					cart.totalPrice = price;
 				}
@@ -1055,8 +1050,7 @@ app.get("/cart/:id/remove", async function (req, res) {
 					let price = 0;
 					cart.products.splice(itemIndex, 1);
 					for (var i = 0; i < cart.products.length; i++) {
-						price +=
-							cart.products[i].quantity * cart.products[i].price;
+						price += cart.products[i].quantity * cart.products[i].price;
 					}
 					cart.totalPrice = price;
 				}
@@ -1583,19 +1577,16 @@ app.post("/consultation", function (req, res) {
 			}
 		});
 
-		Doctor.find(
-			{ department: req.body.department },
-			function (err, results) {
-				if (err) {
-					console.log(err);
-				} else {
-					res.render("docCategory", {
-						docData: results,
-						isAuthenticated: req.isAuthenticated()
-					});
-				}
+		Doctor.find({ department: req.body.department }, function (err, results) {
+			if (err) {
+				console.log(err);
+			} else {
+				res.render("docCategory", {
+					docData: results,
+					isAuthenticated: req.isAuthenticated()
+				});
 			}
-		);
+		});
 	} else {
 		res.redirect("/login");
 	}
@@ -1731,10 +1722,7 @@ app.post("/docProfile/booking/:id", function (req, res) {
 									if (err) {
 										console.log(err);
 									} else {
-										console.log(
-											"Inside Doc result",
-											result
-										);
+										console.log("Inside Doc result", result);
 									}
 								}
 							);
