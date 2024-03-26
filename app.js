@@ -471,7 +471,7 @@ const docImages = [
 ];
 
 app.get("/", async function (req, res) {
-	console.log(req.isAuthenticated());
+	// console.log(req.isAuthenticated());
 
 	let isAdmin = false;
 	const productsInCart = [];
@@ -633,7 +633,7 @@ app.get("/categories", async function (req, res) {
 			let cart = await Cart.findOne({
 				userId
 			});
-			console.log("Hey Cart", cart);
+			// console.log("Hey Cart", cart);
 			if (cart) {
 				//cart exists for user
 				if (cart.products) {
@@ -788,10 +788,10 @@ app.get("/cart", async function (req, res) {
 			let cart = await Cart.findOne({
 				userId
 			});
-			console.log("Hey Cart", cart);
+			// console.log("Hey Cart", cart);
 			if (cart) {
 				//cart exists for user
-				console.log(cart.products.length);
+				// console.log(cart.products.length);
 
 				if (cart.products.length > 0) {
 					// if (ite?mIndex > -1) {
@@ -858,7 +858,7 @@ app.get("/cart/:productid", function (req, res) {
 			if (err) {
 				console.log(err);
 			} else {
-				console.log("Found Results inside cart block: ", results);
+				// console.log("Found Results inside cart block: ", results);
 			}
 			const { img, id, quantity = 1, name, price } = results;
 			const productId = id;
@@ -1169,7 +1169,7 @@ app.get("/products/:category", async function (req, res) {
 			let cart = await Cart.findOne({
 				userId
 			});
-			console.log("Hey Cart", cart);
+			// console.log("Hey Cart", cart);
 			if (cart) {
 				//cart exists for user
 
@@ -1672,7 +1672,7 @@ app.post("/docProfile/booking/:id", function (req, res) {
 
 		const room = req.body.appointmentDateAndTime;
 		const roomId = "/room/" + id + "-" + room;
-		console.log(roomId);
+		// console.log(roomId);
 
 		Doctor.findById(id, function (err, results) {
 			if (err) {
