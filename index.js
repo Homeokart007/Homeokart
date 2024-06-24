@@ -1812,4 +1812,4 @@ server.listen(PORT, (req, res) => {
 	console.log("Server started on http://localhost:" + PORT);
 });
 
-module.exports = app;
+module.exports = { app, session };
