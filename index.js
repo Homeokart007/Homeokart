@@ -20,7 +20,7 @@ var fs = require("fs");
 var path = require("path");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
@@ -1811,3 +1811,5 @@ app.get("/paymentSuccessfull", function (req, res) {
 server.listen(PORT, (req, res) => {
 	console.log("Server started on http://localhost:" + PORT);
 });
+
+module.exports = app;
